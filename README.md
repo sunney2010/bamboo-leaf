@@ -1,39 +1,94 @@
-# bamboo-leaf
+## Tinyid
+[![license](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/didi/tinyid/blob/master/LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/didi/tinyid/pulls)
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+Tinyid is a ID Generator Service. It provides a REST API and a java client for getting ids. Over 10 million QPS per single instance when using the java client.
+Support jdk version 1.7+
 
-#### 软件架构
-软件架构说明
+# Getting started
 
+[中文wiki](https://github.com/didi/tinyid/wiki)
 
-#### 安装教程
+## Clone code
+git clone https://github.com/didi/tinyid.git
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## Create table
+cd tinyid/tinyid-server/ && create table with db.sql (mysql)
 
-#### 使用说明
+## Config db
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+cd tinyid-server/src/main/resources/offline  
+vi application.properties
+```properties
+datasource.tinyid.names=primary
 
-#### 参与贡献
+datasource.tinyid.primary.driver-class-name=com.mysql.jdbc.Driver
+datasource.tinyid.primary.url=jdbc:mysql://ip:port/databaseName?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
+datasource.tinyid.primary.username=root
+datasource.tinyid.primary.password=123456
+```
+## Start tinyid-server
+```xml
+cd tinyid-server/
+sh build.sh offline
+java -jar output/tinyid-server-xxx.jar
+```
+## REST API 
+```properties
+nextId:
+curl 'http://localhost:9999/tinyid/id/nextId?bizType=test&token=0f673adf80504e2eaa552f5d791b644c'
+response:{"data":[2],"code":200,"message":""}
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+nextId Simple:
+curl 'http://localhost:9999/tinyid/id/nextIdSimple?bizType=test&token=0f673adf80504e2eaa552f5d791b644c'
+response: 3
 
+with batchSize:
+curl 'http://localhost:9999/tinyid/id/nextIdSimple?bizType=test&token=0f673adf80504e2eaa552f5d791b644c&batchSize=10'
+response: 4,5,6,7,8,9,10,11,12,13
 
-#### 特技
+Get nextId like 1,3,5,7,9...
+bizType=test_odd : delta is 2 and remainder is 1
+curl 'http://localhost:9999/tinyid/id/nextIdSimple?bizType=test_odd&batchSize=10&token=0f673adf80504e2eaa552f5d791b644c'
+response: 3,5,7,9,11,13,15,17,19,21
+```
+## Java client  (Recommended)
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+### Maven dependency
+```xml
+<dependency>
+    <groupId>com.xiaoju.uemc.tinyid</groupId>
+    <artifactId>tinyid-client</artifactId>
+    <version>${tinyid.version}</version>
+</dependency>
+```
+
+### Create tinyid_client.properties in your classpath
+
+tinyid_client.properties:
+```properties
+tinyid.server=localhost:9999
+tinyid.token=0f673adf80504e2eaa552f5d791b644c
+
+#(tinyid.server=localhost:9999/gateway,ip2:port2/prefix,...)
+```
+### Java Code
+```java
+Long id = TinyId.nextId("test");
+List<Long> ids = TinyId.nextId("test", 10);
+```
+
+# Communication
+<img src="doc/qqqun.JPG" alt="Tinyid Community" width="200"/>
+
+# Contributing
+
+Welcome to contribute by creating issues or sending pull requests. See [Contributing Guide](CONTRIBUTING.md) for guidelines.
+
+# License
+
+Tinyid is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file.
+
+# Note
+
+This is not an official Didi product (experimental or otherwise), it is just code that happens to be owned by Didi.
