@@ -6,21 +6,32 @@ package com.bamboo.leaf.common.entity;
  */
 public class Result {
 
-    private int code;
+    private long val;
+    
     private ResultEnum resultEnum;
 
-    public Result(int code, ResultEnum resultEnum) {
-        this.code = code;
+    public Result(long val, ResultEnum resultEnum) {
+        this.val = val;
         this.resultEnum = resultEnum;
     }
 
-    public int getCode() {
-        return code;
+    /**
+     * @return the val
+     */
+    public long getVal() {
+        return val;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+
+
+    /**
+     * @param val the val to set
+     */
+    public void setVal(long val) {
+        this.val = val;
     }
+
+
 
     /**
      * @return the resultEnum

@@ -5,31 +5,35 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.bamboo.leaf.common.entity.Result;
+import com.bamboo.leaf.common.entity.ResultEnum;
 import com.bamboo.leaf.common.entity.SegmentRange;
+import com.bamboo.leaf.common.exception.BambooLeafException;
+import com.bamboo.leaf.common.factory.NamedThreadFactory;
 import com.bamboo.leaf.common.generator.SegmentGenerator;
 import com.bamboo.leaf.common.service.SegmentRangeService;
-import com.xiaoju.uemc.tinyid.base.entity.Result;
-import com.xiaoju.uemc.tinyid.base.entity.ResultCode;
-import com.xiaoju.uemc.tinyid.base.entity.SegmentId;
-import com.xiaoju.uemc.tinyid.base.exception.TinyIdSysException;
-import com.xiaoju.uemc.tinyid.base.service.SegmentIdService;
-import com.xiaoju.uemc.tinyid.base.util.NamedThreadFactory;
 
 /**
  * @author zhuzhi
  * @date 2020/11/19
  */
 public class CachedSegmentGenerator implements SegmentGenerator {
-    
-    protected String namespace;
+
     protected SegmentRangeService segmentRangeService;
+    // 命名空间
+    protected String namespace;
+
+    // 当前号段
     protected volatile SegmentRange currentSegment;
+    // 下个号段
     protected volatile SegmentRange nextSegment;
+
     private volatile boolean isLoadingNext;
+
     private Object lock = new Object();
 
     private ExecutorService executorService =
-        Executors.newSingleThreadExecutor(new NamedThreadFactory("tinyid-generator"));
+        Executors.newSingleThreadExecutor(new NamedThreadFactory("SegmentGenerator"));
 
     public CachedSegmentGenerator(String namespace, SegmentRangeService segmentRangeService) {
         this.namespace = namespace;
@@ -59,7 +63,7 @@ public class CachedSegmentGenerator implements SegmentGenerator {
         } catch (Exception e) {
             message = e.getMessage();
         }
-        throw new TinyIdSysException("error query segmentId: " + message);
+        throw new BambooLeafException("error query segmentRange: " + message);
     }
 
     public void loadNext() {
@@ -90,14 +94,14 @@ public class CachedSegmentGenerator implements SegmentGenerator {
                 loadCurrent();
                 continue;
             }
-            Result result = currentSegment.getAndIncrement();
-            if (result.getCode() == ResultCode.OVER) {
+            Result result = currentSegment.nextId();
+            if (result.getResultEnum() == ResultEnum.OVER) {
                 loadCurrent();
             } else {
-                if (result.getCode() == ResultCode.LOADING) {
+                if (result.getResultEnum() == ResultEnum.LOADING) {
                     loadNext();
                 }
-                return result.getId();
+                return result.getVal();
             }
         }
     }

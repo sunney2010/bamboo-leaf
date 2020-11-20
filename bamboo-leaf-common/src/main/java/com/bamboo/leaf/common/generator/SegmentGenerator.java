@@ -3,7 +3,8 @@ package com.bamboo.leaf.common.generator;
 import java.util.List;
 
 /**
- * @author du_imba
+ * @author zhuzhi
+ * @date 2020/11/19
  */
 public interface SegmentGenerator {
     /**
