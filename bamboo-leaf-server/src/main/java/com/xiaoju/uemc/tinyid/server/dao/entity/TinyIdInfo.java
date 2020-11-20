@@ -6,9 +6,10 @@ import java.util.Date;
  * @author du_imba
  */
 public class TinyIdInfo {
+    
     private Long id;
 
-    private String bizType;
+    private String namespace;
 
     private Long beginId;
 
