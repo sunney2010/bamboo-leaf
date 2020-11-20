@@ -4,6 +4,7 @@ package com.xiaoju.uemc.tinyid.base.entity;
  * @author du_imba
  */
 public class Result {
+    
     private int code;
     private long id;
 

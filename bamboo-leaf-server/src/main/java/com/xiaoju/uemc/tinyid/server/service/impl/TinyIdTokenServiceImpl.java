@@ -3,12 +3,13 @@ package com.xiaoju.uemc.tinyid.server.service.impl;
 import com.xiaoju.uemc.tinyid.server.dao.TinyIdTokenDAO;
 import com.xiaoju.uemc.tinyid.server.dao.entity.TinyIdToken;
 import com.xiaoju.uemc.tinyid.server.service.TinyIdTokenService;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
@@ -53,8 +54,8 @@ public class TinyIdTokenServiceImpl implements TinyIdTokenService {
     }
 
     @Override
-    public boolean canVisit(String bizType, String token) {
-        if (StringUtils.isEmpty(bizType) || StringUtils.isEmpty(token)) {
+    public boolean canVisit(String namespace, String token) {
+        if (StringUtils.isEmpty(namespace) || StringUtils.isEmpty(namespace)) {
             return false;
         }
         Set<String> bizTypes = token2bizTypes.get(token);

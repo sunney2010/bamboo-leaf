@@ -6,14 +6,15 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * @author du_imba
+ * @author zhuzhi
+ * @date 2020/11/19
  */
 @EnableAsync
 @SpringBootApplication
 @EnableScheduling
-public class TinyIdServerApplication {
+public class BambooLeafServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(TinyIdServerApplication.class, args);
+        SpringApplication.run(BambooLeafServer.class, args);
     }
 }
