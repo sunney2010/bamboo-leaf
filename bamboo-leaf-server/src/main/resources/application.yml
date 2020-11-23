@@ -1,0 +1,19 @@
+logging: 
+   level: 
+      # 日志级别调整
+      root: info
+server:
+    # 服务对外暴露的端口号
+   port: 8080
+spring: 
+  application:
+    name: bamboo-server
+  profiles:
+    active: dev
+  datasource:
+    bamboo-leaf.names: primary
+    #datasource.tinyid.names=primary,secondary
+    bamboo-leaf.primary.driver-class-name: com.mysql.jdbc.Driver
+    bamboo-leaf.primary.url: jdbc:mysql://localhost:3306/db1?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
+    bamboo-leaf.primary.username: root
+    bamboo-leaf.primary.password: 123456

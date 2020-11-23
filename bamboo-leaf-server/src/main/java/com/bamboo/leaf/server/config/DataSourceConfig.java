@@ -1,4 +1,4 @@
-package com.xiaoju.uemc.tinyid.server.config;
+package com.bamboo.leaf.server.config;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;

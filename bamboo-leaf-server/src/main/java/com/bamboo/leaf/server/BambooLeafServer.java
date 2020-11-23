@@ -1,4 +1,4 @@
-package com.xiaoju.uemc.tinyid.server;
+package com.bamboo.leaf.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

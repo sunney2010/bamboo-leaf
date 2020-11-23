@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <configuration status="error" shutdownHook="disable">
-
     <Properties>
         <Property name="log-path">./logs/</Property>
     </Properties>
@@ -23,13 +21,11 @@
     <loggers>
         <logger name="com.xiaoju.uemc.tinyid" level="INFO"/>
         <logger name="org.springframework" level="INFO"/>
-
         <!--<logger name="org.springframework.kafka" level="DEBUG" />-->
         <!--
         <logger name="org.mybatis" level="DEBUG" />
         <logger name="java.sql" level="DEBUG"/>
          -->
-
         <!--建立一个默认的root的logger, 除了上面定义的logger，其他只有warn才会打印-->
         <root level="WARN">
             <appender-ref ref="ServerRollingFile"/>
