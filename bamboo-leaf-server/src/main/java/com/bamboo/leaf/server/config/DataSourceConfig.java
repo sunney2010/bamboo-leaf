@@ -1,8 +1,8 @@
 package com.bamboo.leaf.server.config;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
@@ -86,6 +86,4 @@ public class DataSourceConfig {
             throw new IllegalStateException(e);
         }
     }
-
-
 }
