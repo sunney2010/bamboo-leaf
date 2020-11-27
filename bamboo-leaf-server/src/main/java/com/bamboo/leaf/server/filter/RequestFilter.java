@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @Component
 @ServletComponentScan
-@WebFilter(urlPatterns = "/*", filterName = "requestFilter")
+@WebFilter(urlPatterns = "/*", filterName = "requestFilter11")
 public class RequestFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(RequestFilter.class);

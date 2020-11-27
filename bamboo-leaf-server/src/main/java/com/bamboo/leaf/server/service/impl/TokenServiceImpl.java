@@ -1,10 +1,12 @@
 package com.bamboo.leaf.server.service.impl;
 
+import com.bamboo.leaf.server.dao.TokenDAO;
 import com.bamboo.leaf.server.dao.entity.TokenDO;
 import com.bamboo.leaf.server.service.TokenService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,8 @@ import java.util.*;
 @Component
 public class TokenServiceImpl implements TokenService {
 
+    @Autowired
+    TokenDAO tokenDAO;
     private static final Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
 
     private static Map<String, Set<String>> tokenMap = new HashMap<>();
@@ -64,6 +68,11 @@ public class TokenServiceImpl implements TokenService {
         }
         Set<String> namespaceSet = tokenMap.get(token);
         return (namespaceSet != null && namespaceSet.contains(namespace));
+    }
+
+    @Override
+    public int insertToken(TokenDO tokenDO) {
+        return tokenDAO.insertToken(tokenDO);
     }
 
 }

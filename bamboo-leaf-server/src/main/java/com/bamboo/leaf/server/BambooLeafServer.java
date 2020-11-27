@@ -2,16 +2,13 @@ package com.bamboo.leaf.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 /**
  * @author zhuzhi
- * @date 2020/11/19
+ * @date 2020/11/26
  */
-@EnableAsync
-@SpringBootApplication
-@EnableScheduling
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class BambooLeafServer {
 
     public static void main(String[] args) {

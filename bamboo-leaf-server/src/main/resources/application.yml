@@ -11,9 +11,7 @@ spring:
   profiles:
     active: dev
   datasource:
-    bamboo-leaf.names: primary
-    #datasource.tinyid.names=primary,secondary
-    bamboo-leaf.primary.driver-class-name: com.mysql.jdbc.Driver
-    bamboo-leaf.primary.url: jdbc:mysql://www.zhuzhi.vip:3306/bamboo-leaf?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
-    bamboo-leaf.primary.username: root
-    bamboo-leaf.primary.password: zhuzhi2020
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://www.zhuzhi.vip:3306/bamboo-leaf?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: zhuzhi2020
