@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
@@ -17,11 +17,12 @@ import java.util.*;
  * @author zhuzhi
  * @date 2020/11/19
  */
-@Component
+@Service
 public class TokenServiceImpl implements TokenService {
 
     @Autowired
     TokenDAO tokenDAO;
+
     private static final Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
 
     private static Map<String, Set<String>> tokenMap = new HashMap<>();
