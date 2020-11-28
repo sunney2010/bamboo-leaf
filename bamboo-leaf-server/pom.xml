@@ -38,6 +38,11 @@
         </dependency>
          -->
         <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring.version}</version>
@@ -93,21 +98,7 @@
         </dependency>
     </dependencies>
     <profiles>
-        <profile>
-            <id>online</id>
-            <properties>
-                <package.environment>online</package.environment>
-            </properties>
-        </profile>
-        <profile>
-            <id>offline</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <package.environment>offline</package.environment>
-            </properties>
-        </profile>
+
     </profiles>
 
     <build>
@@ -125,14 +116,6 @@
                 </executions>
             </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/resources/${package.environment}</directory>
-            </resource>
-            <resource>
-                <directory>src/main/resources/base</directory>
-            </resource>
-        </resources>
     </build>
 
 </project>

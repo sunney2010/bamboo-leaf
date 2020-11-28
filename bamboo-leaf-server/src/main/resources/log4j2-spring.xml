@@ -10,7 +10,7 @@
 		<!-- %logger{36} 表示 Logger 名字最长36个字符 -->
 		<property name="LOG_PATTERN" value="%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
 		<!-- 定义日志存储的路径 -->
-		<property name="FILE_PATH" value="/log/" />
+		<property name="FILE_PATH" value="/Users/lichunming/code/bamboo/bamboo-leaf/bamboo-leaf-server/logs" />
 		<property name="FILE_NAME" value="bamboo-leaf" />
 	</Properties>
 
@@ -94,5 +94,4 @@
 			<appender-ref ref="RollingFileError"/>
 		</root>
 	</loggers>
-
 </configuration>

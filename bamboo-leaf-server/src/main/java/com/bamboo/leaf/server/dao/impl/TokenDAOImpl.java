@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import com.bamboo.leaf.server.dao.TokenDAO;
 import com.bamboo.leaf.server.dao.entity.TokenDO;
 
+import javax.annotation.Resource;
+
 /**
  * @description: TODO
  * @Author: Zhuzhi
@@ -51,11 +53,4 @@ public class TokenDAOImpl implements TokenDAO {
         }
     }
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
-    }
-
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-}
+  }
