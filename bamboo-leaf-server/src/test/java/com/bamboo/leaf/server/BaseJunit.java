@@ -1,5 +1,7 @@
 package com.bamboo.leaf.server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
@@ -9,4 +11,5 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @SpringBootTest
 public class BaseJunit {
+    public final Logger logger = LoggerFactory.getLogger(this.getClass());
 }
