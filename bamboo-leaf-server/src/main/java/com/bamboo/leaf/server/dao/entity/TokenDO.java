@@ -10,6 +10,11 @@ import java.util.Date;
  */
 public class TokenDO implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8089634722955185988L;
+
     private Integer id;
 
     private String namespace;
