@@ -1,4 +1,4 @@
-package com.xiaoju.uemc.tinyid.client;
+package com.bamboo.leaf.client;
 
 import com.xiaoju.uemc.tinyid.client.utils.TinyId;
 import org.junit.Test;
@@ -7,7 +7,7 @@ import org.junit.Test;
  * @Author du_imba
  */
 
-public class ClientTest {
+public class BambooLeafClientTest {
 
     @Test
     public void testNextId() {
