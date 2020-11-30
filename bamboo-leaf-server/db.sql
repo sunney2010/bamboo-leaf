@@ -1,4 +1,4 @@
-CREATE TABLE `bamboo_leaf_info` (
+CREATE TABLE `bamboo_leaf_segment` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `namespace` varchar(64) NOT NULL  COMMENT '业务类型，唯一',
   `leaf_val` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '当前值',

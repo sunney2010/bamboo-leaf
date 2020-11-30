@@ -22,6 +22,11 @@
                 <artifactId>bamboo-leaf-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.30</version>
+            </dependency>
             <!--
             <dependency>
                 <groupId>com.bamboo.leaf</groupId>
@@ -29,11 +34,6 @@
                 <version>${project.version}</version>
             </dependency>
             -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
