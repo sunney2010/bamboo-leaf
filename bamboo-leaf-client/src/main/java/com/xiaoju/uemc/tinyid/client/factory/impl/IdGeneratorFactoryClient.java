@@ -3,10 +3,7 @@ package com.xiaoju.uemc.tinyid.client.factory.impl;
 import com.xiaoju.uemc.tinyid.base.factory.AbstractIdGeneratorFactory;
 import com.xiaoju.uemc.tinyid.base.generator.IdGenerator;
 import com.xiaoju.uemc.tinyid.base.generator.impl.CachedIdGenerator;
-import com.xiaoju.uemc.tinyid.client.config.TinyIdClientConfig;
 import com.xiaoju.uemc.tinyid.client.service.impl.HttpSegmentIdServiceImpl;
-import com.xiaoju.uemc.tinyid.client.utils.PropertiesLoader;
-import com.xiaoju.uemc.tinyid.client.utils.TinyIdNumberUtils;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;

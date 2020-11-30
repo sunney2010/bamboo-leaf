@@ -2,8 +2,6 @@ package com.xiaoju.uemc.tinyid.client.service.impl;
 
 import com.xiaoju.uemc.tinyid.base.entity.SegmentId;
 import com.xiaoju.uemc.tinyid.base.service.SegmentIdService;
-import com.xiaoju.uemc.tinyid.client.config.TinyIdClientConfig;
-import com.xiaoju.uemc.tinyid.client.utils.TinyIdHttpUtils;
 
 import java.util.List;
 import java.util.Random;
