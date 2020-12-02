@@ -1,7 +1,9 @@
 package com.bamboo.leaf.client.utils;
 
 /**
- * @Author du_imba
+ * @description: Number工具类
+ * @Author: Zhuzhi
+ * @Date: 2020/11/30 下午1:10
  */
 public class NumberUtils {
 

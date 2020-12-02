@@ -21,7 +21,6 @@ public class RemoteSegmentServiceImpl implements SegmentService {
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteSegmentServiceImpl.class);
 
-
     @Override
     public SegmentRange getNextSegmentRange(String namespace) {
         String url = chooseService(namespace);

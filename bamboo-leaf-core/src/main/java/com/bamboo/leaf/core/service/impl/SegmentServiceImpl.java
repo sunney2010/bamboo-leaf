@@ -8,6 +8,7 @@ import com.bamboo.leaf.core.exception.BambooLeafException;
 import com.bamboo.leaf.core.service.SegmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
@@ -16,6 +17,7 @@ import javax.annotation.Resource;
  * @Author: Zhuzhi
  * @Date: 2020/11/30 下午11:12
  */
+@Component
 public class SegmentServiceImpl implements SegmentService {
     private static final Logger logger = LoggerFactory.getLogger(SegmentServiceImpl.class);
     @Resource

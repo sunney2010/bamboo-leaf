@@ -13,6 +13,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         <druid.version>1.2.3</druid.version>
+        <spring.version>2.4.0</spring.version>
     </properties>
 
     <dependencyManagement>
@@ -32,7 +33,6 @@
                 <artifactId>bamboo-leaf-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
-        
         </dependencies>
     </dependencyManagement>
 
