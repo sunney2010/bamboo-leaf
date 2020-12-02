@@ -30,7 +30,7 @@ public class SegmentServiceImpl implements SegmentService {
                 segmentDO = new SegmentDO();
                 segmentDO.setNamespace(namespace);
                 int val = segmentDAO.insertSegment(segmentDO);
-                //判断插入是否成功
+                //判断插入是否成功,不成功要重试
                 if (val == 1) {
                     if (logger.isInfoEnabled()) {
                         logger.info("bamboo-leaf init success,namespace:{}", namespace);

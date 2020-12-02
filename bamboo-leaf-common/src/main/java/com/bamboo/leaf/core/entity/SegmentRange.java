@@ -13,7 +13,7 @@ public class SegmentRange {
     /**
      * 当前值
      */
-    private  final AtomicLong currentVal;
+    private  AtomicLong currentVal;
 
     private volatile boolean over = false;
 
@@ -161,4 +161,7 @@ public class SegmentRange {
         return currentVal;
     }
 
+    public void setCurrentVal(AtomicLong currentVal) {
+        this.currentVal = currentVal;
+    }
 }

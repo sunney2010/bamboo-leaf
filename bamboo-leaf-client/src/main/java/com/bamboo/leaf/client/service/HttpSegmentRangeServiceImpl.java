@@ -4,6 +4,7 @@ import com.bamboo.leaf.client.config.ClientConfig;
 import com.bamboo.leaf.client.utils.HttpUtils;
 import com.bamboo.leaf.core.entity.SegmentRange;
 import com.bamboo.leaf.core.service.SegmentService;
+
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -25,7 +26,7 @@ public class HttpSegmentRangeServiceImpl implements SegmentService {
         if (response == null || "".equals(response.trim())) {
             return null;
         }
-        SegmentRange segment = new SegmentRange();
+        SegmentRange segment = new SegmentRange(1,100);
         String[] arr = response.split(",");
         segment.setCurrentVal(new AtomicLong(Long.parseLong(arr[0])));
         segment.setLoadingVal(Long.parseLong(arr[1]));

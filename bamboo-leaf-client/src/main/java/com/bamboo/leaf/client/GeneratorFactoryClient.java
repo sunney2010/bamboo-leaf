@@ -1,9 +1,12 @@
 package com.bamboo.leaf.client;
 
 import com.bamboo.leaf.client.config.ClientConfig;
+import com.bamboo.leaf.client.service.HttpSegmentRangeServiceImpl;
 import com.bamboo.leaf.client.utils.NumberUtils;
 import com.bamboo.leaf.client.utils.PropertiesLoader;
-import com.xiaoju.uemc.tinyid.client.service.impl.HttpSegmentIdServiceImpl;
+import com.bamboo.leaf.core.factory.AbstractSegmentGeneratorFactory;
+import com.bamboo.leaf.core.generator.SegmentGenerator;
+import com.bamboo.leaf.core.generator.impl.CachedSegmentGenerator;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ import java.util.logging.Logger;
  * @Author: Zhuzhi
  * @Date: 2020/11/30 下午11:55
  */
-public class GeneratorFactoryClient {
+public class GeneratorFactoryClient extends AbstractSegmentGeneratorFactory {
 
     private static final Logger logger = Logger.getLogger(GeneratorFactoryClient.class.getName());
 
@@ -54,6 +57,7 @@ public class GeneratorFactoryClient {
         String leafServer = properties.getProperty("bamboo-leaf.server");
         String readTimeout = properties.getProperty("bamboo-leaf.readTimeout");
         String connectTimeout = properties.getProperty("bamboo-leaf.connectTimeout");
+        String mode = properties.getProperty("bamboo-leaf.mode");
 
         if (leafToken == null || "".equals(leafToken.trim())
                 || leafServer == null || "".equals(leafServer.trim())) {
@@ -63,6 +67,7 @@ public class GeneratorFactoryClient {
         ClientConfig clientConfig = ClientConfig.getInstance();
         clientConfig.setLeafServer(leafServer);
         clientConfig.setLeafToken(leafToken);
+        clientConfig.setMode(mode);
         clientConfig.setReadTimeout(NumberUtils.toInt(readTimeout, DEFAULT_TIME_OUT));
         clientConfig.setConnectTimeout(NumberUtils.toInt(connectTimeout, DEFAULT_TIME_OUT));
 
@@ -76,9 +81,9 @@ public class GeneratorFactoryClient {
         clientConfig.setServerList(serverList);
     }
 
-    @Override
-    protected IdGenerator createIdGenerator(String namespace) {
-        return new CachedIdGenerator(namespace, new HttpSegmentIdServiceImpl());
-    }
 
+    @Override
+    protected SegmentGenerator createSegmentGenerator(String namespace) {
+        return new CachedSegmentGenerator(namespace, new HttpSegmentRangeServiceImpl());
+    }
 }

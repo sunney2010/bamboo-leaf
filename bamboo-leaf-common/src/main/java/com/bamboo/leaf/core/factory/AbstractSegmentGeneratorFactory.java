@@ -8,7 +8,7 @@ import com.bamboo.leaf.core.generator.SegmentGenerator;
  * @author zhuzhi
  * @date 2020/11/19
  */
-public abstract class AbstractIdGeneratorFactory implements SegmentGeneratorFactory {
+public abstract class AbstractSegmentGeneratorFactory implements SegmentGeneratorFactory {
 
     private static ConcurrentHashMap<String, SegmentGenerator> generators = new ConcurrentHashMap<>();
 
