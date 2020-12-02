@@ -11,7 +11,7 @@ import com.bamboo.leaf.core.entity.SegmentRange;
 import com.bamboo.leaf.core.exception.BambooLeafException;
 import com.bamboo.leaf.core.factory.NamedThreadFactory;
 import com.bamboo.leaf.core.generator.SegmentGenerator;
-import com.bamboo.leaf.core.service.SegmentRangeService;
+import com.bamboo.leaf.core.service.SegmentService;
 
 /**
  * @author zhuzhi
@@ -19,7 +19,7 @@ import com.bamboo.leaf.core.service.SegmentRangeService;
  */
 public class CachedSegmentGenerator implements SegmentGenerator {
 
-    protected SegmentRangeService segmentRangeService;
+    protected SegmentService segmentRangeService;
     // 命名空间
     protected String namespace;
 
@@ -35,7 +35,7 @@ public class CachedSegmentGenerator implements SegmentGenerator {
     private ExecutorService executorService =
         Executors.newSingleThreadExecutor(new NamedThreadFactory("SegmentGenerator"));
 
-    public CachedSegmentGenerator(String namespace, SegmentRangeService segmentRangeService) {
+    public CachedSegmentGenerator(String namespace, SegmentService segmentRangeService) {
         this.namespace = namespace;
         this.segmentRangeService = segmentRangeService;
         loadCurrent();

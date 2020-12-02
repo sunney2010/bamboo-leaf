@@ -13,7 +13,7 @@ public class SegmentRange {
     /**
      * 当前值
      */
-    private  AtomicLong currentVal;
+    private  final AtomicLong currentVal;
 
     private volatile boolean over = false;
 
@@ -32,11 +32,13 @@ public class SegmentRange {
 
     private volatile boolean isInit;
 
+
     public SegmentRange(long min, long max) {
         this.min = min;
         this.max = max;
         this.currentVal = new AtomicLong(min);
     }
+
 
     /**
      * 这个方法主要为了1,4,7,10...这种序列准备的 设置好初始值之后，会以delta的方式递增，保证无论开始id是多少都能生成正确的序列 如当前是号段是(1000,2000]，delta=3,
@@ -159,7 +161,4 @@ public class SegmentRange {
         return currentVal;
     }
 
-    public void setCurrentVal(AtomicLong currentVal) {
-        this.currentVal = currentVal;
-    }
 }

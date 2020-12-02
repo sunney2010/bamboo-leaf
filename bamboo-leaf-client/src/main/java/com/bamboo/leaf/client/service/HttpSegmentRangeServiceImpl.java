@@ -3,7 +3,7 @@ package com.bamboo.leaf.client.service;
 import com.bamboo.leaf.client.config.ClientConfig;
 import com.bamboo.leaf.client.utils.HttpUtils;
 import com.bamboo.leaf.core.entity.SegmentRange;
-import com.bamboo.leaf.core.service.SegmentRangeService;
+import com.bamboo.leaf.core.service.SegmentService;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 /**
  * @author du_imba
  */
-public class HttpSegmentRangeServiceImpl implements SegmentRangeService {
+public class HttpSegmentRangeServiceImpl implements SegmentService {
 
     private static final Logger logger = Logger.getLogger(HttpSegmentRangeServiceImpl.class.getName());
 

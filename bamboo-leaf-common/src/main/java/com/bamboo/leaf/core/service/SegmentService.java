@@ -6,7 +6,7 @@ import com.bamboo.leaf.core.entity.SegmentRange;
  * @author zhuzhi
  * @date 2020/11/19
  */
-public interface SegmentRangeService {
+public interface SegmentService {
 
     /**
      * 根据namespace获取下一个namespace对象

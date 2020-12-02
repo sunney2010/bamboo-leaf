@@ -44,9 +44,8 @@ public class WorkerIdDAOImpl extends AbstractDAO implements WorkerIdDAO {
             // 依赖DB插入或获取WorkerId
             workerId = getWorkerId(namespace, hostIp);
         } catch (Exception e) {
-            //TODO
-            // 如果获取失败，则使用随机数备用
-            //workerId = (int)SnowflakeIdUtils.nextLong(ConfigConstant.INIT_WORKERID, ConfigConstant.MAX_WORKERID);
+            // 如果获取失败，则使用随机数备用;
+            workerId= (int) (Math.random() * 300);
             logger.warn("WorkerIdResolver.resolveId is error, workerId is RANDOM,workerId={}", workerId);
         }
         return workerId;

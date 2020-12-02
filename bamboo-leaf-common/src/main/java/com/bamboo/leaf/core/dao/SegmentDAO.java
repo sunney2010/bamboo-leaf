@@ -11,13 +11,17 @@ import com.bamboo.leaf.core.exception.BambooLeafException;
 public interface SegmentDAO {
     /**
      * 更新
-     * @param segmentDO 对象
+     *
+     * @param segmentDO  对象
+     * @param oldLeafVal 对象
      * @return 返回序列下一个值
      * @throws BambooLeafException
      */
-    int updateSegment(SegmentDO segmentDO) throws BambooLeafException;
+    int updateSegment(SegmentDO segmentDO, long oldLeafVal) throws BambooLeafException;
+
     /**
      * 新增
+     *
      * @param segmentDO 插入对象
      * @return 返回序列下一个值
      * @throws BambooLeafException

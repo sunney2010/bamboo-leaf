@@ -21,10 +21,10 @@ public class SegmentDAOImpl extends AbstractDAO implements SegmentDAO {
     private static final Logger logger = LoggerFactory.getLogger(SegmentDAOImpl.class);
 
     @Override
-    public int updateSegment(SegmentDO segmentDO) throws BambooLeafException {
+    public int updateSegment(SegmentDO segmentDO,long oldLeafVal) throws BambooLeafException {
         int val = 0;
         try {
-            val = this.updateSegmentSql(segmentDO);
+            val = this.updateSegmentSql(segmentDO,oldLeafVal);
         } catch (BambooLeafException e) {
             logger.error("updateSegment is error,msb", e);
             throw e;
@@ -82,7 +82,7 @@ public class SegmentDAOImpl extends AbstractDAO implements SegmentDAO {
         return val;
     }
 
-    private int updateSegmentSql(SegmentDO segmentDO) throws BambooLeafException {
+    private int updateSegmentSql(SegmentDO segmentDO,long oldLeafVal) throws BambooLeafException {
         int val = 0;
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -90,7 +90,7 @@ public class SegmentDAOImpl extends AbstractDAO implements SegmentDAO {
             conn = dataSource.getConnection();
             stmt = conn.prepareStatement(getUpdateSegmentSql());
             stmt.setLong(1, segmentDO.getLeafVal());
-            stmt.setLong(2, segmentDO.getVersion());
+            stmt.setLong(2, segmentDO.getVersion()+1);
             stmt.setString(3, segmentDO.getNamespace());
             stmt.setLong(4, segmentDO.getLeafVal());
             stmt.setLong(5, segmentDO.getVersion());
