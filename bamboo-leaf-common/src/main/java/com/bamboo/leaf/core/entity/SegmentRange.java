@@ -10,8 +10,10 @@ public class SegmentRange {
 
     private final long min;
     private final long max;
-    // 当前
-    private final AtomicLong currentVal;
+    /**
+     * 当前值
+     */
+    private  AtomicLong currentVal;
 
     private volatile boolean over = false;
 
@@ -153,4 +155,11 @@ public class SegmentRange {
         this.remainder = remainder;
     }
 
+    public AtomicLong getCurrentVal() {
+        return currentVal;
+    }
+
+    public void setCurrentVal(AtomicLong currentVal) {
+        this.currentVal = currentVal;
+    }
 }

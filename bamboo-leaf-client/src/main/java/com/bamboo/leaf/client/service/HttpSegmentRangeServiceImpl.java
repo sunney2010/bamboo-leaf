@@ -17,19 +17,19 @@ public class HttpSegmentRangeServiceImpl implements SegmentRangeService {
     private static final Logger logger = Logger.getLogger(HttpSegmentRangeServiceImpl.class.getName());
 
     @Override
-    public SegmentRange getNextSegmentId(String namespace) {
+    public SegmentRange getNextSegmentRange(String namespace) {
         String url = chooseService(namespace);
         String response = HttpUtils.post(url, ClientConfig.getInstance().getReadTimeout(),
                 ClientConfig.getInstance().getConnectTimeout());
-        logger.info("tinyId client getNextSegmentId end, response:" + response);
+        logger.info("bamboo client getNextSegmentId end, response:" + response);
         if (response == null || "".equals(response.trim())) {
             return null;
         }
         SegmentRange segment = new SegmentRange();
         String[] arr = response.split(",");
-        segment.setCurrentId(new AtomicLong(Long.parseLong(arr[0])));
-        segment.setLoadingId(Long.parseLong(arr[1]));
-        segment.setMaxId(Long.parseLong(arr[2]));
+        segment.setCurrentVal(new AtomicLong(Long.parseLong(arr[0])));
+        segment.setLoadingVal(Long.parseLong(arr[1]));
+//        segment.setMaxId(Long.parseLong(arr[2]));
         segment.setDelta(Integer.parseInt(arr[3]));
         segment.setRemainder(Integer.parseInt(arr[4]));
         return segment;

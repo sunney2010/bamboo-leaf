@@ -11,6 +11,7 @@ public class ClientConfig {
 
     private String leafToken;
     private String leafServer;
+    private String mode;
     private List<String> serverList;
     private Integer readTimeout;
     private Integer connectTimeout;
@@ -71,5 +72,13 @@ public class ClientConfig {
 
     public void setConnectTimeout(Integer connectTimeout) {
         this.connectTimeout = connectTimeout;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 }

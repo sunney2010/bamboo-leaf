@@ -9,7 +9,7 @@ CREATE TABLE `bamboo_leaf_segment` (
   `version` bigint(20) NOT NULL DEFAULT 0 COMMENT '版本号',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-   `remark` varchar(255)  NULL  COMMENT '备注',
+  `remark` varchar(255)  NULL  COMMENT '备注',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNI_NAMESPACE` (`namespace`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT 'id信息表';

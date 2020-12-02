@@ -2,18 +2,27 @@ package com.bamboo.leaf.core.constant;
 
 public class SequenceConstant {
 
+
+    //segment 默认表名及字段 START===========
+
+    public static final String DEFAULT_TABLE_NAME = "bamboo_leaf_segment";
+    public static final String DEFAULT_NAME_COLUMN_NAME = "namespace";
+    public static final String DEFAULT_VALUE_COLUMN_NAME = "leaf_val";
+    public static final String DEFAULT_STEP_COLUMN_NAME = "step";
+    public static final String DEFAULT_RETRY_COLUMN_NAME = "retry";
+    public static final String DEFAULT_VERSION_COLUMN_NAME = "version";
+    public static final String DEFAULT_DELTA_COLUMN_NAME = "delta";
+    public static final String DEFAULT_REMAINDER_COLUMN_NAME = "remainder";
+    public static final String DEFAULT_REMARK_COLUMN_NAME = "remark";
+    public static final String DEFAULT_CREATE_COLUMN_NAME = "create_time";
+    public static final String DEFAULT_UPDATE_COLUMN_NAME = "updated_time";
+
+    //================END=============
+
     public static final int MIN_STEP = 1;
     public static final int MAX_STEP = 100000;
     public static final int DEFAULT_STEP = 1000;
     public static final int DEFAULT_RETRY_TIMES = 10;
-
-    public static final String DEFAULT_TABLE_NAME = "bamboo_seq_ai";
-    public static final String DEFAULT_NAME_COLUMN_NAME = "namespace";
-    public static final String DEFAULT_VALUE_COLUMN_NAME = "seq_value";
-    public static final String DEFAULT_STEP_COLUMN_NAME = "seq_step";
-    public static final String DEFAULT_RETRY_COLUMN_NAME = "retryTimes";
-    public static final String DEFAULT_GMT_MODIFIED_COLUMN_NAME = "updated_time";
-
     public static final long DELTA = 100000000L;
 
     public static final long AUTOINCRE_DEFALUT_INITVALUE = 0L;

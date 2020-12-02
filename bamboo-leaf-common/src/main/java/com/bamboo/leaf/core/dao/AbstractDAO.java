@@ -33,29 +33,52 @@ public abstract class AbstractDAO {
     protected String segmentTableName = SequenceConstant.DEFAULT_TABLE_NAME;
 
     /**
-     * 存储序列名称的列名
+     * 命名空间的列名
      */
     protected String nameColumnName = SequenceConstant.DEFAULT_NAME_COLUMN_NAME;
 
     /**
-     * 存储序列值的列名
+     * 当前值的列名
      */
     protected String valueColumnName = SequenceConstant.DEFAULT_VALUE_COLUMN_NAME;
 
     /**
-     * 存储序列值的列名
+     * 步长的列名
      */
     protected String stepColumnName = SequenceConstant.DEFAULT_STEP_COLUMN_NAME;
 
     /**
-     * 存储序列值的列名
+     * 重试次数的列名
      */
-    protected String retryTimesColumnName = SequenceConstant.DEFAULT_RETRY_COLUMN_NAME;
+    protected String retryColumnName = SequenceConstant.DEFAULT_RETRY_COLUMN_NAME;
 
     /**
-     * 存储序列最后更新时间的列名
+     * 最后更新时间的列名
      */
-    protected String gmtModifiedColumnName = SequenceConstant.DEFAULT_GMT_MODIFIED_COLUMN_NAME;
+    protected String updateColumnName = SequenceConstant.DEFAULT_UPDATE_COLUMN_NAME;
+
+    /**
+     * 创建时间的列名
+     */
+    protected String createColumnName = SequenceConstant.DEFAULT_CREATE_COLUMN_NAME;
+    /**
+     * 每次id增量的列名
+     */
+    protected String deltaColumnName = SequenceConstant.DEFAULT_DELTA_COLUMN_NAME;
+    /**
+     *余数的列名
+     */
+    protected String remaiderColumnName = SequenceConstant.DEFAULT_REMAINDER_COLUMN_NAME;
+
+    /**
+     * 备注
+     */
+    protected String remarkColumnName = SequenceConstant.DEFAULT_REMARK_COLUMN_NAME;
+
+    /**
+     * 版本号
+     */
+    protected String versionColumnName = SequenceConstant.DEFAULT_VERSION_COLUMN_NAME;
 
     /**
      * 数据源
@@ -177,7 +200,15 @@ public abstract class AbstractDAO {
             synchronized (this) {
                 if (selectSegmentSql == null) {
                     StringBuilder buffer = new StringBuilder();
-                    buffer.append(" select ").append(valueColumnName).append(",").append(stepColumnName);
+                    buffer.append(" select ");
+
+                    buffer.append(nameColumnName).append(",");
+                    buffer.append(valueColumnName).append(",");
+                    buffer.append(stepColumnName).append(",");
+                    buffer.append(remaiderColumnName).append(",");
+                    buffer.append(deltaColumnName).append(",");
+                    buffer.append(versionColumnName);
+
                     buffer.append(" from ").append(segmentTableName);
                     buffer.append(" where ").append(nameColumnName).append(" = ?");
                     selectSegmentSql = buffer.toString();
@@ -193,10 +224,13 @@ public abstract class AbstractDAO {
                 if (updateSegmentSql == null) {
                     StringBuilder buffer = new StringBuilder();
                     buffer.append("update ").append(segmentTableName);
-                    buffer.append(" set ").append(valueColumnName).append(" = ?, ");
-                    buffer.append(gmtModifiedColumnName).append(" = ? where ");
-                    buffer.append(nameColumnName).append(" = ? and ");
-                    buffer.append(valueColumnName).append(" = ? ");
+                    buffer.append(" set ");
+                    buffer.append(valueColumnName).append(" = ?, ");
+                    buffer.append(versionColumnName).append(" = ? ");
+                    buffer.append(" where ");
+                    buffer.append(nameColumnName).append(" = ?  and ");
+                    buffer.append(valueColumnName).append(" = ? and ");
+                    buffer.append(versionColumnName).append(" = ? ");
                     updateSegmentSql = buffer.toString();
                 }
             }
@@ -215,11 +249,12 @@ public abstract class AbstractDAO {
                 if (resetSegmentSql == null) {
                     StringBuilder buffer = new StringBuilder();
                     buffer.append(" update ").append(segmentTableName);
-                    buffer.append(" set ").append(valueColumnName).append(" = ?, ");
-                    buffer.append(gmtModifiedColumnName).append(" = ? where ");
-                    buffer.append(nameColumnName).append(" = ?  ");
-                    buffer.append(" and ");
-                    buffer.append(valueColumnName).append("  = ? ");
+                    buffer.append(" set ");
+                    buffer.append(valueColumnName).append(" = ?, ");
+                    buffer.append("  where ");
+                    buffer.append(nameColumnName).append(" = ?  and ");
+                    buffer.append(valueColumnName).append(" = ? and ");
+                    buffer.append(versionColumnName).append(" = ? ");
                     resetSegmentSql = buffer.toString();
                 }
             }
@@ -240,11 +275,13 @@ public abstract class AbstractDAO {
                     buffer.append("( ");
                     buffer.append(nameColumnName).append(",");
                     buffer.append(valueColumnName).append(",");
-                    buffer.append(gmtModifiedColumnName).append(",");
+                    buffer.append(remaiderColumnName).append(",");
                     buffer.append(stepColumnName).append(",");
-                    buffer.append(retryTimesColumnName);
+                    buffer.append(versionColumnName).append(",");
+                    buffer.append(retryColumnName).append(",");
+                    buffer.append(deltaColumnName);
                     buffer.append(")");
-                    buffer.append(" VALUES(?, ? ,?,?,?)");
+                    buffer.append(" VALUES(?, ? ,?,?,?,?,?)");
                     insertSegmentSql = buffer.toString();
                 }
             }
