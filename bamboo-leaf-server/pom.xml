@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.bamboo.leaf</groupId>
-            <artifactId>bamboo-leaf-common</artifactId>
+            <artifactId>bamboo-leaf-core</artifactId>
         </dependency>
         <!-- swagger
         <dependency>

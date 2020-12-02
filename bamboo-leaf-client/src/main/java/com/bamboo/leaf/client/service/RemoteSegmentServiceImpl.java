@@ -4,18 +4,23 @@ import com.bamboo.leaf.client.config.ClientConfig;
 import com.bamboo.leaf.client.utils.HttpUtils;
 import com.bamboo.leaf.core.entity.SegmentRange;
 import com.bamboo.leaf.core.service.SegmentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.logging.Logger;
+
 
 /**
- * @author du_imba
+ * @description: 远程服务模式的实现类
+ * @Author: Zhuzhi
+ * @Date: 2020/12/2 下午11:04
  */
-public class HttpSegmentRangeServiceImpl implements SegmentService {
+public class RemoteSegmentServiceImpl implements SegmentService {
 
-    private static final Logger logger = Logger.getLogger(HttpSegmentRangeServiceImpl.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(RemoteSegmentServiceImpl.class);
+
 
     @Override
     public SegmentRange getNextSegmentRange(String namespace) {
@@ -48,6 +53,4 @@ public class HttpSegmentRangeServiceImpl implements SegmentService {
         url += namespace;
         return url;
     }
-
-
 }

@@ -19,7 +19,7 @@
         <dependencies>
             <dependency>
                 <groupId>com.bamboo.leaf</groupId>
-                <artifactId>bamboo-leaf-common</artifactId>
+                <artifactId>bamboo-leaf-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -27,22 +27,19 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>1.7.30</version>
             </dependency>
-            <!--
             <dependency>
                 <groupId>com.bamboo.leaf</groupId>
                 <artifactId>bamboo-leaf-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            -->
+        
         </dependencies>
     </dependencyManagement>
 
     <modules>
-        <module>bamboo-leaf-common</module>
+        <module>bamboo-leaf-core</module>
         <module>bamboo-leaf-server</module>
-        <!--
         <module>bamboo-leaf-client</module>
-        -->
     </modules>
 
 </project>

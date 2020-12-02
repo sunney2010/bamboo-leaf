@@ -1,7 +1,9 @@
 package com.bamboo.leaf.client;
 
 import com.bamboo.leaf.client.config.ClientConfig;
-import com.bamboo.leaf.client.service.HttpSegmentRangeServiceImpl;
+import com.bamboo.leaf.client.constant.ModeEnum;
+import com.bamboo.leaf.client.service.LocalSegmentServiceImpl;
+import com.bamboo.leaf.client.service.RemoteSegmentServiceImpl;
 import com.bamboo.leaf.client.utils.NumberUtils;
 import com.bamboo.leaf.client.utils.PropertiesLoader;
 import com.bamboo.leaf.core.factory.AbstractSegmentGeneratorFactory;
@@ -71,19 +73,26 @@ public class GeneratorFactoryClient extends AbstractSegmentGeneratorFactory {
         clientConfig.setReadTimeout(NumberUtils.toInt(readTimeout, DEFAULT_TIME_OUT));
         clientConfig.setConnectTimeout(NumberUtils.toInt(connectTimeout, DEFAULT_TIME_OUT));
 
-        String[] tinyIdServers = leafServer.split(",");
-        List<String> serverList = new ArrayList<>(tinyIdServers.length);
-        for (String server : tinyIdServers) {
+        String[] leafServers = leafServer.split(",");
+        List<String> serverList = new ArrayList<>(leafServers.length);
+        for (String server : leafServers) {
             String url = MessageFormat.format(serverUrl, server, leafToken);
             serverList.add(url);
         }
-        logger.info("init tinyId client success url info:" + serverList);
+        logger.info("init bamboo-leaf client success url info:" + serverList);
         clientConfig.setServerList(serverList);
     }
 
 
     @Override
     protected SegmentGenerator createSegmentGenerator(String namespace) {
-        return new CachedSegmentGenerator(namespace, new HttpSegmentRangeServiceImpl());
+        SegmentGenerator segmentGenerator = null;
+        //判断配置的模式
+        if (ClientConfig.getInstance().getMode().endsWith(ModeEnum.Remote.name())) {
+            segmentGenerator = new CachedSegmentGenerator(namespace, new RemoteSegmentServiceImpl());
+        } else if (ClientConfig.getInstance().getMode().endsWith(ModeEnum.Local.name())) {
+            segmentGenerator = new CachedSegmentGenerator(namespace, new LocalSegmentServiceImpl());
+        }
+        return segmentGenerator;
     }
 }

@@ -13,12 +13,11 @@
     <dependencies>
         <dependency>
             <groupId>com.bamboo.leaf</groupId>
-            <artifactId>bamboo-leaf-common</artifactId>
+            <artifactId>bamboo-leaf-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
     </dependencies>
     <build>

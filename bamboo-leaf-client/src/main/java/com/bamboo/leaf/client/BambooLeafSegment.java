@@ -1,6 +1,5 @@
-package com.bamboo.leaf.client.utils;
+package com.bamboo.leaf.client;
 
-import com.bamboo.leaf.client.GeneratorFactoryClient;
 import com.bamboo.leaf.core.generator.SegmentGenerator;
 
 import java.util.ArrayList;
@@ -17,13 +16,12 @@ public class BambooLeafSegment {
     private BambooLeafSegment() {
 
     }
-
     public static Long nextId(String namespace) {
         if (namespace == null) {
             throw new IllegalArgumentException("namespace is null");
         }
-        SegmentGenerator idGenerator = client.getSegmentGenerator(namespace);
-        return idGenerator.nextId();
+        SegmentGenerator generator = client.getSegmentGenerator(namespace);
+        return generator.nextId();
     }
 
     public static List<Long> nextId(String namespace, Integer batchSize) {
@@ -33,8 +31,8 @@ public class BambooLeafSegment {
             list.add(id);
             return list;
         }
-        SegmentGenerator idGenerator = client.getSegmentGenerator(namespace);
-        return idGenerator.nextId(batchSize);
+        SegmentGenerator generator = client.getSegmentGenerator(namespace);
+        return generator.nextId(batchSize);
     }
 
 }

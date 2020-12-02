@@ -3,22 +3,35 @@ package com.bamboo.leaf.client.config;
 import java.util.List;
 
 /**
- * @description: TODO
+ * @description: 客户端配置
  * @Author: Zhuzhi
  * @Date: 2020/11/30 下午1:10
  */
 public class ClientConfig {
-
-    private String leafToken;
-    private String leafServer;
+    /**
+     * 模式：Local：本地模式，Remote:服务模式
+     */
     private String mode;
+
+    /**
+     * Remote:服务模式时，通信的Token
+     */
+    private String leafToken;
+    /**
+     * Remote:服务模式时的服务地址
+     */
+    private String leafServer;
+
     private List<String> serverList;
+
     private Integer readTimeout;
+
     private Integer connectTimeout;
 
     private volatile static ClientConfig clientConfig;
 
     private ClientConfig() {
+
     }
 
     public static ClientConfig getInstance() {
