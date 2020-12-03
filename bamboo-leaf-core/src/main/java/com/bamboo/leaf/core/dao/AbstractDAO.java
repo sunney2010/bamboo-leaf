@@ -4,6 +4,7 @@ import com.bamboo.leaf.core.constant.SequenceConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,6 +19,11 @@ import java.sql.Statement;
 public abstract class AbstractDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractDAO.class);
+    /**
+     * 数据源
+     */
+    @Resource
+    protected DataSource dataSource;
     /**
      * 重试次数
      */
@@ -80,10 +86,7 @@ public abstract class AbstractDAO {
      */
     protected String versionColumnName = SequenceConstant.DEFAULT_VERSION_COLUMN_NAME;
 
-    /**
-     * 数据源
-     */
-    protected DataSource dataSource;
+
 
     /**
      * SQL拼接

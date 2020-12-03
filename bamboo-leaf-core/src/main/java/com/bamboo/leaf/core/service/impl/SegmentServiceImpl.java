@@ -22,6 +22,7 @@ public class SegmentServiceImpl implements SegmentService {
     private static final Logger logger = LoggerFactory.getLogger(SegmentServiceImpl.class);
     @Resource
     SegmentDAO segmentDAO;
+
     @Override
     public SegmentRange getNextSegmentRange(String namespace) {
         // 获取NextSegmentRange的时候，有可能存在version冲突，需要重试
@@ -79,5 +80,13 @@ public class SegmentServiceImpl implements SegmentService {
         // 默认20%加载
         segmentRange.setLoadingVal(segmentRange.getCurrentVal().get() + segmentDO.getStep() * Constants.LOADING_PERCENT / 100);
         return segmentRange;
+    }
+
+    public SegmentDAO getSegmentDAO() {
+        return segmentDAO;
+    }
+
+    public void setSegmentDAO(SegmentDAO segmentDAO) {
+        this.segmentDAO = segmentDAO;
     }
 }

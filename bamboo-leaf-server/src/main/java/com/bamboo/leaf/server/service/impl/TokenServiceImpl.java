@@ -59,16 +59,17 @@ public class TokenServiceImpl implements TokenService {
     }
 
     private List<TokenDO> queryAllToken() {
-        return null;
+        return tokenDAO.selectAll();
     }
 
     @Override
     public boolean canVisit(String namespace, String token) {
-        if (StringUtils.isEmpty(namespace) || StringUtils.isEmpty(namespace)) {
+        if (StringUtils.isEmpty(namespace) || StringUtils.isEmpty(token)) {
             return false;
         }
         Set<String> namespaceSet = tokenMap.get(token);
-        return (namespaceSet != null && namespaceSet.contains(namespace));
+        boolean val=(namespaceSet != null && namespaceSet.contains(namespace));
+        return val;
     }
 
     @Override

@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  * @date 2020/11/19
  */
 @RestController
-@RequestMapping("/leaf/")
+@RequestMapping("/bamboo-leaf/")
 public class LeafController {
     private static final Logger logger = LoggerFactory.getLogger(LeafController.class);
 
@@ -40,6 +40,7 @@ public class LeafController {
     @RequestMapping("nextSegmentRange")
     public ResultResponse<SegmentRange> nextSegmentRange(String namespace, String token) {
         ResultResponse<SegmentRange> response = new ResultResponse<>();
+        logger.info("nextSegmentRange,namespace:{},token:{}",namespace,token);
         if (!tokenService.canVisit(namespace, token)) {
             response.setCode(ErrorCode.TOKEN_ERR.getCode());
             response.setMessage(ErrorCode.TOKEN_ERR.getMessage());

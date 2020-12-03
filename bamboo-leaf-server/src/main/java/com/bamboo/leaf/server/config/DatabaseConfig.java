@@ -26,7 +26,7 @@ public class DatabaseConfig {
     }
 
     @ConfigurationProperties(prefix = "spring.datasource.druid")
-    @Bean(initMethod = "init", destroyMethod = "close")
+    @Bean(name = "dataSource",initMethod = "init", destroyMethod = "close")
     public DruidDataSource druidDataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
 
