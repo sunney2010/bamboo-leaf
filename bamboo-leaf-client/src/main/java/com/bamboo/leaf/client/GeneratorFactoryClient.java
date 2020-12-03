@@ -79,7 +79,7 @@ public class GeneratorFactoryClient extends AbstractSegmentGeneratorFactory {
             String url = MessageFormat.format(serverUrl, server, leafToken);
             serverList.add(url);
         }
-        logger.info("init bamboo-leaf client success url info:" + serverList);
+        logger.info("bamboo-leaf client init success url info:" + serverList);
         clientConfig.setServerList(serverList);
     }
 
