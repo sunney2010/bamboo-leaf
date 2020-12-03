@@ -1,9 +1,9 @@
 package com.bamboo.leaf.server.controller;
 
 import com.bamboo.leaf.core.common.ErrorCode;
+import com.bamboo.leaf.core.common.ResultResponse;
 import com.bamboo.leaf.core.entity.SegmentRange;
 import com.bamboo.leaf.core.service.SegmentService;
-import com.bamboo.leaf.core.common.ResultResponse;
 import com.bamboo.leaf.server.dao.entity.TokenDO;
 import com.bamboo.leaf.server.service.TokenService;
 import org.slf4j.Logger;
@@ -20,6 +20,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/bamboo-leaf/")
 public class LeafController {
+
     private static final Logger logger = LoggerFactory.getLogger(LeafController.class);
 
     @Resource
@@ -49,6 +50,7 @@ public class LeafController {
         try {
             SegmentRange segment = segmentService.getNextSegmentRange(namespace);
             response.setData(segment);
+            logger.info("nextSegmentRange is success,namespace:{},leafVal:{}", namespace, segment.getCurrentVal());
         } catch (Exception e) {
             response.setCode(ErrorCode.SYS_ERR.getCode());
             response.setMessage(e.getMessage());
@@ -56,5 +58,4 @@ public class LeafController {
         }
         return response;
     }
-
 }

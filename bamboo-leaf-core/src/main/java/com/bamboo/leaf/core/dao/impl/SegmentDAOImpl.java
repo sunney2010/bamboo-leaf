@@ -69,6 +69,7 @@ public class SegmentDAOImpl extends AbstractDAO implements SegmentDAO {
             stmt.setInt(4, segmentDO.getStep());
             stmt.setLong(5, segmentDO.getVersion());
             stmt.setInt(6, segmentDO.getRetry());
+            stmt.setInt(7, segmentDO.getDelta());
             val = stmt.executeUpdate();
         } catch (SQLException e) {
             logger.error("insertSegmentSql is error,msb", e);
@@ -92,11 +93,11 @@ public class SegmentDAOImpl extends AbstractDAO implements SegmentDAO {
             stmt.setLong(1, segmentDO.getLeafVal());
             stmt.setLong(2, segmentDO.getVersion()+1);
             stmt.setString(3, segmentDO.getNamespace());
-            stmt.setLong(4, segmentDO.getLeafVal());
+            stmt.setLong(4, oldLeafVal);
             stmt.setLong(5, segmentDO.getVersion());
             val = stmt.executeUpdate();
         } catch (SQLException e) {
-            logger.error("updateSegmentSql is error,msb", e);
+            logger.error("updateSegmentSql is error,msg", e);
             throw new BambooLeafException(e);
         } finally {
             closeStatement(stmt);

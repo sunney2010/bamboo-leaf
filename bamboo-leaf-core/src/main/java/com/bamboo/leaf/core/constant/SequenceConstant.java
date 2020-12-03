@@ -1,5 +1,9 @@
 package com.bamboo.leaf.core.constant;
 
+/**
+ * @author zhuzhi
+ * @date 2020/11/19
+ */
 public class SequenceConstant {
 
 

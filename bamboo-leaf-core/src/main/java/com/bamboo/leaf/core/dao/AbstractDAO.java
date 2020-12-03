@@ -254,6 +254,7 @@ public abstract class AbstractDAO {
                     buffer.append(" update ").append(segmentTableName);
                     buffer.append(" set ");
                     buffer.append(valueColumnName).append(" = ?, ");
+                    buffer.append(versionColumnName).append(" = ? ");
                     buffer.append("  where ");
                     buffer.append(nameColumnName).append(" = ?  and ");
                     buffer.append(valueColumnName).append(" = ? and ");

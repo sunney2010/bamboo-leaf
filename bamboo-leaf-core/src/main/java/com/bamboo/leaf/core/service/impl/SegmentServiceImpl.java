@@ -1,6 +1,7 @@
 package com.bamboo.leaf.core.service.impl;
 
 import com.bamboo.leaf.core.constant.Constants;
+import com.bamboo.leaf.core.constant.SequenceConstant;
 import com.bamboo.leaf.core.dao.SegmentDAO;
 import com.bamboo.leaf.core.entity.SegmentDO;
 import com.bamboo.leaf.core.entity.SegmentRange;
@@ -32,6 +33,12 @@ public class SegmentServiceImpl implements SegmentService {
                 //默认插入对象
                 segmentDO = new SegmentDO();
                 segmentDO.setNamespace(namespace);
+                segmentDO.setDelta(1);
+                segmentDO.setRemainder(1);
+                segmentDO.setStep(SequenceConstant.DEFAULT_STEP);
+                segmentDO.setLeafVal(1L);
+                segmentDO.setVersion(1L);
+                segmentDO.setRetry(SequenceConstant.DEFAULT_RETRY_TIMES);
                 int val = segmentDAO.insertSegment(segmentDO);
                 //判断插入是否成功,不成功要重试
                 if (val == 1) {
