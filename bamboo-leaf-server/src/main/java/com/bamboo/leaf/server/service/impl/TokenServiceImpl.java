@@ -32,7 +32,6 @@ public class TokenServiceImpl implements TokenService {
      */
     @Scheduled(cron = "0 0/1 * * * ?")
     public void refresh() {
-        logger.info("refresh token begin");
         init();
     }
 

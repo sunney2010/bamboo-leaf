@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 @Component
 public class SegmentServiceImpl implements SegmentService {
     private static final Logger logger = LoggerFactory.getLogger(SegmentServiceImpl.class);
+
     @Resource
     SegmentDAO segmentDAO;
 
@@ -38,7 +39,7 @@ public class SegmentServiceImpl implements SegmentService {
                 segmentDO.setStep(SequenceConstant.DEFAULT_STEP);
                 segmentDO.setLeafVal(1L);
                 segmentDO.setVersion(1L);
-                segmentDO.setRetry(SequenceConstant.DEFAULT_RETRY_TIMES);
+                segmentDO.setRetry(Constants.RETRY);
                 int val = segmentDAO.insertSegment(segmentDO);
                 //判断插入是否成功,不成功要重试
                 if (val == 1) {

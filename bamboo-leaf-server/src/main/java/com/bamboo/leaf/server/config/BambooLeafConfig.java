@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @description: TODO
+ * @description: 自动配置
  * @Author: Zhuzhi
  * @Date: 2020/12/3 下午8:15
  */
