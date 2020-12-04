@@ -7,10 +7,8 @@ package com.bamboo.leaf.core.common;
  */
 public class ResultResponse<T> {
     private T data;
-    private Integer code = 200;
-    private String message = "";
-
-    public static final int SYS_ERROR = 500;
+    private String result = "success";
+    private String errMsg ;
 
     public T getData() {
         return data;
@@ -20,19 +18,19 @@ public class ResultResponse<T> {
         this.data = data;
     }
 
-    public Integer getCode() {
-        return code;
+    public String getResult() {
+        return result;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setResult(String result) {
+        this.result = result;
     }
 
-    public String getMessage() {
-        return message;
+    public String getErrMsg() {
+        return errMsg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 }

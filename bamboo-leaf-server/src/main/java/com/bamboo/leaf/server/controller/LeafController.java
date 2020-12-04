@@ -20,7 +20,6 @@ import javax.annotation.Resource;
  * @date 2020/11/19
  */
 @RestController
-@RequestMapping("/bamboo-leaf/")
 public class LeafController {
 
     private static final Logger logger = LoggerFactory.getLogger(LeafController.class);
@@ -45,10 +44,10 @@ public class LeafController {
     @RequestMapping("nextSegmentRange")
     public ResultResponse<SegmentRange> nextSegmentRange(String namespace, String token) {
         ResultResponse<SegmentRange> response = new ResultResponse<>();
-        logger.info("nextSegmentRange,namespace:{},token:{}",namespace,token);
+        logger.info("nextSegmentRange parameter: namespace:{},token:{}",namespace,token);
         if (!tokenService.canVisit(namespace, token)) {
-            response.setCode(ErrorCode.TOKEN_ERR.getCode());
-            response.setMessage(ErrorCode.TOKEN_ERR.getMessage());
+            response.setResult(ErrorCode.FAIL.getMessage());
+            response.setErrMsg(ErrorCode.TOKEN_ERR.getMessage());
             return response;
         }
         try {
@@ -56,8 +55,8 @@ public class LeafController {
             response.setData(segment);
             logger.info("nextSegmentRange is success,namespace:{},leafVal:{}", namespace, segment.getCurrentVal());
         } catch (Exception e) {
-            response.setCode(ErrorCode.SYS_ERR.getCode());
-            response.setMessage(e.getMessage());
+            response.setResult(ErrorCode.FAIL.getMessage());
+            response.setErrMsg(ErrorCode.SYS_ERR.getMessage());
             logger.error("nextSegmentRange error", e);
         }
         return response;
@@ -65,16 +64,16 @@ public class LeafController {
 
     @RequestMapping("/queryWorkerId")
     public ResultResponse<Integer> queryWorkerId(String namespace, String hostIp, String token) {
-        logger.info("queryWorkerId,namespace:{},hostIp:{},token:{}", namespace, hostIp, token);
+        logger.info("queryWorkerId parameter: namespace:{},hostIp:{},token:{}", namespace, hostIp, token);
         ResultResponse<Integer> response = new ResultResponse<>();
         if (StringUtils.isEmpty(namespace) || StringUtils.isEmpty(hostIp) || StringUtils.isEmpty(token)) {
-            response.setCode(ErrorCode.PARA_ERR.getCode());
-            response.setMessage(ErrorCode.PARA_ERR.getMessage());
+            response.setResult(ErrorCode.FAIL.getMessage());
+            response.setErrMsg(ErrorCode.PARA_ERR.getMessage());
             return response;
         }
         if (!tokenService.canVisit(namespace, token)) {
-            response.setCode(ErrorCode.TOKEN_ERR.getCode());
-            response.setMessage(ErrorCode.TOKEN_ERR.getMessage());
+            response.setResult(ErrorCode.FAIL.getMessage());
+            response.setErrMsg(ErrorCode.TOKEN_ERR.getMessage());
             return response;
         }
         try {
@@ -82,8 +81,8 @@ public class LeafController {
             response.setData(workerId);
             logger.info("queryWorkerId success,namespace:{},hostIp:{},workerId:{}", namespace, hostIp, workerId);
         } catch (Exception e) {
-            response.setCode(ErrorCode.SYS_ERR.getCode());
-            response.setMessage(e.getMessage());
+            response.setResult(ErrorCode.FAIL.getMessage());
+            response.setErrMsg(ErrorCode.SYS_ERR.getMessage());
             logger.error("queryWorkerId is error", e);
         }
         return response;

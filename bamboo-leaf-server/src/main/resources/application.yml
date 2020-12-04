@@ -3,16 +3,18 @@ logging:
       # 日志级别调整
       root: info
 server:
-    # 服务对外暴露的端口号
-   port: 8081
+  # 服务对外暴露的端口号
+  port: 8081
+  servlet:
+    context-path: /bamboo-leaf
 spring: 
   application:
-    name: bamboo-server
+    name: bamboo-leaf-server
   profiles:
     active: dev
   datasource:
     druid:
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       type: com.alibaba.druid.pool.DruidDataSource
       url: jdbc:mysql://www.zhuzhi.vip:3306/bamboo-leaf?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
       username: root

@@ -7,28 +7,32 @@ package com.bamboo.leaf.core.common;
  */
 public enum ErrorCode {
     /**
-     * token is wrong
+     * success
      */
-    TOKEN_ERR(5, "token is error"),
+    SUCCESS("success"),
+    /**
+     * success
+     */
+    FAIL("fail"),
     /**
      * token is wrong
      */
-    PARA_ERR(9, "para is error"),
+    TOKEN_ERR("TOKEN IS ERROR"),
+    /**
+     * token is wrong
+     */
+    PARA_ERR("PARAMETER IS NULL"),
     /**
      * server internal error
      */
-    SYS_ERR(6, "sys error");
+    SYS_ERR("SYSTEM IS ERROR");
 
-    private Integer code;
+
     private String message;
 
-    ErrorCode(Integer code, String message) {
-        this.code = code;
-        this.message = message;
-    }
+    ErrorCode(String message) {
 
-    public Integer getCode() {
-        return code;
+        this.message = message;
     }
 
 
