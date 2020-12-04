@@ -1,13 +1,13 @@
-package com.bamboo.leaf.core.dao;
+package com.bamboo.leaf.core.service;
 
 import com.bamboo.leaf.core.util.PURL;
 
 /**
  * @description: TODO
  * @Author: Zhuzhi
- * @Date: 2020/11/29 下午11:32
+ * @Date: 2020/12/4 上午11:19
  */
-public interface WorkerIdDAO {
+public interface WorkerIdService {
     /**
      * 通过nameSpace,hostIp获取workerId
      * @param namespace 命名空间

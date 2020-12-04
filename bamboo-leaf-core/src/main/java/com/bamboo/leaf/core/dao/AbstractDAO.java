@@ -41,7 +41,7 @@ public abstract class AbstractDAO {
     /**
      * 命名空间的列名
      */
-    protected String nameColumnName = SequenceConstant.DEFAULT_NAME_COLUMN_NAME;
+    protected String nameColumnName = SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME;
 
     /**
      * 当前值的列名
@@ -107,7 +107,7 @@ public abstract class AbstractDAO {
                     buffer.append(" max( ").append(SequenceConstant.DEFAULT_WORKERID_COLUMN_NAME).append(" )");
                     buffer.append(" from ").append(workIdTableName);
                     buffer.append(" where ");
-                    buffer.append(SequenceConstant.DEFAULT_WORKERID_NAMESPACE_COLUMN_NAME).append(" = ?  ");
+                    buffer.append(SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME).append(" = ?  ");
                     selectWorkerIdMax = buffer.toString();
                 }
             }
@@ -123,11 +123,11 @@ public abstract class AbstractDAO {
                 if (selectWorkerIdSql == null) {
                     StringBuilder buffer = new StringBuilder();
                     buffer.append("select ");
-                    buffer.append(SequenceConstant.DEFAULT_WORKERID_NAMESPACE_COLUMN_NAME).append(",");
+                    buffer.append(SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME).append(",");
                     buffer.append(SequenceConstant.DEFAULT_WORKERID_IP_COLUMN_NAME).append(",");
                     buffer.append(SequenceConstant.DEFAULT_WORKERID_COLUMN_NAME);
                     buffer.append(" from ").append(workIdTableName);
-                    buffer.append(" where ").append(SequenceConstant.DEFAULT_WORKERID_NAMESPACE_COLUMN_NAME)
+                    buffer.append(" where ").append(SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME)
                             .append(" = ? and ");
                     buffer.append(SequenceConstant.DEFAULT_WORKERID_IP_COLUMN_NAME).append(" = ? ");
                     selectWorkerIdSql = buffer.toString();
@@ -144,13 +144,11 @@ public abstract class AbstractDAO {
                     StringBuilder buffer = new StringBuilder();
                     buffer.append("insert into ").append(workIdTableName);
                     buffer.append(" ( ");
-                    buffer.append(SequenceConstant.DEFAULT_WORKERID_NAMESPACE_COLUMN_NAME).append(",");
+                    buffer.append(SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME).append(",");
                     buffer.append(SequenceConstant.DEFAULT_WORKERID_IP_COLUMN_NAME).append(",");
-                    buffer.append(SequenceConstant.DEFAULT_WORKERID_COLUMN_NAME).append(",");
-                    buffer.append(SequenceConstant.DEFAULT_WORKERID_CREATETIME_COLUMN_NAME).append(",");
-                    buffer.append(SequenceConstant.DEFAULT_WORKERID_UPDATETIME_COLUMN_NAME);
+                    buffer.append(SequenceConstant.DEFAULT_WORKERID_COLUMN_NAME);
                     buffer.append(" ) ");
-                    buffer.append(" VALUES(?, ? ,?,?,?)");
+                    buffer.append(" VALUES(?, ? ,?)");
                     insertWorkerIdSql = buffer.toString();
                 }
             }

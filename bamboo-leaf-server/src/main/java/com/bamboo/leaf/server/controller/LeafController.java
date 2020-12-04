@@ -4,8 +4,10 @@ import com.bamboo.leaf.core.common.ErrorCode;
 import com.bamboo.leaf.core.common.ResultResponse;
 import com.bamboo.leaf.core.entity.SegmentRange;
 import com.bamboo.leaf.core.service.SegmentService;
+import com.bamboo.leaf.core.service.WorkerIdService;
 import com.bamboo.leaf.server.dao.entity.TokenDO;
 import com.bamboo.leaf.server.service.TokenService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,8 @@ public class LeafController {
     TokenService tokenService;
     @Resource
     SegmentService segmentService;
+    @Resource
+    WorkerIdService workerIdService;
 
     @RequestMapping("/insertToken")
     public int insertToken(TokenDO tokenDO) {
@@ -55,6 +59,32 @@ public class LeafController {
             response.setCode(ErrorCode.SYS_ERR.getCode());
             response.setMessage(e.getMessage());
             logger.error("nextSegmentRange error", e);
+        }
+        return response;
+    }
+
+    @RequestMapping("/queryWorkerId")
+    public ResultResponse<Integer> queryWorkerId(String namespace, String hostIp, String token) {
+        logger.info("queryWorkerId,namespace:{},hostIp:{},token:{}", namespace, hostIp, token);
+        ResultResponse<Integer> response = new ResultResponse<>();
+        if (StringUtils.isEmpty(namespace) || StringUtils.isEmpty(hostIp) || StringUtils.isEmpty(token)) {
+            response.setCode(ErrorCode.PARA_ERR.getCode());
+            response.setMessage(ErrorCode.PARA_ERR.getMessage());
+            return response;
+        }
+        if (!tokenService.canVisit(namespace, token)) {
+            response.setCode(ErrorCode.TOKEN_ERR.getCode());
+            response.setMessage(ErrorCode.TOKEN_ERR.getMessage());
+            return response;
+        }
+        try {
+            int workerId = workerIdService.getWorkerId(namespace, hostIp);
+            response.setData(workerId);
+            logger.info("queryWorkerId success,namespace:{},hostIp:{},workerId:{}", namespace, hostIp, workerId);
+        } catch (Exception e) {
+            response.setCode(ErrorCode.SYS_ERR.getCode());
+            response.setMessage(e.getMessage());
+            logger.error("queryWorkerId is error", e);
         }
         return response;
     }

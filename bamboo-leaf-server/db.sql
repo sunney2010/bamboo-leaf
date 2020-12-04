@@ -25,11 +25,11 @@ CREATE TABLE `bamboo_leaf_token` (
   UNIQUE KEY `UNI_NAMESPACE_TOKEN` (`namespace`,`token`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT 'token信息表';
 
-CREATE TABLE `bamboo_leaf_workId` (
+CREATE TABLE `bamboo_leaf_workerId` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `namespace` varchar(64) NOT NULL  COMMENT '业务类型标识',
   `host_ip` varchar(64) NOT NULL  COMMENT '主机IP',
-  `word_id` int(11) NOT NULL COMMENT '节点编号',
+  `worker_id` int(11) NOT NULL COMMENT '节点编号',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `remark` varchar(255)  NULL  COMMENT '备注',

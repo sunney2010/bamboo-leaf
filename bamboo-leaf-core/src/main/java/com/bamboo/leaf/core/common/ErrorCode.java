@@ -11,6 +11,10 @@ public enum ErrorCode {
      */
     TOKEN_ERR(5, "token is error"),
     /**
+     * token is wrong
+     */
+    PARA_ERR(9, "para is error"),
+    /**
      * server internal error
      */
     SYS_ERR(6, "sys error");

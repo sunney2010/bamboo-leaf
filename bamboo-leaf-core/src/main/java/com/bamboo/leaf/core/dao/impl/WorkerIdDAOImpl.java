@@ -5,7 +5,6 @@ import com.bamboo.leaf.core.constant.SequenceConstant;
 import com.bamboo.leaf.core.dao.AbstractDAO;
 import com.bamboo.leaf.core.dao.WorkerIdDAO;
 import com.bamboo.leaf.core.exception.BambooLeafException;
-import com.bamboo.leaf.core.util.PURL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,28 +29,20 @@ public class WorkerIdDAOImpl extends AbstractDAO implements WorkerIdDAO {
     }
 
     @Override
-    public synchronized int getWorkerId(String namespace, String hostIp, PURL configURL) {
+    public synchronized int getWorkerId(String namespace, String hostIp) {
         int workerId = ConfigConstant.INIT_WORKERID;
         try {
-            // 默认表名
-            String workIdTableName = SequenceConstant.DEFAULT_WORKERID_TABLE_NAME;
-            if (null != configURL) {
-                // 获取定义表名
-                workIdTableName = configURL.getParameter(ConfigConstant.HUBBLE_SEQ_WORKID_TABLENAME,
-                        SequenceConstant.DEFAULT_WORKERID_TABLE_NAME);
-                this.workIdTableName = workIdTableName;
-            }
             // 依赖DB插入或获取WorkerId
-            workerId = getWorkerId(namespace, hostIp);
+            workerId = queryWorkerId(namespace, hostIp);
         } catch (Exception e) {
             // 如果获取失败，则使用随机数备用;
-            workerId= (int) (Math.random() * 300);
-            logger.warn("WorkerIdResolver.resolveId is error, workerId is RANDOM,workerId={}", workerId);
+            workerId = (int) (Math.random() * 300);
+            logger.warn("getWorkerId is error, workerId is RANDOM,workerId={}", workerId);
         }
         return workerId;
     }
 
-    public int getWorkerId(String namespace, String hostIp) {
+    private int queryWorkerId(String namespace, String hostIp) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -67,15 +58,16 @@ public class WorkerIdDAOImpl extends AbstractDAO implements WorkerIdDAO {
                 for (int i = 0; i < retryTimes + 1; ++i) {
                     try {
                         workerId = selectSqlWorkerIdMax(conn, stmt, namespace);
+                        //在前最大的workerId+1
                         workerId++;
-                        boolean val = insertSql(conn, stmt, namespace, hostIp, workerId);
-                        if (val) {
+                        int val = insertSql(conn, stmt, namespace, hostIp, workerId);
+                        if (val==1) {
                             break;
                         }
                     } catch (BambooLeafException e) {
-                        logger.error(" select or insert error,retryTimes:{},msg:", i, e.getMessage());
+                        logger.error(" select or insert error,retryTimes:{},msg:{}", i, e.getMessage());
                     }
-                    // 随机sleep 1-300ms
+                    // 随机sleep 1-300ms,retry
                     int sleep = (int) (Math.random() * 300);
                     Thread.sleep(sleep);
                 }
@@ -102,7 +94,7 @@ public class WorkerIdDAOImpl extends AbstractDAO implements WorkerIdDAO {
         return workerId;
     }
 
-    protected int selectSqlWorkerIdMax(Connection conn, PreparedStatement stmt, String nameSpace)
+    private int selectSqlWorkerIdMax(Connection conn, PreparedStatement stmt, String nameSpace)
             throws BambooLeafException {
         int val = 0;
         ResultSet rs = null;
@@ -129,21 +121,18 @@ public class WorkerIdDAOImpl extends AbstractDAO implements WorkerIdDAO {
         return val;
     }
 
-    private boolean insertSql(Connection conn, PreparedStatement stmt, String nameSpace, String hostIp, int workerId)
+    private int insertSql(Connection conn, PreparedStatement stmt, String nameSpace, String hostIp, int workerId)
             throws BambooLeafException {
-        boolean val = false;
+        int val = 0;
         try {
             conn = dataSource.getConnection();
             stmt = conn.prepareStatement(getInsertWorkerIdSql());
             stmt.setString(1, nameSpace);
             stmt.setString(2, hostIp);
             stmt.setInt(3, workerId);
-            stmt.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
-            stmt.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
-            stmt.executeUpdate();
-            val = true;
+            val = stmt.executeUpdate();
+
         } catch (SQLException e) {
-            val = false;
             throw new BambooLeafException(e);
         } finally {
             closeConnection(conn);

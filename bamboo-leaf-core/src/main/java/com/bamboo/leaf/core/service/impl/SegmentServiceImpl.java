@@ -46,6 +46,7 @@ public class SegmentServiceImpl implements SegmentService {
                     if (logger.isInfoEnabled()) {
                         logger.info("bamboo-leaf init success,namespace:{}", namespace);
                     }
+                    // retry
                     continue;
                 }
             }
@@ -62,26 +63,28 @@ public class SegmentServiceImpl implements SegmentService {
                 message.append(", please check table ").append(namespace);
                 throw new BambooLeafException(message.toString());
             }
-            Long newMaxId = oldValue + segmentDO.getStep();
+            Long newMaxId = oldValue + segmentDO.getStep() - 1;
             SegmentDO updateSegment = new SegmentDO();
             updateSegment.setLeafVal(newMaxId);
             updateSegment.setVersion(segmentDO.getVersion());
             updateSegment.setNamespace(namespace);
             int row = segmentDAO.updateSegment(updateSegment, oldValue);
             //判断是否更新成功
-            if (row == 1) {
-                //对象转换
-                SegmentRange segmentRange = convert(segmentDO);
-                logger.info("getNextSegmentRange success segmentDO:{} current:{}", segmentDO, segmentRange);
-                return segmentRange;
-            } else {
-                logger.info("getNextSegmentRange conflict segmentDO:{}", segmentDO);
+            if (row == 0) {
+                // retry
+                continue;
             }
+            //对象转换
+            SegmentRange segmentRange = convert(segmentDO);
+            if (logger.isInfoEnabled()) {
+                logger.info("new range is success,namespace:{},range:{}->{}", namespace, oldValue, newMaxId);
+            }
+            return segmentRange;
         }
         throw new BambooLeafException("Retried too many times, retryTimes = " + Constants.RETRY);
     }
 
-    public SegmentRange convert(SegmentDO segmentDO) {
+    private SegmentRange convert(SegmentDO segmentDO) {
         SegmentRange segmentRange = new SegmentRange(segmentDO.getLeafVal(), segmentDO.getLeafVal() + segmentDO.getStep());
         segmentRange.setRemainder(segmentDO.getRemainder() == null ? 0 : segmentDO.getRemainder());
         segmentRange.setDelta(segmentDO.getDelta() == null ? 1 : segmentDO.getDelta());
