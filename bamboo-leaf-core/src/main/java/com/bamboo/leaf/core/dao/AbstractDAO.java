@@ -92,27 +92,27 @@ public abstract class AbstractDAO {
      * SQL拼接
      */
     private volatile String selectWorkerIdSql;
-    private volatile String selectWorkerIdMax;
+    private volatile String selectMaxWorkerIdSql;
     private volatile String insertWorkerIdSql;
 
     /**
      * 获取当前namespace下最大的WorkerId
      */
-    protected String getSelectSqlWorkerIdMax() {
-        if (selectWorkerIdMax == null) {
+    protected String getSelectMaxWorkerIdSql() {
+        if (selectMaxWorkerIdSql == null) {
             synchronized (this) {
-                if (selectWorkerIdMax == null) {
+                if (selectMaxWorkerIdSql == null) {
                     StringBuilder buffer = new StringBuilder();
                     buffer.append("select ");
                     buffer.append(" max( ").append(SequenceConstant.DEFAULT_WORKERID_COLUMN_NAME).append(" )");
                     buffer.append(" from ").append(workIdTableName);
                     buffer.append(" where ");
                     buffer.append(SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME).append(" = ?  ");
-                    selectWorkerIdMax = buffer.toString();
+                    selectMaxWorkerIdSql = buffer.toString();
                 }
             }
         }
-        return selectWorkerIdMax;
+        return selectMaxWorkerIdSql;
     }
     /**
      * 通过namespace查询对象
@@ -127,8 +127,8 @@ public abstract class AbstractDAO {
                     buffer.append(SequenceConstant.DEFAULT_WORKERID_IP_COLUMN_NAME).append(",");
                     buffer.append(SequenceConstant.DEFAULT_WORKERID_COLUMN_NAME);
                     buffer.append(" from ").append(workIdTableName);
-                    buffer.append(" where ").append(SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME)
-                            .append(" = ? and ");
+                    buffer.append(" where ");
+                    buffer.append(SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME).append(" = ? and ");
                     buffer.append(SequenceConstant.DEFAULT_WORKERID_IP_COLUMN_NAME).append(" = ? ");
                     selectWorkerIdSql = buffer.toString();
                 }
