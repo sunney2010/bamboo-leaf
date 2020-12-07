@@ -20,27 +20,29 @@ import org.springframework.context.annotation.Configuration;
  * @Date: 2020/11/30 下午1:10
  */
 @Configuration
-@EnableConfigurationProperties(LeafTableProperties.class)
+@EnableConfigurationProperties({LeafTableProperties.class, LeafProperties.class})
 public class BambooAutoConfiguration {
 
     private final LeafTableProperties leafTableProperties;
 
     private final LeafProperties leafProperties;
 
-    public BambooAutoConfiguration(LeafTableProperties leafTableProperties,LeafProperties leafProperties) {
+    public BambooAutoConfiguration(LeafProperties leafProperties, LeafTableProperties leafTableProperties) {
         this.leafTableProperties = leafTableProperties;
-        this.leafProperties=leafProperties;
+        this.leafProperties = leafProperties;
     }
+
     @Bean
-    public LeafConfigure leafConfigure(){
-        LeafConfigure leafConfigure=new LeafConfigure();
+    public LeafConfigure leafConfigure() {
+        LeafConfigure leafConfigure = new LeafConfigure();
         leafConfigure.setLoadingPercent(leafProperties.getLoadingPercent());
         leafConfigure.setRetry(leafProperties.getRetry());
         leafConfigure.setStep(leafProperties.getStep());
         return leafConfigure;
     }
+
     @Bean
-    public TableConfigure tableConfig() {
+    public TableConfigure tableConfigure() {
         TableConfigure tableConfig = new TableConfigure();
         String workerIdTableName = leafTableProperties.getWorkerIdTableName();
         if (workerIdTableName != null && (workerIdTableName = workerIdTableName.trim()).length() > 0) {

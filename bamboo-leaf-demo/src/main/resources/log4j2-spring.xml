@@ -15,7 +15,6 @@
 	</Properties>
 
 	<appenders>
-
 		<console name="Console" target="SYSTEM_OUT">
 			<!--输出日志的格式-->
 			<PatternLayout pattern="${LOG_PATTERN}"/>
@@ -86,7 +85,7 @@
 			<AppenderRef ref="Console"/>
 		</Logger>
 
-		<root level="info">
+		<root level="debug">
 			<appender-ref ref="Console"/>
 			<appender-ref ref="Filelog"/>
 			<appender-ref ref="RollingFileInfo"/>
