@@ -42,7 +42,6 @@ public class BambooAutoConfiguration {
     @Bean
     public TableConfigure tableConfig() {
         TableConfigure tableConfig = new TableConfigure();
-
         String workerIdTableName = leafTableProperties.getWorkerIdTableName();
         if (workerIdTableName != null && (workerIdTableName = workerIdTableName.trim()).length() > 0) {
             tableConfig.setWorkIdTableName(workerIdTableName);

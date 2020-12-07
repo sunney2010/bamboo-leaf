@@ -1,4 +1,4 @@
-package com.bamboo.leaf.server;
+package com.bamboo.leaf.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,9 +10,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @EnableScheduling
-public class BambooLeafServer {
+public class BambooLeafDemo {
 
     public static void main(String[] args) {
-        SpringApplication.run(BambooLeafServer.class, args);
+        SpringApplication.run(BambooLeafDemo.class, args);
     }
 }

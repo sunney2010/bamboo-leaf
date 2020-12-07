@@ -110,5 +110,6 @@
 		<module>bamboo-leaf-server</module>
 		<module>bamboo-leaf-client</module>
 		<module>bamboo-leaf-autoconfigure</module>
+        <module>bamboo-leaf-demo</module>
 	</modules>
 </project>

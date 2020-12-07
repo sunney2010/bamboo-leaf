@@ -26,7 +26,12 @@ public class LeafConfigure {
     }
 
     public void setRetry(int retry) {
-        this.retry = retry;
+        if (retry < 3) {
+            this.retry=LeafConstant.DEFAULT_RETRY_TIMES;
+        }else{
+            this.retry = retry;
+        }
+
     }
 
     public int getLoadingPercent() {
@@ -34,7 +39,11 @@ public class LeafConfigure {
     }
 
     public void setLoadingPercent(int loadingPercent) {
-        this.loadingPercent = loadingPercent;
+        if (loadingPercent < 10) {
+            this.loadingPercent=LeafConstant.DEFAULT_LOADING_PERCENT;
+        }else{
+            this.loadingPercent = loadingPercent;
+        }
     }
 
     public int getStep() {
