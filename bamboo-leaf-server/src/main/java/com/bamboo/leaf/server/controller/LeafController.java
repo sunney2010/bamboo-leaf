@@ -41,7 +41,7 @@ public class LeafController {
         logger.info("hello success");
         return "success";
     }
-    @RequestMapping("nextSegmentRange")
+    @RequestMapping("/segment/nextSegmentRange")
     public ResultResponse<SegmentRange> nextSegmentRange(String namespace, String token) {
         ResultResponse<SegmentRange> response = new ResultResponse<>();
         logger.info("nextSegmentRange parameter: namespace:{},token:{}",namespace,token);
@@ -62,7 +62,7 @@ public class LeafController {
         return response;
     }
 
-    @RequestMapping("/queryWorkerId")
+    @RequestMapping("/snowflake/queryWorkerId")
     public ResultResponse<Integer> queryWorkerId(String namespace, String hostIp, String token) {
         logger.info("queryWorkerId parameter: namespace:{},hostIp:{},token:{}", namespace, hostIp, token);
         ResultResponse<Integer> response = new ResultResponse<>();

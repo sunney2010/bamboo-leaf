@@ -28,6 +28,7 @@
     <orderEntry type="module" module-name="bamboo-leaf-autoconfigure" />
     <orderEntry type="module" module-name="bamboo-leaf-core" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
+    <orderEntry type="module" module-name="bamboo-leaf-client" />
     <orderEntry type="library" name="Maven: com.alibaba:druid:1.2.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.4.0" level="project" />

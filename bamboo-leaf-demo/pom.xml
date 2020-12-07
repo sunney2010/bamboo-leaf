@@ -19,6 +19,10 @@
             <artifactId>bamboo-leaf-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.bamboo.leaf</groupId>
+            <artifactId>bamboo-leaf-client</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
         </dependency>

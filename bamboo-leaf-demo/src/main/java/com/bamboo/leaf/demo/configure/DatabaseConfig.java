@@ -1,4 +1,4 @@
-package com.bamboo.leaf.server.config;
+package com.bamboo.leaf.demo.configure;
 
 import com.alibaba.druid.filter.Filter;
 import com.alibaba.druid.filter.stat.StatFilter;
@@ -8,7 +8,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.LinkedList;
 
@@ -19,14 +18,9 @@ import java.util.LinkedList;
  */
 @Configuration
 public class DatabaseConfig {
-    @Bean
-    public JdbcTemplate jdbcTemplate() {
-        // 这里要将配置的 DruidDataSource 数据源注入 JdbcTemplate 中，不然默认注入 Spring Boot 自带的 HikariDatasource。
-        return new JdbcTemplate(druidDataSource());
-    }
 
     @ConfigurationProperties(prefix = "spring.datasource.druid")
-    @Bean(name = "dataSource",initMethod = "init", destroyMethod = "close")
+    @Bean(name = "dataSource", initMethod = "init", destroyMethod = "close")
     public DruidDataSource druidDataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
 
