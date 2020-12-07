@@ -4,7 +4,7 @@ package com.bamboo.leaf.core.constant;
  * @author zhuzhi
  * @date 2020/11/19
  */
-public class SequenceConstant {
+public class LeafConstant {
 
 
     //segment 默认表名及字段 START===========
@@ -15,6 +15,7 @@ public class SequenceConstant {
     public static final String DEFAULT_REMARK_COLUMN_NAME = "remark";
 
     public static final String DEFAULT_TABLE_NAME = "bamboo_leaf_segment";
+
     public static final String DEFAULT_VALUE_COLUMN_NAME = "leaf_val";
     public static final String DEFAULT_STEP_COLUMN_NAME = "step";
     public static final String DEFAULT_RETRY_COLUMN_NAME = "retry";
@@ -32,28 +33,30 @@ public class SequenceConstant {
 
     public static final int MIN_STEP = 1;
     public static final int MAX_STEP = 100000;
+    /**
+     * 默认步长
+     */
     public static final int DEFAULT_STEP = 1000;
+    /**
+     * 默认重试次数
+     */
     public static final int DEFAULT_RETRY_TIMES = 10;
-    public static final long DELTA = 100000000L;
+    /**
+     * 预加载下个号段的百分比
+     */
+    public static final int DEFAULT_LOADING_PERCENT = 25;
 
-    public static final long AUTOINCRE_DEFALUT_INITVALUE = 0L;
-
-    public static final long AUTOINCRE_DATEAI_MAXVALUE = 99999999999L;
-    public static final long AUTOINCRE_TIMEAI_MAXVALUE = 9999999L;
-    public static final long AUTOINCRE_PREFIX_MAXVALUE = 9999999999L;
-
-
-    public static final String BAMBOO_SEQUENCE_MAXVAL="maxVal";
-    
-    public static final String BAMBOO_SEQUENCE_INITVAL="initVal";
     
 
 
     public static final int RADIX = 36;
     public static final int RADIX64 = 64;
 
-    public static final int MAX_RANDOM = Integer.parseInt("zzz", RADIX);
 
-    public static final int MAX_NAMESPACE = Integer.parseInt("zzzz", RADIX);
+    public static final long DEFAULT_BUFFER = 100000000L;
+
+    public static final int INIT_WORKERID = 0;
+
+    public static final int MAX_WORKERID = 1023;
 
 }

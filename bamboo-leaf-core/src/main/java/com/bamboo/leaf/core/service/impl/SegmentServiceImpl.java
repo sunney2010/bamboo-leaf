@@ -1,7 +1,7 @@
 package com.bamboo.leaf.core.service.impl;
 
-import com.bamboo.leaf.core.constant.Constants;
-import com.bamboo.leaf.core.constant.SequenceConstant;
+import com.bamboo.leaf.core.constant.LeafConfigure;
+import com.bamboo.leaf.core.constant.LeafConstant;
 import com.bamboo.leaf.core.dao.SegmentDAO;
 import com.bamboo.leaf.core.entity.SegmentDO;
 import com.bamboo.leaf.core.entity.SegmentRange;
@@ -25,10 +25,13 @@ public class SegmentServiceImpl implements SegmentService {
     @Resource
     SegmentDAO segmentDAO;
 
+    @Resource
+    LeafConfigure leafConfigure;
+
     @Override
     public SegmentRange getNextSegmentRange(String namespace) {
         // 获取NextSegmentRange的时候，有可能存在version冲突，需要重试
-        for (int i = 0; i < Constants.RETRY; i++) {
+        for (int i = 0; i < leafConfigure.getRetry(); i++) {
             SegmentDO segmentDO = segmentDAO.selectSegment(namespace);
             if (segmentDO == null) {
                 //默认插入对象
@@ -36,10 +39,10 @@ public class SegmentServiceImpl implements SegmentService {
                 segmentDO.setNamespace(namespace);
                 segmentDO.setDelta(1);
                 segmentDO.setRemainder(1);
-                segmentDO.setStep(SequenceConstant.DEFAULT_STEP);
+                segmentDO.setStep(LeafConstant.DEFAULT_STEP);
                 segmentDO.setLeafVal(1L);
                 segmentDO.setVersion(1L);
-                segmentDO.setRetry(Constants.RETRY);
+                segmentDO.setRetry(leafConfigure.getRetry());
                 int val = segmentDAO.insertSegment(segmentDO);
                 //判断插入是否成功,不成功要重试
                 if (val == 1) {
@@ -57,7 +60,7 @@ public class SegmentServiceImpl implements SegmentService {
                 message.append(", please check namespace: ").append(namespace);
                 throw new BambooLeafException(message.toString());
             }
-            if (oldValue > Long.MAX_VALUE - Constants.BUFFER) {
+            if (oldValue > Long.MAX_VALUE - LeafConstant.DEFAULT_BUFFER) {
                 StringBuilder message = new StringBuilder();
                 message.append("bamboo-leaf  value overflow, value = ").append(oldValue);
                 message.append(", please check table ").append(namespace);
@@ -81,7 +84,7 @@ public class SegmentServiceImpl implements SegmentService {
             }
             return segmentRange;
         }
-        throw new BambooLeafException("Retried too many times, retryTimes = " + Constants.RETRY);
+        throw new BambooLeafException("Retried too many times, retryTimes = " + leafConfigure.getRetry());
     }
 
     private SegmentRange convert(SegmentDO segmentDO) {
@@ -89,7 +92,7 @@ public class SegmentServiceImpl implements SegmentService {
         segmentRange.setRemainder(segmentDO.getRemainder() == null ? 0 : segmentDO.getRemainder());
         segmentRange.setDelta(segmentDO.getDelta() == null ? 1 : segmentDO.getDelta());
         // 默认20%加载
-        segmentRange.setLoadingVal(segmentRange.getCurrentVal().get() + segmentDO.getStep() * Constants.LOADING_PERCENT / 100);
+        segmentRange.setLoadingVal(segmentRange.getCurrentVal().get() + segmentDO.getStep() * leafConfigure.getLoadingPercent() / 100);
         return segmentRange;
     }
 

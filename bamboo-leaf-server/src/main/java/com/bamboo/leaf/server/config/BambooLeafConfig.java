@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * @Author: Zhuzhi
  * @Date: 2020/12/3 下午8:15
  */
-@Configuration
+
 public class BambooLeafConfig {
     @Bean
     public SegmentDAO segmentDAO() {

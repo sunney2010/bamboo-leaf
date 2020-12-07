@@ -1,7 +1,5 @@
 package com.bamboo.leaf.client;
 
-import org.junit.Test;
-
 /**
  * @description:测试
  * @Author: Zhuzhi
@@ -9,7 +7,7 @@ import org.junit.Test;
  */
 public class BambooLeafClientTest {
 
-    @Test
+
     public void testNextId() {
         for (int i = 0; i < 100; i++) {
             Long id = BambooLeafSegment.nextId("segment-test");

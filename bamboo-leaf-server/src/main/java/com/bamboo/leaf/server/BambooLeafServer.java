@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class BambooLeafServer {
 
     public static void main(String[] args) {
+
         SpringApplication.run(BambooLeafServer.class, args);
     }
 }

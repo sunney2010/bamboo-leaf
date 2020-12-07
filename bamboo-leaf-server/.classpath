@@ -5,9 +5,9 @@
   <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
   <classpathentry kind="output" path="target/classes"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="src" path="/bamboo-leaf-autoconfigure"/>
   <classpathentry kind="src" path="/bamboo-leaf-core"/>
   <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.jar" sourcepath="M2_REPO/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/alibaba/druid/1.2.3/druid-1.2.3.jar" sourcepath="M2_REPO/com/alibaba/druid/1.2.3/druid-1.2.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-web/2.4.0/spring-boot-starter-web-2.4.0.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-starter-web/2.4.0/spring-boot-starter-web-2.4.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter/2.4.0/spring-boot-starter-2.4.0.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-starter/2.4.0/spring-boot-starter-2.4.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot/2.4.0/spring-boot-2.4.0.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot/2.4.0/spring-boot-2.4.0-sources.jar"/>
@@ -33,6 +33,7 @@
   <classpathentry kind="var" path="M2_REPO/org/glassfish/jakarta.el/3.0.3/jakarta.el-3.0.3.jar" sourcepath="M2_REPO/org/glassfish/jakarta.el/3.0.3/jakarta.el-3.0.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/tomcat/embed/tomcat-embed-websocket/9.0.39/tomcat-embed-websocket-9.0.39.jar" sourcepath="M2_REPO/org/apache/tomcat/embed/tomcat-embed-websocket/9.0.39/tomcat-embed-websocket-9.0.39-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc/5.3.1/spring-webmvc-5.3.1.jar" sourcepath="M2_REPO/org/springframework/spring-webmvc/5.3.1/spring-webmvc-5.3.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/alibaba/druid/1.2.3/druid-1.2.3.jar" sourcepath="M2_REPO/com/alibaba/druid/1.2.3/druid-1.2.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-test/2.4.0/spring-boot-starter-test-2.4.0.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-starter-test/2.4.0/spring-boot-starter-test-2.4.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-test/2.4.0/spring-boot-test-2.4.0.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-test/2.4.0/spring-boot-test-2.4.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-test-autoconfigure/2.4.0/spring-boot-test-autoconfigure-2.4.0.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-test-autoconfigure/2.4.0/spring-boot-test-autoconfigure-2.4.0-sources.jar"/>
@@ -70,7 +71,8 @@
   <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-jdbc/2.4.0/spring-boot-starter-jdbc-2.4.0.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-starter-jdbc/2.4.0/spring-boot-starter-jdbc-2.4.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-jdbc/5.3.1/spring-jdbc-5.3.1.jar" sourcepath="M2_REPO/org/springframework/spring-jdbc/5.3.1/spring-jdbc-5.3.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-tx/5.3.1/spring-tx-5.3.1.jar" sourcepath="M2_REPO/org/springframework/spring-tx/5.3.1/spring-tx-5.3.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/mysql/mysql-connector-java/5.1.49/mysql-connector-java-5.1.49.jar" sourcepath="M2_REPO/mysql/mysql-connector-java/5.1.49/mysql-connector-java-5.1.49-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/mysql/mysql-connector-java/8.0.22/mysql-connector-java-8.0.22.jar" sourcepath="M2_REPO/mysql/mysql-connector-java/8.0.22/mysql-connector-java-8.0.22-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/protobuf/protobuf-java/3.11.4/protobuf-java-3.11.4.jar" sourcepath="M2_REPO/com/google/protobuf/protobuf-java/3.11.4/protobuf-java-3.11.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/1.9.3/commons-beanutils-1.9.3.jar" sourcepath="M2_REPO/commons-beanutils/commons-beanutils/1.9.3/commons-beanutils-1.9.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.2/commons-logging-1.2.jar" sourcepath="M2_REPO/commons-logging/commons-logging/1.2/commons-logging-1.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar" sourcepath="M2_REPO/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2-sources.jar"/>

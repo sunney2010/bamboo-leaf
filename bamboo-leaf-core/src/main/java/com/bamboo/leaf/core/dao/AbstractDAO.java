@@ -1,6 +1,6 @@
 package com.bamboo.leaf.core.dao;
 
-import com.bamboo.leaf.core.constant.SequenceConstant;
+import com.bamboo.leaf.core.constant.TableConfigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,69 +24,8 @@ public abstract class AbstractDAO {
      */
     @Resource
     protected DataSource dataSource;
-    /**
-     * 重试次数
-     */
-    protected int retryTimes = SequenceConstant.DEFAULT_RETRY_TIMES;
-    /**
-     * workId数据库表名，并设置默认值
-     */
-    protected String workIdTableName = SequenceConstant.DEFAULT_WORKERID_TABLE_NAME;
-
-    /**
-     * 序列所在的表名
-     */
-    protected String segmentTableName = SequenceConstant.DEFAULT_TABLE_NAME;
-
-    /**
-     * 命名空间的列名
-     */
-    protected String nameColumnName = SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME;
-
-    /**
-     * 当前值的列名
-     */
-    protected String valueColumnName = SequenceConstant.DEFAULT_VALUE_COLUMN_NAME;
-
-    /**
-     * 步长的列名
-     */
-    protected String stepColumnName = SequenceConstant.DEFAULT_STEP_COLUMN_NAME;
-
-    /**
-     * 重试次数的列名
-     */
-    protected String retryColumnName = SequenceConstant.DEFAULT_RETRY_COLUMN_NAME;
-
-    /**
-     * 最后更新时间的列名
-     */
-    protected String updateColumnName = SequenceConstant.DEFAULT_UPDATE_COLUMN_NAME;
-
-    /**
-     * 创建时间的列名
-     */
-    protected String createColumnName = SequenceConstant.DEFAULT_CREATE_COLUMN_NAME;
-    /**
-     * 每次id增量的列名
-     */
-    protected String deltaColumnName = SequenceConstant.DEFAULT_DELTA_COLUMN_NAME;
-    /**
-     *余数的列名
-     */
-    protected String remaiderColumnName = SequenceConstant.DEFAULT_REMAINDER_COLUMN_NAME;
-
-    /**
-     * 备注
-     */
-    protected String remarkColumnName = SequenceConstant.DEFAULT_REMARK_COLUMN_NAME;
-
-    /**
-     * 版本号
-     */
-    protected String versionColumnName = SequenceConstant.DEFAULT_VERSION_COLUMN_NAME;
-
-
+    @Resource
+    protected TableConfigure tableConfigure;
 
     /**
      * SQL拼接
@@ -104,10 +43,10 @@ public abstract class AbstractDAO {
                 if (selectMaxWorkerIdSql == null) {
                     StringBuilder buffer = new StringBuilder();
                     buffer.append("select ");
-                    buffer.append(" max( ").append(SequenceConstant.DEFAULT_WORKERID_COLUMN_NAME).append(" )");
-                    buffer.append(" from ").append(workIdTableName);
+                    buffer.append(" max( ").append(tableConfigure.getWorkerIdColumnName()).append(" )");
+                    buffer.append(" from ").append(tableConfigure.getWorkIdTableName());
                     buffer.append(" where ");
-                    buffer.append(SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME).append(" = ?  ");
+                    buffer.append(tableConfigure.getNamespaceColumnName()).append(" = ?  ");
                     selectMaxWorkerIdSql = buffer.toString();
                 }
             }
@@ -123,13 +62,13 @@ public abstract class AbstractDAO {
                 if (selectWorkerIdSql == null) {
                     StringBuilder buffer = new StringBuilder();
                     buffer.append("select ");
-                    buffer.append(SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME).append(",");
-                    buffer.append(SequenceConstant.DEFAULT_WORKERID_IP_COLUMN_NAME).append(",");
-                    buffer.append(SequenceConstant.DEFAULT_WORKERID_COLUMN_NAME);
-                    buffer.append(" from ").append(workIdTableName);
+                    buffer.append(tableConfigure.getNamespaceColumnName()).append(",");
+                    buffer.append(tableConfigure.getHostIpColumnName()).append(",");
+                    buffer.append(tableConfigure.getWorkerIdColumnName());
+                    buffer.append(" from ").append(tableConfigure.getWorkIdTableName());
                     buffer.append(" where ");
-                    buffer.append(SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME).append(" = ? and ");
-                    buffer.append(SequenceConstant.DEFAULT_WORKERID_IP_COLUMN_NAME).append(" = ? ");
+                    buffer.append(tableConfigure.getNamespaceColumnName()).append(" = ? and ");
+                    buffer.append(tableConfigure.getHostIpColumnName()).append(" = ? ");
                     selectWorkerIdSql = buffer.toString();
                 }
             }
@@ -142,11 +81,11 @@ public abstract class AbstractDAO {
             synchronized (this) {
                 if (insertWorkerIdSql == null) {
                     StringBuilder buffer = new StringBuilder();
-                    buffer.append("insert into ").append(workIdTableName);
+                    buffer.append("insert into ").append(tableConfigure.getWorkIdTableName());
                     buffer.append(" ( ");
-                    buffer.append(SequenceConstant.DEFAULT_NAMESPACE_COLUMN_NAME).append(",");
-                    buffer.append(SequenceConstant.DEFAULT_WORKERID_IP_COLUMN_NAME).append(",");
-                    buffer.append(SequenceConstant.DEFAULT_WORKERID_COLUMN_NAME);
+                    buffer.append(tableConfigure.getNamespaceColumnName()).append(",");
+                    buffer.append(tableConfigure.getHostIpColumnName()).append(",");
+                    buffer.append(tableConfigure.getWorkerIdColumnName());
                     buffer.append(" ) ");
                     buffer.append(" VALUES(?, ? ,?)");
                     insertWorkerIdSql = buffer.toString();
@@ -203,15 +142,15 @@ public abstract class AbstractDAO {
                     StringBuilder buffer = new StringBuilder();
                     buffer.append(" select ");
 
-                    buffer.append(nameColumnName).append(",");
-                    buffer.append(valueColumnName).append(",");
-                    buffer.append(stepColumnName).append(",");
-                    buffer.append(remaiderColumnName).append(",");
-                    buffer.append(deltaColumnName).append(",");
-                    buffer.append(versionColumnName);
+                    buffer.append(tableConfigure.getNamespaceColumnName()).append(",");
+                    buffer.append(tableConfigure.getLeafValueColumnName()).append(",");
+                    buffer.append(tableConfigure.getStepColumnName()).append(",");
+                    buffer.append(tableConfigure.getRemaiderColumnName()).append(",");
+                    buffer.append(tableConfigure.getDeltaColumnName()).append(",");
+                    buffer.append(tableConfigure.getVersionColumnName());
 
-                    buffer.append(" from ").append(segmentTableName);
-                    buffer.append(" where ").append(nameColumnName).append(" = ?");
+                    buffer.append(" from ").append(tableConfigure.getSegmentTableName());
+                    buffer.append(" where ").append(tableConfigure.getNamespaceColumnName()).append(" = ?");
                     selectSegmentSql = buffer.toString();
                 }
             }
@@ -224,14 +163,14 @@ public abstract class AbstractDAO {
             synchronized (this) {
                 if (updateSegmentSql == null) {
                     StringBuilder buffer = new StringBuilder();
-                    buffer.append("update ").append(segmentTableName);
+                    buffer.append("update ").append(tableConfigure.getSegmentTableName());
                     buffer.append(" set ");
-                    buffer.append(valueColumnName).append(" = ?, ");
-                    buffer.append(versionColumnName).append(" = ? ");
+                    buffer.append(tableConfigure.getLeafValueColumnName()).append(" = ?, ");
+                    buffer.append(tableConfigure.getVersionColumnName()).append(" = ? ");
                     buffer.append(" where ");
-                    buffer.append(nameColumnName).append(" = ?  and ");
-                    buffer.append(valueColumnName).append(" = ? and ");
-                    buffer.append(versionColumnName).append(" = ? ");
+                    buffer.append(tableConfigure.getNamespaceColumnName()).append(" = ?  and ");
+                    buffer.append(tableConfigure.getLeafValueColumnName()).append(" = ? and ");
+                    buffer.append(tableConfigure.getVersionColumnName()).append(" = ? ");
                     updateSegmentSql = buffer.toString();
                 }
             }
@@ -249,14 +188,14 @@ public abstract class AbstractDAO {
             synchronized (this) {
                 if (resetSegmentSql == null) {
                     StringBuilder buffer = new StringBuilder();
-                    buffer.append(" update ").append(segmentTableName);
+                    buffer.append(" update ").append(tableConfigure.getSegmentTableName());
                     buffer.append(" set ");
-                    buffer.append(valueColumnName).append(" = ?, ");
-                    buffer.append(versionColumnName).append(" = ? ");
+                    buffer.append(tableConfigure.getLeafValueColumnName()).append(" = ?, ");
+                    buffer.append(tableConfigure.getVersionColumnName()).append(" = ? ");
                     buffer.append("  where ");
-                    buffer.append(nameColumnName).append(" = ?  and ");
-                    buffer.append(valueColumnName).append(" = ? and ");
-                    buffer.append(versionColumnName).append(" = ? ");
+                    buffer.append(tableConfigure.getNamespaceColumnName()).append(" = ?  and ");
+                    buffer.append(tableConfigure.getLeafValueColumnName()).append(" = ? and ");
+                    buffer.append(tableConfigure.getVersionColumnName()).append(" = ? ");
                     resetSegmentSql = buffer.toString();
                 }
             }
@@ -273,15 +212,15 @@ public abstract class AbstractDAO {
             synchronized (this) {
                 if (insertSegmentSql == null) {
                     StringBuilder buffer = new StringBuilder();
-                    buffer.append("insert into ").append(segmentTableName);
+                    buffer.append("insert into ").append(tableConfigure.getSegmentTableName());
                     buffer.append("( ");
-                    buffer.append(nameColumnName).append(",");
-                    buffer.append(valueColumnName).append(",");
-                    buffer.append(remaiderColumnName).append(",");
-                    buffer.append(stepColumnName).append(",");
-                    buffer.append(versionColumnName).append(",");
-                    buffer.append(retryColumnName).append(",");
-                    buffer.append(deltaColumnName);
+                    buffer.append(tableConfigure.getNamespaceColumnName()).append(",");
+                    buffer.append(tableConfigure.getLeafValueColumnName()).append(",");
+                    buffer.append(tableConfigure.getRemaiderColumnName()).append(",");
+                    buffer.append(tableConfigure.getStepColumnName()).append(",");
+                    buffer.append(tableConfigure.getVersionColumnName()).append(",");
+                    buffer.append(tableConfigure.getRetryColumnName()).append(",");
+                    buffer.append(tableConfigure.getDeltaColumnName());
                     buffer.append(")");
                     buffer.append(" VALUES(?, ? ,?,?,?,?,?)");
                     insertSegmentSql = buffer.toString();
@@ -289,5 +228,13 @@ public abstract class AbstractDAO {
             }
         }
         return insertSegmentSql;
+    }
+
+    public TableConfigure getTableConfigure() {
+        return tableConfigure;
+    }
+
+    public void setTableConfigure(TableConfigure tableConfigure) {
+        this.tableConfigure = tableConfigure;
     }
 }

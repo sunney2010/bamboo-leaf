@@ -45,8 +45,8 @@ public class RequestFilter implements Filter {
         } catch (Throwable e) {
             throw e;
         } finally {
-            long cost = System.currentTimeMillis() - start;
-            logger.info("request filter path={}, cost={}, params={}", request.getServletPath(), cost, params);
+            long costTime = System.currentTimeMillis() - start;
+            logger.info("request filter path={}, costTime={} ms, params={}", request.getServletPath(), costTime, params);
         }
     }
 
