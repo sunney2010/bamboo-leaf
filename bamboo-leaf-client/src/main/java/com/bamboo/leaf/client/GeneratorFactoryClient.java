@@ -87,10 +87,11 @@ public class GeneratorFactoryClient extends AbstractSegmentGeneratorFactory {
     @Override
     protected SegmentGenerator createSegmentGenerator(String namespace) {
         SegmentGenerator segmentGenerator = null;
+        String mode=ClientConfig.getInstance().getMode();
         //判断配置的模式
-        if (ClientConfig.getInstance().getMode().endsWith(ModeEnum.Remote.name())) {
+        if (mode.equalsIgnoreCase(ModeEnum.Remote.name())) {
             segmentGenerator = new CachedSegmentGenerator(namespace, new RemoteSegmentServiceImpl());
-        } else if (ClientConfig.getInstance().getMode().endsWith(ModeEnum.Local.name())) {
+        } else if (mode.equalsIgnoreCase(ModeEnum.Local.name())) {
             segmentGenerator = new CachedSegmentGenerator(namespace, new LocalSegmentServiceImpl());
         }
         return segmentGenerator;

@@ -8,14 +8,14 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class SegmentRange {
 
-    private final long min;
-    private final long max;
+    /**
+     * 当前段最大值
+     */
+    private long maxId;
     /**
      * 当前值
      */
-    private  AtomicLong currentVal;
-
-    private volatile boolean over = false;
+    private AtomicLong currentVal;
 
     /**
      * 预加载值
@@ -30,13 +30,14 @@ public class SegmentRange {
      */
     private int remainder;
 
+    private volatile boolean over = false;
+
+
     private volatile boolean isInit;
 
 
-    public SegmentRange(long min, long max) {
-        this.min = min;
-        this.max = max;
-        this.currentVal = new AtomicLong(min);
+    public SegmentRange() {
+
     }
 
 
@@ -72,7 +73,7 @@ public class SegmentRange {
 
     public long getBatch(int size) {
         long currentValue = currentVal.getAndAdd(size) + size - 1;
-        if (currentValue > max) {
+        if (currentValue > maxId) {
             over = true;
             return -1;
         }
@@ -83,7 +84,7 @@ public class SegmentRange {
     public Result nextId() {
         init();
         long val = currentVal.addAndGet(delta);
-        if (val > max) {
+        if (val > maxId) {
             return new Result(val, ResultEnum.OVER);
         }
         if (val >= loadingVal) {
@@ -93,15 +94,7 @@ public class SegmentRange {
     }
 
     public boolean useful() {
-        return currentVal.get() <= max;
-    }
-
-    public long getMin() {
-        return min;
-    }
-
-    public long getMax() {
-        return max;
+        return currentVal.get() <= maxId;
     }
 
     public boolean isOver() {
@@ -163,5 +156,13 @@ public class SegmentRange {
 
     public void setCurrentVal(AtomicLong currentVal) {
         this.currentVal = currentVal;
+    }
+
+    public long getMaxId() {
+        return maxId;
+    }
+
+    public void setMaxId(long maxId) {
+        this.maxId = maxId;
     }
 }

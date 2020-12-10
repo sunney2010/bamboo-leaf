@@ -5,7 +5,7 @@ package com.bamboo.leaf.core.common;
  * @Author: Zhuzhi
  * @Date: 2020/12/3 下午7:55
  */
-public enum ErrorCode {
+public enum ResultCode {
     /**
      * success
      */
@@ -30,7 +30,7 @@ public enum ErrorCode {
 
     private String message;
 
-    ErrorCode(String message) {
+    ResultCode(String message) {
 
         this.message = message;
     }

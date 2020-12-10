@@ -10,19 +10,19 @@ import com.bamboo.leaf.core.generator.SegmentGenerator;
  */
 public abstract class AbstractSegmentGeneratorFactory implements SegmentGeneratorFactory {
 
-    private static ConcurrentHashMap<String, SegmentGenerator> generators = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, SegmentGenerator> generatorMap = new ConcurrentHashMap<>();
 
     @Override
     public SegmentGenerator getSegmentGenerator(String namespace) {
-        if (generators.containsKey(namespace)) {
-            return generators.get(namespace);
+        if (generatorMap.containsKey(namespace)) {
+            return generatorMap.get(namespace);
         }
         synchronized (this) {
-            if (generators.containsKey(namespace)) {
-                return generators.get(namespace);
+            if (generatorMap.containsKey(namespace)) {
+                return generatorMap.get(namespace);
             }
             SegmentGenerator generator = createSegmentGenerator(namespace);
-            generators.put(namespace, generator);
+            generatorMap.put(namespace, generator);
             return generator;
         }
     }

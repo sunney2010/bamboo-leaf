@@ -1,15 +1,19 @@
 package com.bamboo.leaf.client.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.bamboo.leaf.client.config.ClientConfig;
 import com.bamboo.leaf.client.utils.HttpUtils;
+import com.bamboo.leaf.core.common.ResultCode;
+import com.bamboo.leaf.core.common.ResultResponse;
 import com.bamboo.leaf.core.entity.SegmentRange;
 import com.bamboo.leaf.core.service.SegmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
 
 
 /**
@@ -24,19 +28,22 @@ public class RemoteSegmentServiceImpl implements SegmentService {
     @Override
     public SegmentRange getNextSegmentRange(String namespace) {
         String url = chooseService(namespace);
+        if(logger.isInfoEnabled()){
+            logger.info("getNextSegmentRange url:{}",url);
+        }
         String response = HttpUtils.post(url, ClientConfig.getInstance().getReadTimeout(),
                 ClientConfig.getInstance().getConnectTimeout());
         logger.info("bamboo client getNextSegmentId end, response:" + response);
         if (response == null || "".equals(response.trim())) {
             return null;
         }
-        SegmentRange segment = new SegmentRange(1,100);
-        String[] arr = response.split(",");
-        segment.setCurrentVal(new AtomicLong(Long.parseLong(arr[0])));
-        segment.setLoadingVal(Long.parseLong(arr[1]));
-//        segment.setMaxId(Long.parseLong(arr[2]));
-        segment.setDelta(Integer.parseInt(arr[3]));
-        segment.setRemainder(Integer.parseInt(arr[4]));
+        Type type = new TypeReference<ResultResponse<SegmentRange>>() {}.getType();
+        ResultResponse<SegmentRange> resultDto = JSON.parseObject(response, type);
+        String result = resultDto.getResult();
+        SegmentRange segment = null;
+        if ((ResultCode.SUCCESS.name()).equalsIgnoreCase(result)) {
+            segment = resultDto.getResultData();
+        }
         return segment;
     }
 

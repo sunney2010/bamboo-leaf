@@ -10,6 +10,10 @@ import java.util.Date;
  */
 public class SegmentDO implements Serializable {
     /**
+     *
+     */
+    private static final long serialVersionUID = -2360620799995587767L;
+    /**
      * 自增主键
      */
     private Long id;

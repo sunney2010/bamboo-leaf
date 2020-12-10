@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @description: TODO
@@ -39,7 +40,7 @@ public class SegmentServiceImpl implements SegmentService {
                 segmentDO.setNamespace(namespace);
                 segmentDO.setDelta(1);
                 segmentDO.setRemainder(1);
-                segmentDO.setStep(LeafConstant.DEFAULT_STEP);
+                segmentDO.setStep(leafConfigure.getStep());
                 segmentDO.setLeafVal(1L);
                 segmentDO.setVersion(1L);
                 segmentDO.setRetry(leafConfigure.getRetry());
@@ -88,7 +89,9 @@ public class SegmentServiceImpl implements SegmentService {
     }
 
     private SegmentRange convert(SegmentDO segmentDO) {
-        SegmentRange segmentRange = new SegmentRange(segmentDO.getLeafVal(), segmentDO.getLeafVal() + segmentDO.getStep());
+        SegmentRange segmentRange = new SegmentRange();
+        segmentRange.setMaxId(segmentDO.getLeafVal() + segmentDO.getStep());
+        segmentRange.setCurrentVal(new AtomicLong(segmentDO.getLeafVal() + 1));
         segmentRange.setRemainder(segmentDO.getRemainder() == null ? 0 : segmentDO.getRemainder());
         segmentRange.setDelta(segmentDO.getDelta() == null ? 1 : segmentDO.getDelta());
         // 默认20%加载

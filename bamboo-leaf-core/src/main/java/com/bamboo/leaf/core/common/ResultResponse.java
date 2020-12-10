@@ -6,16 +6,17 @@ package com.bamboo.leaf.core.common;
  * @Date: 2020/12/3 下午7:50
  */
 public class ResultResponse<T> {
-    private T data;
+
     private String result = "success";
     private String errMsg ;
+    private T resultData;
 
-    public T getData() {
-        return data;
+    public T getResultData() {
+        return resultData;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setResultData(T resultData) {
+        this.resultData = resultData;
     }
 
     public String getResult() {

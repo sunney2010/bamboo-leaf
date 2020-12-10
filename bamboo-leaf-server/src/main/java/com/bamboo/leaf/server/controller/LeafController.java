@@ -1,6 +1,6 @@
 package com.bamboo.leaf.server.controller;
 
-import com.bamboo.leaf.core.common.ErrorCode;
+import com.bamboo.leaf.core.common.ResultCode;
 import com.bamboo.leaf.core.common.ResultResponse;
 import com.bamboo.leaf.core.entity.SegmentRange;
 import com.bamboo.leaf.core.service.SegmentService;
@@ -44,19 +44,19 @@ public class LeafController {
     @RequestMapping("/segment/nextSegmentRange")
     public ResultResponse<SegmentRange> nextSegmentRange(String namespace, String token) {
         ResultResponse<SegmentRange> response = new ResultResponse<>();
-        logger.info("nextSegmentRange parameter: namespace:{},token:{}",namespace,token);
+        logger.info("nextSegmentRange parameter, namespace:{},token:{}",namespace,token);
         if (!tokenService.canVisit(namespace, token)) {
-            response.setResult(ErrorCode.FAIL.getMessage());
-            response.setErrMsg(ErrorCode.TOKEN_ERR.getMessage());
+            response.setResult(ResultCode.FAIL.getMessage());
+            response.setErrMsg(ResultCode.TOKEN_ERR.getMessage());
             return response;
         }
         try {
             SegmentRange segment = segmentService.getNextSegmentRange(namespace);
-            response.setData(segment);
+            response.setResultData(segment);
             logger.info("nextSegmentRange is success,namespace:{},leafVal:{}", namespace, segment.getCurrentVal());
         } catch (Exception e) {
-            response.setResult(ErrorCode.FAIL.getMessage());
-            response.setErrMsg(ErrorCode.SYS_ERR.getMessage());
+            response.setResult(ResultCode.FAIL.getMessage());
+            response.setErrMsg(ResultCode.SYS_ERR.getMessage());
             logger.error("nextSegmentRange error", e);
         }
         return response;
@@ -67,22 +67,22 @@ public class LeafController {
         logger.info("queryWorkerId parameter: namespace:{},hostIp:{},token:{}", namespace, hostIp, token);
         ResultResponse<Integer> response = new ResultResponse<>();
         if (StringUtils.isEmpty(namespace) || StringUtils.isEmpty(hostIp) || StringUtils.isEmpty(token)) {
-            response.setResult(ErrorCode.FAIL.getMessage());
-            response.setErrMsg(ErrorCode.PARA_ERR.getMessage());
+            response.setResult(ResultCode.FAIL.getMessage());
+            response.setErrMsg(ResultCode.PARA_ERR.getMessage());
             return response;
         }
         if (!tokenService.canVisit(namespace, token)) {
-            response.setResult(ErrorCode.FAIL.getMessage());
-            response.setErrMsg(ErrorCode.TOKEN_ERR.getMessage());
+            response.setResult(ResultCode.FAIL.getMessage());
+            response.setErrMsg(ResultCode.TOKEN_ERR.getMessage());
             return response;
         }
         try {
             int workerId = workerIdService.getWorkerId(namespace, hostIp);
-            response.setData(workerId);
+            response.setResultData(workerId);
             logger.info("queryWorkerId success,namespace:{},hostIp:{},workerId:{}", namespace, hostIp, workerId);
         } catch (Exception e) {
-            response.setResult(ErrorCode.FAIL.getMessage());
-            response.setErrMsg(ErrorCode.SYS_ERR.getMessage());
+            response.setResult(ResultCode.FAIL.getMessage());
+            response.setErrMsg(ResultCode.SYS_ERR.getMessage());
             logger.error("queryWorkerId is error", e);
         }
         return response;

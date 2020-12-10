@@ -10,7 +10,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class NamedThreadFactory implements ThreadFactory {
 
     private final ThreadGroup group;
-    //线程号
+    /**
+     * 线程号
+     */
     private final AtomicInteger threadNumber = new AtomicInteger(1);
 
     private final String namePrefix;

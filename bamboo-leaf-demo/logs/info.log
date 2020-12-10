@@ -1,75 +1,30 @@
-23:00:44.983 [main] INFO  com.bamboo.leaf.server.BambooLeafServer - Starting BambooLeafServer using Java 1.8.0_221 on lichunmingdeMacBook-Pro.local with PID 73076 (/Users/lichunming/code/bamboo/bamboo-leaf/bamboo-leaf-server/target/classes started by lichunming in /Users/lichunming/code/bamboo/bamboo-leaf)
-23:00:45.052 [main] INFO  com.bamboo.leaf.server.BambooLeafServer - The following profiles are active: dev
-23:00:46.446 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
-23:00:46.447 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
-23:00:46.447 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.39]
-23:00:46.553 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/bamboo-leaf] - Initializing Spring embedded WebApplicationContext
-23:00:46.667 [main] INFO  org.apache.catalina.core.StandardService - Stopping service [Tomcat]
-23:00:54.466 [main] INFO  com.bamboo.leaf.server.BambooLeafServer - Starting BambooLeafServer using Java 1.8.0_221 on lichunmingdeMacBook-Pro.local with PID 73089 (/Users/lichunming/code/bamboo/bamboo-leaf/bamboo-leaf-server/target/classes started by lichunming in /Users/lichunming/code/bamboo/bamboo-leaf)
-23:00:54.478 [main] INFO  com.bamboo.leaf.server.BambooLeafServer - The following profiles are active: dev
-23:00:55.512 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
-23:00:55.513 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
-23:00:55.514 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.39]
-23:00:55.584 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/bamboo-leaf] - Initializing Spring embedded WebApplicationContext
-23:00:55.663 [main] INFO  org.apache.catalina.core.StandardService - Stopping service [Tomcat]
-23:01:00.002 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:01:00.022 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:02:00.002 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:02:00.020 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:03:00.002 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:03:00.014 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:16:53.840 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:16:53.875 [scheduling-1] WARN  com.alibaba.druid.pool.DruidAbstractDataSource - discard long time none received connection. , jdbcUrl : jdbc:mysql://www.zhuzhi.vip:3306/bamboo-leaf?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false, version : 1.2.3, lastPacketReceivedIdleMillis : 833862
-23:16:55.440 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:17:00.001 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:17:00.014 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:17:59.994 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:18:00.012 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:19:00.002 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:19:00.023 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:20:00.001 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:20:00.018 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:21:00.001 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:21:00.019 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:22:00.003 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:22:00.020 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:23:00.006 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:23:00.024 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:24:00.001 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:24:00.020 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:25:00.000 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:25:00.018 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:26:00.004 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:26:00.023 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:27:00.001 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:27:00.020 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:28:00.000 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:28:00.019 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:29:00.000 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:29:00.018 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:30:00.001 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:30:00.025 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:31:00.000 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:31:00.020 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:32:00.001 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:32:00.017 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:33:00.001 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:33:00.012 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:34:00.000 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:34:00.013 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:35:00.001 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:35:00.013 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:36:00.005 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:36:00.017 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:37:00.003 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:37:00.016 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:38:00.002 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:38:00.020 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:39:00.001 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:39:00.023 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:40:00.002 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:40:00.021 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:41:00.001 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:41:00.019 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
-23:42:00.001 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
-23:42:00.019 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
+00:00:00.006 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
+00:00:00.051 [scheduling-1] WARN  com.alibaba.druid.pool.DruidAbstractDataSource - discard long time none received connection. , jdbcUrl : jdbc:mysql://www.zhuzhi.vip:3306/bamboo-leaf?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false, version : 1.2.3, lastPacketReceivedIdleMillis : 60032
+00:00:02.285 [scheduling-1] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
+00:00:30.525 [main] INFO  com.bamboo.leaf.server.BambooLeafServer - Starting BambooLeafServer using Java 1.8.0_221 on lichunmingdeMacBook-Pro.local with PID 90910 (/Users/lichunming/code/bamboo/bamboo-leaf/bamboo-leaf-server/target/classes started by lichunming in /Users/lichunming/code/bamboo/bamboo-leaf)
+00:00:30.535 [main] INFO  com.bamboo.leaf.server.BambooLeafServer - The following profiles are active: dev
+00:00:31.955 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+00:00:31.955 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+00:00:31.958 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.39]
+00:00:32.085 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/bamboo-leaf] - Initializing Spring embedded WebApplicationContext
+00:00:33.195 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+00:00:33.246 [main] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
+00:00:33.421 [main] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
+00:00:33.774 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+00:00:33.822 [main] INFO  com.bamboo.leaf.server.BambooLeafServer - Started BambooLeafServer in 4.013 seconds (JVM running for 5.285)
+00:00:33.853 [main] INFO  com.bamboo.leaf.server.BambooLeafServer - Starting BambooLeafServer using Java 1.8.0_221 on lichunmingdeMacBook-Pro.local with PID 90922 (/Users/lichunming/code/bamboo/bamboo-leaf/bamboo-leaf-server/target/classes started by lichunming in /Users/lichunming/code/bamboo/bamboo-leaf)
+00:00:33.910 [main] INFO  com.bamboo.leaf.server.BambooLeafServer - The following profiles are active: dev
+00:00:34.747 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8082"]
+00:00:34.748 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+00:00:34.748 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.39]
+00:00:34.794 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/bamboo-leaf] - Initializing Spring embedded WebApplicationContext
+00:00:35.663 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+00:00:35.705 [main] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init begin
+00:00:35.831 [main] INFO  com.bamboo.leaf.server.service.impl.TokenServiceImpl - bamboo-leaf token init success, token size:9
+00:00:36.081 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8082"]
+00:00:36.103 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+00:00:36.107 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+00:00:36.110 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8082"]
+00:00:36.110 [main] INFO  org.apache.catalina.core.StandardService - Stopping service [Tomcat]
+00:00:36.113 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8082"]
+00:00:36.113 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8082"]
