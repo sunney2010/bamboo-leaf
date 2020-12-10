@@ -1,38 +1,6 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
-
-# Folder config file
-Desktop.ini
-
-# java class file
-*.class
-.classpath
-
-# Package Files #
-*.war
-*.ear
-/target
-/.settings
-/.classpath
-/.project
-/.idea
-
-# ignore Maven generated target folders
 target
-out
-target/
-.DS_Store
-
-# ignore eclipse files
-.project
+.settings/
 .classpath
-.settings
-.factorypath
-.metadata
-.idea
-*.iml
-
-# ignore log files
-*.log
-
+.project
+.gitignore
+derby.log
