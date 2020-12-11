@@ -30,8 +30,10 @@ public class SegmentRange {
      */
     private int remainder;
 
+    /**
+     * 是否已用完
+     */
     private volatile boolean over = false;
-
 
     private volatile boolean isInit;
 
@@ -77,7 +79,6 @@ public class SegmentRange {
             over = true;
             return -1;
         }
-
         return currentValue;
     }
 

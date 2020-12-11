@@ -31,22 +31,47 @@ public class LeafConstant {
 
     //================END=============
 
-    public static final int MIN_STEP = 1;
-    public static final int MAX_STEP = 100000;
+    /**
+     * 最小步长
+     */
+    public static final int STEP_MIN = 1;
+    /**
+     * 最大步长
+     */
+    public static final int STEP_MAX = 100000;
     /**
      * 默认步长
      */
     public static final int DEFAULT_STEP = 1000;
     /**
+     * 默认序列值
+     */
+    public static final long DEFAULT_VALUE = 0L;
+    /**
      * 默认重试次数
      */
     public static final int DEFAULT_RETRY_TIMES = 10;
     /**
-     * 预加载下个号段的百分比
+     * 最小重试次数
+     */
+    public static final int RETRY_TIMES_MIN = 3;
+    /**
+     * 最大重试次数
+     */
+    public static final int RETRY_TIMES_MAX = 20;
+    /**
+     * 预加载下个号段的默认百分比
      */
     public static final int DEFAULT_LOADING_PERCENT = 25;
+    /**
+     * 预加载下个号段的最小百分比
+     */
+    public static final int LOADING_PERCENT_MIN = 10;
 
-    
+    /**
+     * 预加载下个号段的最大百分比
+     */
+    public static final int LOADING_PERCENT_MAX = 50;
 
 
     public static final int RADIX = 36;

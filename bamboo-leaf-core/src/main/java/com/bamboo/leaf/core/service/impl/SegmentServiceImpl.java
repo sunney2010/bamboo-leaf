@@ -41,7 +41,7 @@ public class SegmentServiceImpl implements SegmentService {
                 segmentDO.setDelta(1);
                 segmentDO.setRemainder(1);
                 segmentDO.setStep(leafConfigure.getStep());
-                segmentDO.setLeafVal(1L);
+                segmentDO.setLeafVal(LeafConstant.DEFAULT_VALUE);
                 segmentDO.setVersion(1L);
                 segmentDO.setRetry(leafConfigure.getRetry());
                 int val = segmentDAO.insertSegment(segmentDO);
@@ -57,7 +57,7 @@ public class SegmentServiceImpl implements SegmentService {
             Long oldValue = segmentDO.getLeafVal();
             if (oldValue < 0) {
                 StringBuilder message = new StringBuilder();
-                message.append("bamboo-leaf  value cannot be less than zero, value = ").append(oldValue);
+                message.append(" bamboo-leaf  value cannot be less than zero, value = ").append(oldValue);
                 message.append(", please check namespace: ").append(namespace);
                 throw new BambooLeafException(message.toString());
             }
@@ -67,9 +67,9 @@ public class SegmentServiceImpl implements SegmentService {
                 message.append(", please check table ").append(namespace);
                 throw new BambooLeafException(message.toString());
             }
-            Long newMaxId = oldValue + segmentDO.getStep() - 1;
+            Long newMaxVal = oldValue + segmentDO.getStep();
             SegmentDO updateSegment = new SegmentDO();
-            updateSegment.setLeafVal(newMaxId);
+            updateSegment.setLeafVal(newMaxVal);
             updateSegment.setVersion(segmentDO.getVersion());
             updateSegment.setNamespace(namespace);
             int row = segmentDAO.updateSegment(updateSegment, oldValue);
@@ -81,11 +81,13 @@ public class SegmentServiceImpl implements SegmentService {
             //对象转换
             SegmentRange segmentRange = convert(segmentDO);
             if (logger.isInfoEnabled()) {
-                logger.info("new range is success,namespace:{},range:{}->{}", namespace, oldValue, newMaxId);
+                logger.info("new range is success,namespace:{},range:{}->{}", namespace, oldValue, newMaxVal);
             }
             return segmentRange;
         }
-        throw new BambooLeafException("Retried too many times, retryTimes = " + leafConfigure.getRetry());
+        String msg = "Retried too many times, namespace=" + namespace + ", retryTimes = " + leafConfigure.getRetry();
+        logger.error(msg);
+        throw new BambooLeafException(msg);
     }
 
     private SegmentRange convert(SegmentDO segmentDO) {
@@ -94,7 +96,7 @@ public class SegmentServiceImpl implements SegmentService {
         segmentRange.setCurrentVal(new AtomicLong(segmentDO.getLeafVal() + 1));
         segmentRange.setRemainder(segmentDO.getRemainder() == null ? 0 : segmentDO.getRemainder());
         segmentRange.setDelta(segmentDO.getDelta() == null ? 1 : segmentDO.getDelta());
-        // 默认20%加载
+        // 默认25%加载
         segmentRange.setLoadingVal(segmentRange.getCurrentVal().get() + segmentDO.getStep() * leafConfigure.getLoadingPercent() / 100);
         return segmentRange;
     }

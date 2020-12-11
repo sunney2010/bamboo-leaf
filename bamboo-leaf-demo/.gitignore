@@ -20,8 +20,6 @@ Desktop.ini
 # ignore Maven generated target folders
 target
 out
-target/
-.DS_Store
 
 # ignore eclipse files
 .project
@@ -34,5 +32,3 @@ target/
 
 # ignore log files
 *.log
-logs/
-log/

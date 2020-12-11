@@ -1,7 +1,7 @@
 package com.bamboo.leaf.core.constant;
 
 /**
- * @description: TODO
+ * @description: 参数
  * @Author: Zhuzhi
  * @Date: 2020/12/7 下午12:52
  */
@@ -19,19 +19,16 @@ public class LeafConfigure {
      */
     private int step=LeafConstant.DEFAULT_STEP;
 
-    private long buffer=LeafConstant.DEFAULT_BUFFER;
-
     public int getRetry() {
         return retry;
     }
 
     public void setRetry(int retry) {
-        if (retry < 3) {
-            this.retry=LeafConstant.DEFAULT_RETRY_TIMES;
-        }else{
+        if (retry < LeafConstant.RETRY_TIMES_MIN || retry > LeafConstant.RETRY_TIMES_MAX) {
+            this.retry = LeafConstant.DEFAULT_RETRY_TIMES;
+        } else {
             this.retry = retry;
         }
-
     }
 
     public int getLoadingPercent() {
@@ -39,9 +36,9 @@ public class LeafConfigure {
     }
 
     public void setLoadingPercent(int loadingPercent) {
-        if (loadingPercent < 10) {
-            this.loadingPercent=LeafConstant.DEFAULT_LOADING_PERCENT;
-        }else{
+        if (loadingPercent < LeafConstant.LOADING_PERCENT_MIN || loadingPercent > LeafConstant.LOADING_PERCENT_MAX) {
+            this.loadingPercent = LeafConstant.DEFAULT_LOADING_PERCENT;
+        } else {
             this.loadingPercent = loadingPercent;
         }
     }
@@ -51,6 +48,10 @@ public class LeafConfigure {
     }
 
     public void setStep(int step) {
-        this.step = step;
+        if (step < LeafConstant.STEP_MIN || step > LeafConstant.STEP_MAX) {
+            this.step = LeafConstant.DEFAULT_STEP;
+        } else {
+            this.step = step;
+        }
     }
 }

@@ -34,4 +34,6 @@ target/
 
 # ignore log files
 *.log
+logs/
+log/
 

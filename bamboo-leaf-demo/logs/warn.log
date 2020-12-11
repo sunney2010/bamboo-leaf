@@ -1,1 +1,0 @@
-00:00:00.051 [scheduling-1] WARN  com.alibaba.druid.pool.DruidAbstractDataSource - discard long time none received connection. , jdbcUrl : jdbc:mysql://www.zhuzhi.vip:3306/bamboo-leaf?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false, version : 1.2.3, lastPacketReceivedIdleMillis : 60032
