@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author lichunming
@@ -38,8 +40,13 @@ public class LeafController {
 
     @RequestMapping("/hello")
     public String hello() {
-        logger.info("hello success");
-        return "success";
+        //格式化
+        DateTimeFormatter fmTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        //当前时间
+        LocalDateTime now = LocalDateTime.now();
+        String message = "hello success! current Time:" + now.format(fmTime);
+        logger.info(message);
+        return message;
     }
     @RequestMapping("/segment/nextSegmentRange")
     public ResultResponse<SegmentRange> nextSegmentRange(String namespace, String token) {

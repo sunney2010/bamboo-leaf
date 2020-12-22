@@ -1,15 +1,14 @@
 package com.bamboo.leaf.demo.controller;
 
 import com.bamboo.leaf.client.BambooLeafSegment;
-import com.bamboo.leaf.core.common.ResultResponse;
-import com.bamboo.leaf.core.entity.SegmentRange;
+import com.bamboo.leaf.client.service.BambooLeafClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 
 /**
@@ -20,6 +19,8 @@ import java.time.LocalDateTime;
 public class LeafController {
 
     private static final Logger logger = LoggerFactory.getLogger(LeafController.class);
+    @Resource
+    BambooLeafClient bambooLeafClient;
 
     @RequestMapping("/segment/hello")
     public ModelMap hello() {
@@ -35,7 +36,7 @@ public class LeafController {
         logger.info("nextSegment parameter: namespace:{}", namespace);
         ModelMap result = new ModelMap();
         try {
-            long leafVal = BambooLeafSegment.nextId(namespace);
+            long leafVal = bambooLeafClient.nextId(namespace);
             result.put("leafVal", leafVal);
             result.put("currentTime", LocalDateTime.now());
             logger.info("nextSegment is success,namespace:{},leafVal:{}", namespace, leafVal);

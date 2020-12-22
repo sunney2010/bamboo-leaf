@@ -1,5 +1,7 @@
 package com.bamboo.leaf.client;
 
+import java.util.List;
+
 /**
  * @description:测试
  * @Author: Zhuzhi
@@ -13,5 +15,11 @@ public class BambooLeafClientTest {
             Long id = BambooLeafSegment.nextId("segment-test");
             System.out.println("current id is: " + id);
         }
+    }
+
+    public void NextBatchId() {
+        String namespace = "segment-test-batch";
+        List<Long> idList = BambooLeafSegment.nextId(namespace, 100);
+        System.out.println("current id is,size: " + idList.size());
     }
 }

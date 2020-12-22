@@ -3,7 +3,7 @@ package com.bamboo.leaf.autoconfigure;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @description: TODO
+ * @description: 定义表名字段名
  * @Author: Zhuzhi
  * @Date: 2020/11/30 下午1:10
  */

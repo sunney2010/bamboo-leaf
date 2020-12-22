@@ -1,4 +1,4 @@
-package com.bamboo.leaf.client.service;
+package com.bamboo.leaf.client.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -10,6 +10,7 @@ import com.bamboo.leaf.core.entity.SegmentRange;
 import com.bamboo.leaf.core.service.SegmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.Random;
  * @Author: Zhuzhi
  * @Date: 2020/12/2 下午11:04
  */
+@Component("remoteSegmentService")
 public class RemoteSegmentServiceImpl implements SegmentService {
 
     private static final Logger logger = LoggerFactory.getLogger(RemoteSegmentServiceImpl.class);

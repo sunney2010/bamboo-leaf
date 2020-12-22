@@ -1,5 +1,7 @@
 package com.bamboo.leaf.autoconfigure;
 
+import com.bamboo.leaf.client.service.BambooLeafClient;
+import com.bamboo.leaf.client.service.impl.BambooLeafClientImpl;
 import com.bamboo.leaf.core.constant.LeafConfigure;
 import com.bamboo.leaf.core.constant.TableConfigure;
 import com.bamboo.leaf.core.dao.SegmentDAO;
@@ -112,7 +114,7 @@ public class BambooAutoConfiguration {
         return segmentDAO;
     }
 
-    @Bean
+    @Bean(name = "segmentService")
     public SegmentService segmentService() {
         SegmentService segmentService = new SegmentServiceImpl();
         return segmentService;
@@ -128,5 +130,11 @@ public class BambooAutoConfiguration {
     public WorkerIdService workerIdService() {
         WorkerIdService workerIdService = new WorkerIdServiceImpl();
         return workerIdService;
+    }
+
+    @Bean(name = "bambooLeafClient")
+    public BambooLeafClient bambooLeafClient() {
+        BambooLeafClient bambooLeafClient = new BambooLeafClientImpl();
+        return bambooLeafClient;
     }
 }
