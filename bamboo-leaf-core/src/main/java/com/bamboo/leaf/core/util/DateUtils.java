@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.baidu.fsg.uid.utils;
+package com.bamboo.leaf.core.util;
+
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
-
-import org.apache.commons.lang.time.DateFormatUtils;
 
 /**
  * DateUtils provides date formatting, parsing
  *
  * @author yutianbao
  */
-public abstract class DateUtils extends org.apache.commons.lang.time.DateUtils {
+public abstract class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     /**
      * Patterns
      */
