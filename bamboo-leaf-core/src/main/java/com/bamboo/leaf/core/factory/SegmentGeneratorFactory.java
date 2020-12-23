@@ -9,8 +9,18 @@ import com.bamboo.leaf.core.generator.SegmentGenerator;
 public interface SegmentGeneratorFactory {
     /**
      * 根据namespace创建id生成器
+     *
      * @param namespace
      * @return
      */
     SegmentGenerator getSegmentGenerator(String namespace);
+
+    /**
+     * 根据namespace创建id生成器
+     *
+     * @param namespace
+     * @param hostIp
+     * @return
+     */
+    Integer getWorkerId(String namespace, String hostIp);
 }

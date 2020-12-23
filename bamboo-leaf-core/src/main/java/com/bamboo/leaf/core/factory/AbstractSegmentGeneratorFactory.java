@@ -1,8 +1,8 @@
 package com.bamboo.leaf.core.factory;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.bamboo.leaf.core.generator.SegmentGenerator;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author zhuzhi
@@ -11,6 +11,7 @@ import com.bamboo.leaf.core.generator.SegmentGenerator;
 public abstract class AbstractSegmentGeneratorFactory implements SegmentGeneratorFactory {
 
     private static ConcurrentHashMap<String, SegmentGenerator> generatorMap = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, Integer> workerIdMap = new ConcurrentHashMap<>();
 
     @Override
     public SegmentGenerator getSegmentGenerator(String namespace) {
@@ -27,6 +28,22 @@ public abstract class AbstractSegmentGeneratorFactory implements SegmentGenerato
         }
     }
 
+    @Override
+    public Integer getWorkerId(String namespace, String hostIp) {
+        String key = namespace + "-" + hostIp;
+        if (workerIdMap.containsKey(key)) {
+            return workerIdMap.get(key);
+        }
+        synchronized (this) {
+            if (workerIdMap.containsKey(key)) {
+                return workerIdMap.get(key);
+            }
+            Integer workerId = createWorkerId(namespace, hostIp);
+            workerIdMap.put(key, workerId);
+            return workerId;
+        }
+    }
+
     /**
      * 根据namespace创建id生成器
      *
@@ -34,4 +51,13 @@ public abstract class AbstractSegmentGeneratorFactory implements SegmentGenerato
      * @return
      */
     protected abstract SegmentGenerator createSegmentGenerator(String namespace);
+
+    /**
+     * 根据namespace创建id生成器
+     *
+     * @param namespace
+     * @param hostIp
+     * @return
+     */
+    protected abstract Integer createWorkerId(String namespace, String hostIp);
 }

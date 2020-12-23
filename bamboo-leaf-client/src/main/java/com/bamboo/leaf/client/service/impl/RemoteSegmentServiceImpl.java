@@ -50,7 +50,7 @@ public class RemoteSegmentServiceImpl implements SegmentService {
     }
 
     private String chooseService(String namespace) {
-        List<String> serverList = ClientConfig.getInstance().getServerList();
+        List<String> serverList = ClientConfig.getInstance().getSegmentServerList();
         String url = "";
         if (serverList != null && serverList.size() == 1) {
             url = serverList.get(0);

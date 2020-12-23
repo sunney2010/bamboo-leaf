@@ -22,7 +22,14 @@ public class ClientConfig {
      */
     private String leafServer;
 
-    private List<String> serverList;
+    /**
+     * segment算法服务地址
+     */
+    private List<String> segmentServerList;
+    /**
+     * snowflake算法服务地址
+     */
+    private List<String> snowServerList;
 
     private Integer readTimeout;
 
@@ -63,12 +70,20 @@ public class ClientConfig {
         this.leafServer = leafServer;
     }
 
-    public List<String> getServerList() {
-        return serverList;
+    public List<String> getSegmentServerList() {
+        return segmentServerList;
     }
 
-    public void setServerList(List<String> serverList) {
-        this.serverList = serverList;
+    public void setSegmentServerList(List<String> segmentServerList) {
+        this.segmentServerList = segmentServerList;
+    }
+
+    public List<String> getSnowServerList() {
+        return snowServerList;
+    }
+
+    public void setSnowServerList(List<String> snowServerList) {
+        this.snowServerList = snowServerList;
     }
 
     public Integer getReadTimeout() {

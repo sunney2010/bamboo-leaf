@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @Author: Zhuzhi
  * @Date: 2020/12/22 下午7:27
  */
+
 public class DefaultSnowflakeGenerator extends AbstractSnowflake implements SnowflakeGenerator, InitializingBean {
     private static final Logger logger = LoggerFactory.getLogger(DefaultSnowflakeGenerator.class);
     /**
@@ -78,7 +79,6 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
      */
     protected synchronized long nextSnowId() {
         long currentSecond = getCurrentSecond();
-
         // Clock moved backwards, refuse to generate uid
         if (currentSecond < lastTimestamp) {
             long refusedSeconds = lastTimestamp - currentSecond;

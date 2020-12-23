@@ -7,10 +7,18 @@ package com.bamboo.leaf.client.service;
  */
 public interface BambooLeafClient {
     /**
-     * 获取序列
+     * 获取segment算法序列
      *
      * @param namespace 命名空间
      * @return
      */
-    public Long nextId(String namespace);
+    public Long segmentId(String namespace);
+
+    /**
+     * 获取snowflake算法序列
+     *
+     * @param namespace 命名空间
+     * @return
+     */
+    public long snowId(String namespace);
 }
