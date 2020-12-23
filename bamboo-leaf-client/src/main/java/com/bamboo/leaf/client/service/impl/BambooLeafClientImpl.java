@@ -7,7 +7,9 @@ import com.bamboo.leaf.client.utils.NumberUtils;
 import com.bamboo.leaf.client.utils.PropertiesLoader;
 import com.bamboo.leaf.core.factory.AbstractSegmentGeneratorFactory;
 import com.bamboo.leaf.core.generator.SegmentGenerator;
+import com.bamboo.leaf.core.generator.SnowflakeGenerator;
 import com.bamboo.leaf.core.generator.impl.CachedSegmentGenerator;
+import com.bamboo.leaf.core.generator.impl.DefaultSnowflakeGenerator;
 import com.bamboo.leaf.core.generator.impl.DefaultWorkerIdGenerator;
 import com.bamboo.leaf.core.service.SegmentService;
 import com.bamboo.leaf.core.service.WorkerIdService;
@@ -108,7 +110,9 @@ public class BambooLeafClientImpl extends AbstractSegmentGeneratorFactory implem
         String hospIp = PNetUtils.getLocalHost();
         // get workerId
         Integer workerId = this.getWorkerId(namespace, hospIp);
-        return 0;
+        SnowflakeGenerator SnowflakeGenerator = this.getSnowflakeGenerator(namespace, workerId);
+
+        return SnowflakeGenerator.nextId();
     }
 
     @Override
@@ -123,6 +127,11 @@ public class BambooLeafClientImpl extends AbstractSegmentGeneratorFactory implem
             segmentGenerator = new CachedSegmentGenerator(namespace, localSegmentService);
         }
         return segmentGenerator;
+    }
+
+    @Override
+    protected SnowflakeGenerator createSnowflakeGenerator(int workerId) {
+        return new DefaultSnowflakeGenerator(workerId);
     }
 
     @Override

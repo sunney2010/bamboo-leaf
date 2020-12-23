@@ -1,6 +1,7 @@
 package com.bamboo.leaf.core.factory;
 
 import com.bamboo.leaf.core.generator.SegmentGenerator;
+import com.bamboo.leaf.core.generator.SnowflakeGenerator;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -11,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class AbstractSegmentGeneratorFactory implements SegmentGeneratorFactory {
 
     private static ConcurrentHashMap<String, SegmentGenerator> generatorMap = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, SnowflakeGenerator> snowflakeMap = new ConcurrentHashMap<>();
     private static ConcurrentHashMap<String, Integer> workerIdMap = new ConcurrentHashMap<>();
 
     @Override
@@ -24,6 +26,21 @@ public abstract class AbstractSegmentGeneratorFactory implements SegmentGenerato
             }
             SegmentGenerator generator = createSegmentGenerator(namespace);
             generatorMap.put(namespace, generator);
+            return generator;
+        }
+    }
+
+    @Override
+    public SnowflakeGenerator getSnowflakeGenerator(String namespace,int workerId) {
+        if (snowflakeMap.containsKey(namespace)) {
+            return snowflakeMap.get(namespace);
+        }
+        synchronized (this) {
+            if (snowflakeMap.containsKey(namespace)) {
+                return snowflakeMap.get(namespace);
+            }
+            SnowflakeGenerator generator = createSnowflakeGenerator(workerId);
+            snowflakeMap.put(namespace, generator);
             return generator;
         }
     }
@@ -51,6 +68,14 @@ public abstract class AbstractSegmentGeneratorFactory implements SegmentGenerato
      * @return
      */
     protected abstract SegmentGenerator createSegmentGenerator(String namespace);
+
+    /**
+     * 根据namespace创建id生成器
+     *
+     * @param workerId
+     * @return
+     */
+    protected abstract SnowflakeGenerator createSnowflakeGenerator(int workerId);
 
     /**
      * 根据namespace创建id生成器

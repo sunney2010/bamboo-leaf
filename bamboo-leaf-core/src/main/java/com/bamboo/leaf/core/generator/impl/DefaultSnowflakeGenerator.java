@@ -25,6 +25,22 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
      */
     protected BitsAllocator bitsAllocator;
 
+
+    public DefaultSnowflakeGenerator(int workerId) {
+        super.workerId= workerId;
+        // initialize bits allocator
+        bitsAllocator = new BitsAllocator(timeBits, workerIdBits, sequenceBits);
+
+        // initialize worker id
+        if (workerId > bitsAllocator.getMaxWorkerId()) {
+            throw new RuntimeException("Worker id " + workerId + " exceeds the max " + bitsAllocator.getMaxWorkerId());
+        }
+
+        logger.info("Initialized bits(1, {}, {}, {}) for workerID:{}", timeBits, workerIdBits, sequenceBits, workerId);
+
+
+    }
+
     @Override
     public void afterPropertiesSet() throws Exception {
         // initialize bits allocator

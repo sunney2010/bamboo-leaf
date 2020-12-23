@@ -1,6 +1,7 @@
 package com.bamboo.leaf.core.factory;
 
 import com.bamboo.leaf.core.generator.SegmentGenerator;
+import com.bamboo.leaf.core.generator.SnowflakeGenerator;
 
 /**
  * @author zhuzhi
@@ -23,4 +24,12 @@ public interface SegmentGeneratorFactory {
      * @return
      */
     Integer getWorkerId(String namespace, String hostIp);
+
+    /**
+     * 根据namespace创建Snowflake生成器
+     *
+     * @param namespace
+     * @return
+     */
+    SnowflakeGenerator getSnowflakeGenerator(String namespace,int workerId);
 }
