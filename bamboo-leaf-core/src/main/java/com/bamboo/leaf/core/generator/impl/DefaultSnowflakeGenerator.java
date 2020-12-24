@@ -47,7 +47,6 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
         bitsAllocator = new BitsAllocator(timeBits, workerIdBits, sequenceBits);
 
         // initialize worker id
-        // workerId = workerIdAssigner.assignWorkerId();
         if (workerId > bitsAllocator.getMaxWorkerId()) {
             throw new RuntimeException("Worker id " + workerId + " exceeds the max " + bitsAllocator.getMaxWorkerId());
         }
@@ -88,14 +87,14 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
     }
 
     /**
-     * Get UID
+     * Get SnowId
      *
-     * @return UID
+     * @return SnowId
      * @throws BambooLeafException in the case: Clock moved backwards; Exceeds the max timestamp
      */
     protected synchronized long nextSnowId() {
         long currentSecond = getCurrentSecond();
-        // Clock moved backwards, refuse to generate uid
+        // Clock moved backwards, refuse to generate SnowId
         if (currentSecond < lastTimestamp) {
             long refusedSeconds = lastTimestamp - currentSecond;
             throw new BambooLeafException("Clock moved backwards. Refusing for " + refusedSeconds + " seconds");
@@ -103,7 +102,7 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
         // At the same second, increase sequence
         if (currentSecond == lastTimestamp) {
             sequence = (sequence + 1) & bitsAllocator.getMaxSequence();
-            // Exceed the max sequence, we wait the next second to generate uid
+            // Exceed the max sequence, we wait the next second to generate SnowId
             if (sequence == 0) {
                 currentSecond = getNextSecond(lastTimestamp);
             }
@@ -112,7 +111,7 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
             sequence = 0L;
         }
         lastTimestamp = currentSecond;
-        // Allocate bits for UID
+        // Allocate bits for SnowId
         return bitsAllocator.allocate(currentSecond - epochSeconds, workerId, sequence);
     }
 

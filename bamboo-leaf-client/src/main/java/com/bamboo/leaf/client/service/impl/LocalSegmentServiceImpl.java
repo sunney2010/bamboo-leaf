@@ -1,12 +1,10 @@
 package com.bamboo.leaf.client.service.impl;
 
-import com.bamboo.leaf.client.config.ApplicationContextProvider;
 import com.bamboo.leaf.core.entity.SegmentRange;
 import com.bamboo.leaf.core.service.SegmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
