@@ -51,6 +51,7 @@ public class BambooLeafClientImpl extends AbstractSegmentGeneratorFactory implem
     @Resource(name = "workerIdService")
     WorkerIdService localWorkerIdService;
 
+    ClientConfig clientConfig;
 
     @PostConstruct
     public void init() {
