@@ -4,7 +4,7 @@ logging:
       root: info
 server:
   # 服务对外暴露的端口号
-  port: 8080
+  port: 8087
   servlet:
     context-path: /bamboo-leaf
 spring: 

@@ -52,7 +52,7 @@ public class LeafController {
             long snowId = bambooLeafClient.snowId(namespace);
             result.put("snowId", snowId);
             result.put("currentTime", LocalDateTime.now());
-            logger.info("nextSegment is success,namespace:{},snowId:{}", namespace, snowId);
+            logger.info("nextSnowId is success,namespace:{},snowId:{}", namespace, snowId);
         } catch (Exception e) {
             logger.error("nextSnowId error", e);
         }
