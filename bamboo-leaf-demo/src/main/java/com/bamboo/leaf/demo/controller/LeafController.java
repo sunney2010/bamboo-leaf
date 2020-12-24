@@ -1,6 +1,5 @@
 package com.bamboo.leaf.demo.controller;
 
-import com.bamboo.leaf.client.BambooLeafSegment;
 import com.bamboo.leaf.client.service.BambooLeafClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,12 +35,26 @@ public class LeafController {
         logger.info("nextSegment parameter: namespace:{}", namespace);
         ModelMap result = new ModelMap();
         try {
-            long leafVal = bambooLeafClient.nextId(namespace);
+            long leafVal = bambooLeafClient.segmentId(namespace);
             result.put("leafVal", leafVal);
             result.put("currentTime", LocalDateTime.now());
             logger.info("nextSegment is success,namespace:{},leafVal:{}", namespace, leafVal);
         } catch (Exception e) {
             logger.error("nextSegment error", e);
+        }
+        return result;
+    }
+    @RequestMapping("/snowflake/nextSnowId")
+    public ModelMap nextSnowId(String namespace) {
+        logger.info("snowflake parameter: namespace:{}", namespace);
+        ModelMap result = new ModelMap();
+        try {
+            long snowId = bambooLeafClient.snowId(namespace);
+            result.put("snowId", snowId);
+            result.put("currentTime", LocalDateTime.now());
+            logger.info("nextSegment is success,namespace:{},snowId:{}", namespace, snowId);
+        } catch (Exception e) {
+            logger.error("nextSnowId error", e);
         }
         return result;
     }

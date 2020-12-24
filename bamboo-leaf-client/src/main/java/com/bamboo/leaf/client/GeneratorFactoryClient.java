@@ -8,6 +8,7 @@ import com.bamboo.leaf.client.utils.NumberUtils;
 import com.bamboo.leaf.client.utils.PropertiesLoader;
 import com.bamboo.leaf.core.factory.AbstractSegmentGeneratorFactory;
 import com.bamboo.leaf.core.generator.SegmentGenerator;
+import com.bamboo.leaf.core.generator.SnowflakeGenerator;
 import com.bamboo.leaf.core.generator.impl.CachedSegmentGenerator;
 import com.bamboo.leaf.core.service.SegmentService;
 
@@ -88,7 +89,7 @@ public class GeneratorFactoryClient extends AbstractSegmentGeneratorFactory {
             serverList.add(url);
         }
         logger.info("bamboo-leaf client init success url info:" + serverList);
-        clientConfig.setServerList(serverList);
+        clientConfig.setSegmentServerList(serverList);
     }
 
 
@@ -104,5 +105,15 @@ public class GeneratorFactoryClient extends AbstractSegmentGeneratorFactory {
             segmentGenerator = new CachedSegmentGenerator(namespace, localSegmentService);
         }
         return segmentGenerator;
+    }
+
+    @Override
+    protected SnowflakeGenerator createSnowflakeGenerator(int workerId) {
+        return null;
+    }
+
+    @Override
+    protected Integer createWorkerId(String namespace, String hostIp) {
+        return null;
     }
 }

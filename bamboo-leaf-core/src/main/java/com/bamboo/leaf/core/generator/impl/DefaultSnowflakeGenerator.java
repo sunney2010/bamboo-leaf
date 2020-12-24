@@ -59,7 +59,7 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
     @Override
     public Long nextId() {
         try {
-            return nextId();
+            return nextSnowId();
         } catch (Exception e) {
             logger.error("Generate unique id exception. ", e);
             throw new BambooLeafException(e);
