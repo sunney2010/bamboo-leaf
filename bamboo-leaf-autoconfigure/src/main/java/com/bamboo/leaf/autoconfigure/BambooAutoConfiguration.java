@@ -1,6 +1,7 @@
 package com.bamboo.leaf.autoconfigure;
 
 import com.bamboo.leaf.client.config.ClientConfig;
+import com.bamboo.leaf.client.constant.ClientConstant;
 import com.bamboo.leaf.client.constant.ModeEnum;
 import com.bamboo.leaf.client.service.BambooLeafClient;
 import com.bamboo.leaf.client.service.impl.BambooLeafClientImpl;
@@ -38,10 +39,6 @@ import java.util.Properties;
 @EnableConfigurationProperties({LeafTableProperties.class, LeafProperties.class, LeafClientProperties.class})
 public class BambooAutoConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(BambooAutoConfiguration.class);
-    private static final String DEFAULT_PROPERTIES = "bamboo-leaf-client.properties";
-    private static final int DEFAULT_TIME_OUT = 5000;
-    private static String segmentServerUrl = "http://{0}/bamboo-leaf/segment/nextSegmentRange?token={1}&namespace=";
-    private static String snowServerUrl = "http://{0}/bamboo-leaf/snowflake/queryWorkerId?token={1}&hostIp={2}&namespace=";
 
 
     private final LeafTableProperties leafTableProperties;
@@ -134,9 +131,9 @@ public class BambooAutoConfiguration {
         Properties properties = null;
         if (leafClientProperties == null) {
             try {
-                properties = PropertiesLoader.loadProperties(DEFAULT_PROPERTIES);
+                properties = PropertiesLoader.loadProperties(ClientConstant.DEFAULT_PROPERTIES);
             } catch (Exception e) {
-                logger.warn("Please confirm whether {} exists", DEFAULT_PROPERTIES);
+                logger.warn("Please confirm whether {} exists", ClientConstant.DEFAULT_PROPERTIES);
                 throw new BambooLeafException("Client properties is not exists!");
             }
         }
@@ -176,13 +173,13 @@ public class BambooAutoConfiguration {
 
             int readTimeout = leafClientProperties.getReadTimeout();
             if (readTimeout == 0) {
-                readTimeout = NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.readTimeout"), 5000);
+                readTimeout = NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.readTimeout"), ClientConstant.DEFAULT_TIME_OUT);
             }
             clientConfig.setReadTimeout(readTimeout);
 
             int connectTimeout = leafClientProperties.getConnectTimeout();
             if (connectTimeout == 0) {
-                connectTimeout = NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.connectTimeout"), 5000);
+                connectTimeout = NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.connectTimeout"), ClientConstant.DEFAULT_TIME_OUT);
             }
             clientConfig.setConnectTimeout(connectTimeout);
 
@@ -191,10 +188,10 @@ public class BambooAutoConfiguration {
             List<String> snowServerList = new ArrayList<>(leafServers.length);
             for (String server : leafServers) {
                 // segment remote api url
-                String segmentUrl = MessageFormat.format(segmentServerUrl, server, leafToken);
+                String segmentUrl = MessageFormat.format(ClientConstant.segmentServerUrl, server, leafToken);
                 segmentServerList.add(segmentUrl);
                 // snowflake remote api url
-                String snowUrl = MessageFormat.format(snowServerUrl, server, leafToken, PNetUtils.getLocalHost());
+                String snowUrl = MessageFormat.format(ClientConstant.snowServerUrl, server, leafToken, PNetUtils.getLocalHost());
                 snowServerList.add(snowUrl);
             }
             clientConfig.setSegmentServerList(segmentServerList);
