@@ -3,6 +3,7 @@ package com.bamboo.leaf.client.service.impl;
 import com.bamboo.leaf.client.config.ClientConfig;
 import com.bamboo.leaf.client.constant.ModeEnum;
 import com.bamboo.leaf.client.service.BambooLeafClient;
+import com.bamboo.leaf.core.exception.BambooLeafException;
 import com.bamboo.leaf.core.factory.AbstractSegmentGeneratorFactory;
 import com.bamboo.leaf.core.generator.SegmentGenerator;
 import com.bamboo.leaf.core.generator.SnowflakeGenerator;
@@ -66,6 +67,9 @@ public class BambooLeafClientImpl extends AbstractSegmentGeneratorFactory implem
         SegmentGenerator segmentGenerator = null;
         //获取当前的配置的模式
         String mode = ClientConfig.getInstance().getMode();
+        if (null == mode || mode.trim().length() == 0) {
+            throw new BambooLeafException("bamboo.leaf.client.mode is not null");
+        }
         //判断配置的模式
         if (mode.equalsIgnoreCase(ModeEnum.Remote.name())) {
             segmentGenerator = new CachedSegmentGenerator(namespace, new RemoteSegmentServiceImpl());
@@ -85,6 +89,9 @@ public class BambooLeafClientImpl extends AbstractSegmentGeneratorFactory implem
         Integer workerId = null;
         //获取当前的配置的模式
         String mode = ClientConfig.getInstance().getMode();
+        if (null == mode || mode.trim().length() == 0) {
+            throw new BambooLeafException("bamboo.leaf.client.mode is not null");
+        }
         //判断配置的模式
         if (mode.equalsIgnoreCase(ModeEnum.Remote.name())) {
             workerId = new RemoteWorkerIdServiceImpl().getWorkerId(namespace, hostIp);

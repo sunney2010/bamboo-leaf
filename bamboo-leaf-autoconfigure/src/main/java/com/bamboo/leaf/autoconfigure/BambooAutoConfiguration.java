@@ -2,7 +2,6 @@ package com.bamboo.leaf.autoconfigure;
 
 import com.bamboo.leaf.client.config.ClientConfig;
 import com.bamboo.leaf.client.constant.ClientConstant;
-import com.bamboo.leaf.client.constant.ModeEnum;
 import com.bamboo.leaf.client.service.BambooLeafClient;
 import com.bamboo.leaf.client.service.impl.BambooLeafClientImpl;
 import com.bamboo.leaf.client.utils.NumberUtils;
@@ -144,8 +143,7 @@ public class BambooAutoConfiguration {
             throw new BambooLeafException("bamboo.leaf.client.mode is not null!");
         }
         clientConfig.setMode(mode);
-        // Remote 模式要判断leafServer，leafToken
-        if (mode.equalsIgnoreCase(ModeEnum.Remote.name())) {
+
             // 服务地址
             String leafServer = leafClientProperties.getLeafServer();
             if ((leafServer == null || leafServer.trim().length() == 0) && null != properties) {
@@ -172,7 +170,7 @@ public class BambooAutoConfiguration {
                 connectTimeout = NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.connectTimeout"), ClientConstant.DEFAULT_TIME_OUT);
             }
             clientConfig.setConnectTimeout(connectTimeout);
-        }
+
         return clientConfig;
 
     }
