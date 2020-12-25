@@ -2,7 +2,6 @@ package com.bamboo.leaf.client;
 
 import com.bamboo.leaf.client.config.ClientConfig;
 import com.bamboo.leaf.client.constant.ModeEnum;
-import com.bamboo.leaf.client.service.impl.LocalSegmentServiceImpl;
 import com.bamboo.leaf.client.service.impl.RemoteSegmentServiceImpl;
 import com.bamboo.leaf.client.utils.NumberUtils;
 import com.bamboo.leaf.client.utils.PropertiesLoader;

@@ -32,7 +32,7 @@ public class BambooLeafClientImpl extends AbstractSegmentGeneratorFactory implem
     private static final Logger logger = LoggerFactory.getLogger(BambooLeafClientImpl.class);
 
     private ApplicationContext applicationContext;
-    
+
     @Resource(name = "segmentService")
     SegmentService localSegmentService;
 
@@ -88,12 +88,9 @@ public class BambooLeafClientImpl extends AbstractSegmentGeneratorFactory implem
         //判断配置的模式
         if (mode.equalsIgnoreCase(ModeEnum.Remote.name())) {
             workerId = new RemoteWorkerIdServiceImpl().getWorkerId(namespace, hostIp);
-
         } else if (mode.equalsIgnoreCase(ModeEnum.Local.name())) {
-
             workerId = new DefaultWorkerIdGenerator(localWorkerIdService, namespace, hostIp).getWorkerId();
         }
-
         return workerId;
     }
 

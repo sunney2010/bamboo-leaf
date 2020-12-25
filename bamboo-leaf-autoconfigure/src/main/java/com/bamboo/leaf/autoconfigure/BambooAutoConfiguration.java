@@ -18,16 +18,12 @@ import com.bamboo.leaf.core.service.SegmentService;
 import com.bamboo.leaf.core.service.WorkerIdService;
 import com.bamboo.leaf.core.service.impl.SegmentServiceImpl;
 import com.bamboo.leaf.core.service.impl.WorkerIdServiceImpl;
-import com.bamboo.leaf.core.util.PNetUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 /**
@@ -129,13 +125,14 @@ public class BambooAutoConfiguration {
     public ClientConfig clientConfig() {
         ClientConfig clientConfig = ClientConfig.getInstance();
         Properties properties = null;
-        if (leafClientProperties == null) {
-            try {
-                properties = PropertiesLoader.loadProperties(ClientConstant.DEFAULT_PROPERTIES);
-            } catch (Exception e) {
-                logger.warn("Please confirm whether {} exists", ClientConstant.DEFAULT_PROPERTIES);
-                throw new BambooLeafException("Client properties is not exists!");
-            }
+        try {
+            properties = PropertiesLoader.loadProperties(ClientConstant.DEFAULT_PROPERTIES);
+        } catch (Exception e) {
+            logger.warn("Please confirm whether {} exists", ClientConstant.DEFAULT_PROPERTIES);
+
+        }
+        if (leafClientProperties == null && properties == null) {
+            throw new BambooLeafException("Client properties is not exists!");
         }
         // 模式
         String mode = leafClientProperties.getMode();
@@ -151,51 +148,30 @@ public class BambooAutoConfiguration {
         if (mode.equalsIgnoreCase(ModeEnum.Remote.name())) {
             // 服务地址
             String leafServer = leafClientProperties.getLeafServer();
-            if (leafServer == null || (leafServer = leafServer.trim()).length() == 0) {
+            if ((leafServer == null || leafServer.trim().length() == 0) && null != properties) {
                 leafServer = properties.getProperty("bamboo.leaf.client.leafServer");
-            }
-            // 判断服务地址
-            if (leafServer == null || (leafServer = leafServer.trim()).length() == 0) {
-                throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafServer is not null!");
             }
             clientConfig.setLeafServer(leafServer);
 
             //Token
-            String leafToken = leafClientProperties.getLeafServer();
-            if (leafToken == null || (leafToken = leafToken.trim()).length() == 0) {
+            String leafToken = leafClientProperties.getLeafToken();
+            if ((leafToken == null || leafToken.trim().length() == 0) && null != properties) {
                 leafToken = properties.getProperty("bamboo.leaf.client.leafToken");
             }
-            // 判断服务token
-            if (leafToken == null || (leafToken = leafToken.trim()).length() == 0) {
-                throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafToken is not null!");
-            }
+
             clientConfig.setLeafToken(leafToken);
 
-            int readTimeout = leafClientProperties.getReadTimeout();
-            if (readTimeout == 0) {
+            int readTimeout = leafClientProperties.getReadTimeout() == null ? 0 : leafClientProperties.getReadTimeout();
+            if (readTimeout == 0 && null != properties) {
                 readTimeout = NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.readTimeout"), ClientConstant.DEFAULT_TIME_OUT);
             }
             clientConfig.setReadTimeout(readTimeout);
 
-            int connectTimeout = leafClientProperties.getConnectTimeout();
-            if (connectTimeout == 0) {
+            int connectTimeout = leafClientProperties.getConnectTimeout() == null ? 0 : leafClientProperties.getConnectTimeout();
+            if (connectTimeout == 0 && null != properties) {
                 connectTimeout = NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.connectTimeout"), ClientConstant.DEFAULT_TIME_OUT);
             }
             clientConfig.setConnectTimeout(connectTimeout);
-
-            String[] leafServers = leafServer.split(",");
-            List<String> segmentServerList = new ArrayList<>(leafServers.length);
-            List<String> snowServerList = new ArrayList<>(leafServers.length);
-            for (String server : leafServers) {
-                // segment remote api url
-                String segmentUrl = MessageFormat.format(ClientConstant.segmentServerUrl, server, leafToken);
-                segmentServerList.add(segmentUrl);
-                // snowflake remote api url
-                String snowUrl = MessageFormat.format(ClientConstant.snowServerUrl, server, leafToken, PNetUtils.getLocalHost());
-                snowServerList.add(snowUrl);
-            }
-            clientConfig.setSegmentServerList(segmentServerList);
-            clientConfig.setSnowServerList(snowServerList);
         }
         return clientConfig;
 

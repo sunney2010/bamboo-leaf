@@ -67,3 +67,6 @@ bamboo:
     configure:
       retry: 16
       step: 20000
+    client:
+      leafToken: 0504c00e-7971-41d1-87e8-0952399c5816
+      leafServer: 127.0.0.1:8087
