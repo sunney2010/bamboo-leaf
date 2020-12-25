@@ -2,8 +2,10 @@ package com.bamboo.leaf.autoconfigure;
 
 import com.bamboo.leaf.client.config.ClientConfig;
 import com.bamboo.leaf.client.constant.ClientConstant;
-import com.bamboo.leaf.client.service.BambooLeafClient;
-import com.bamboo.leaf.client.service.impl.BambooLeafClientImpl;
+import com.bamboo.leaf.client.service.BambooLeafSegmentClient;
+import com.bamboo.leaf.client.service.BambooLeafSnowflakeClient;
+import com.bamboo.leaf.client.service.impl.BambooLeafSegmentClientImpl;
+import com.bamboo.leaf.client.service.impl.BambooLeafSnowflakeClientImpl;
 import com.bamboo.leaf.client.utils.NumberUtils;
 import com.bamboo.leaf.client.utils.PropertiesLoader;
 import com.bamboo.leaf.core.constant.LeafConfigure;
@@ -199,9 +201,15 @@ public class BambooAutoConfiguration {
         return workerIdService;
     }
 
-    @Bean(name = "bambooLeafClient")
-    public BambooLeafClient bambooLeafClient() {
-        BambooLeafClient bambooLeafClient = new BambooLeafClientImpl();
-        return bambooLeafClient;
+    @Bean(name = "bambooLeafSegmentClient")
+    public BambooLeafSegmentClient bambooLeafSegmentClient() {
+        BambooLeafSegmentClient bambooLeafSegmentClient = new BambooLeafSegmentClientImpl();
+        return bambooLeafSegmentClient;
+    }
+
+    @Bean(name = "bambooLeafSnowflakeClient")
+    public BambooLeafSnowflakeClient bambooLeafSnowflakeClient() {
+        BambooLeafSnowflakeClient bambooLeafSnowflakeClient = new BambooLeafSnowflakeClientImpl();
+        return bambooLeafSnowflakeClient;
     }
 }

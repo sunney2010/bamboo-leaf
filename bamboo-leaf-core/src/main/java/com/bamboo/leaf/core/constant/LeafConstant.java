@@ -77,6 +77,9 @@ public class LeafConstant {
     public static final int RADIX = 36;
     public static final int RADIX64 = 64;
 
+    public static final int MAX_RANDOM = Integer.parseInt("zzz", RADIX);
+
+    public static final int MAX_NAMESPACE = Integer.parseInt("zzzz", RADIX);
 
     public static final long DEFAULT_BUFFER = 100000000L;
 

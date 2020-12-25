@@ -16,20 +16,5 @@ public interface SegmentGeneratorFactory {
      */
     SegmentGenerator getSegmentGenerator(String namespace);
 
-    /**
-     * 根据namespace创建id生成器
-     *
-     * @param namespace
-     * @param hostIp
-     * @return
-     */
-    Integer getWorkerId(String namespace, String hostIp);
 
-    /**
-     * 根据namespace创建Snowflake生成器
-     *
-     * @param namespace
-     * @return
-     */
-    SnowflakeGenerator getSnowflakeGenerator(String namespace,int workerId);
 }

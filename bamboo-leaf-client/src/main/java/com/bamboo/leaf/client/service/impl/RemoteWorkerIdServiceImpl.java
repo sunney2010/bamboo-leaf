@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -73,7 +74,9 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
             if (leafToken == null || leafToken.trim().length() == 0) {
                 throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafToken is not null!");
             }
+
             String[] leafServers = ClientConfig.getInstance().getLeafServer().split(",");
+            snowServerList = new ArrayList<String>(leafServers.length);
             for (String server : leafServers) {
                 // snowUrl remote api url
                 String snowUrl = MessageFormat.format(ClientConstant.snowServerUrl, server, leafToken, PNetUtils.getLocalHost());

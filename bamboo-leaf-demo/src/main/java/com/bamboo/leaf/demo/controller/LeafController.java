@@ -1,6 +1,7 @@
 package com.bamboo.leaf.demo.controller;
 
-import com.bamboo.leaf.client.service.BambooLeafClient;
+import com.bamboo.leaf.client.service.BambooLeafSegmentClient;
+import com.bamboo.leaf.client.service.BambooLeafSnowflakeClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.ModelMap;
@@ -19,7 +20,10 @@ public class LeafController {
 
     private static final Logger logger = LoggerFactory.getLogger(LeafController.class);
     @Resource
-    BambooLeafClient bambooLeafClient;
+    BambooLeafSegmentClient bambooLeafSegmentClient;
+
+    @Resource
+    BambooLeafSnowflakeClient bambooLeafSnowflakeClient;
 
     @RequestMapping("/segment/hello")
     public ModelMap hello() {
@@ -35,7 +39,7 @@ public class LeafController {
         logger.info("nextSegment parameter: namespace:{}", namespace);
         ModelMap result = new ModelMap();
         try {
-            long leafVal = bambooLeafClient.segmentId(namespace);
+            long leafVal = bambooLeafSegmentClient.segmentId(namespace);
             result.put("leafVal", leafVal);
             result.put("currentTime", LocalDateTime.now());
             logger.info("nextSegment is success,namespace:{},leafVal:{}", namespace, leafVal);
@@ -49,10 +53,16 @@ public class LeafController {
         logger.info("snowflake parameter: namespace:{}", namespace);
         ModelMap result = new ModelMap();
         try {
-            long snowId = bambooLeafClient.snowId(namespace);
-            result.put("snowId", snowId);
+            long snowflakeId = bambooLeafSnowflakeClient.snowflakeId(namespace);
+            String snowflakeId16 = bambooLeafSnowflakeClient.snowflakeId16(namespace);
+            String snowflakeId20 = bambooLeafSnowflakeClient.snowflakeId20(namespace);
+            String parsSnowflakeId = bambooLeafSnowflakeClient.parsSnowflakeId(namespace, snowflakeId);
+            result.put("snowflakeId", snowflakeId);
+            result.put("snowflakeId16", snowflakeId16);
+            result.put("snowflakeId20", snowflakeId20);
+            result.put("parsSnowflakeId", parsSnowflakeId);
             result.put("currentTime", LocalDateTime.now());
-            logger.info("nextSnowId is success,namespace:{},snowId:{}", namespace, snowId);
+            logger.info("nextSnowId is success,namespace:{},snowflakeId:{}", namespace, snowflakeId);
         } catch (Exception e) {
             logger.error("nextSnowId error", e);
         }

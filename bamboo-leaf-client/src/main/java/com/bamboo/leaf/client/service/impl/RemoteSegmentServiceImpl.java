@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -68,7 +69,7 @@ public class RemoteSegmentServiceImpl implements SegmentService {
                 throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafToken is not null!");
             }
             String[] leafServers = ClientConfig.getInstance().getLeafServer().split(",");
-
+            segmentServerList = new ArrayList<String>(leafServers.length);
             for (String server : leafServers) {
                 // segment remote api url
                 String segmentUrl = MessageFormat.format(ClientConstant.segmentServerUrl, server, leafToken);
