@@ -26,7 +26,25 @@ public interface BambooLeafSegmentClient {
      * 获取segment算法序列
      *
      * @param namespace 命名空间
+     * @param prefix    前缀
+     * @return
+     */
+    public String dateSegmentId(String namespace, String prefix);
+
+    /**
+     * 获取segment算法序列
+     *
+     * @param namespace 命名空间
      * @return
      */
     public Long timeSegmentId(String namespace);
+
+    /**
+     * 获取segment算法序列
+     *
+     * @param namespace 命名空间
+     * @param prefix    前缀
+     * @return
+     */
+    public String timeSegmentId(String namespace, String prefix);
 }

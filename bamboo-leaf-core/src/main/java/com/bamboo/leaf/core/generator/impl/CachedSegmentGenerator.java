@@ -102,7 +102,7 @@ public class CachedSegmentGenerator implements SegmentGenerator {
     }
 
     @Override
-    public Long nextId() {
+    public Long nextSegmentId() {
         while (true) {
             if (currentSegment == null) {
                 loadCurrent();
@@ -121,10 +121,25 @@ public class CachedSegmentGenerator implements SegmentGenerator {
     }
 
     @Override
-    public List<Long> nextId(Integer batchSize) {
+    public String nextSegmentIdFixed(long maxValue) {
+        int fixedLength = Long.toString(maxValue).length();
+        long val = this.nextSegmentId();
+        String valTemp = val + "";
+        StringBuilder id = new StringBuilder(fixedLength);
+        // 不足位数前面补"0"
+        for (int i = 0; i < (fixedLength - valTemp.length()); i++) {
+            id.append("0");
+        }
+        id.append(val);
+        return id.toString();
+
+    }
+
+    @Override
+    public List<Long> nextSegmentId(Integer batchSize) {
         List<Long> ids = new ArrayList<>();
         for (int i = 0; i < batchSize; i++) {
-            Long id = nextId();
+            Long id = nextSegmentId();
             ids.add(id);
         }
         return ids;

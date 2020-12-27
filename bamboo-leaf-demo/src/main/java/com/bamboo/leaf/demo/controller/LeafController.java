@@ -40,9 +40,24 @@ public class LeafController {
         ModelMap result = new ModelMap();
         try {
             long leafVal = bambooLeafSegmentClient.segmentId(namespace);
+            long dateVal = bambooLeafSegmentClient.dateSegmentId(namespace);
+            long timeVal = bambooLeafSegmentClient.timeSegmentId(namespace);
+            String datePixedVal = bambooLeafSegmentClient.dateSegmentId(namespace, "O");
+            String timePixedVal = bambooLeafSegmentClient.timeSegmentId(namespace, "P");
+
             result.put("leafVal", leafVal);
+            result.put("dateVal", dateVal + "");
+            result.put("timeVal", timeVal + "");
+            result.put("datePixedVal", datePixedVal);
+            result.put("timePixedVal", timePixedVal);
             result.put("currentTime", LocalDateTime.now());
-            logger.info("nextSegment is success,namespace:{},leafVal:{}", namespace, leafVal);
+            logger.info("nextSegment is success,namespace:{}", namespace);
+            logger.info("leafVal:{}", leafVal);
+            logger.info("dateVal:{}", dateVal);
+            logger.info("timeVal:{}", timeVal);
+            logger.info("datePixedVal:{}", datePixedVal);
+            logger.info("timePixedVal:{}", timePixedVal);
+
         } catch (Exception e) {
             logger.error("nextSegment error", e);
         }

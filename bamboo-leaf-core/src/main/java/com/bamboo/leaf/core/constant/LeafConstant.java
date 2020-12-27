@@ -87,4 +87,7 @@ public class LeafConstant {
 
     public static final int MAX_WORKERID = 1023;
 
+    public static final long SEGMENT_DATE_MAXVALUE = 99999999999L;
+    public static final long SEGMENT_TIME_MAXVALUE = 9999999L;
+
 }

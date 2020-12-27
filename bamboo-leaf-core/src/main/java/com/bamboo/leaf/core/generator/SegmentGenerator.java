@@ -9,14 +9,25 @@ import java.util.List;
 public interface SegmentGenerator {
     /**
      * get next id
+     *
      * @return
      */
-    Long nextId();
+    Long nextSegmentId();
+
+    /**
+     * get next id
+     *
+     * @param maxValue 最大值
+     * @return
+     */
+    String nextSegmentIdFixed(long maxValue);
+
 
     /**
      * get next id batch
+     *
      * @param batchSize
      * @return
      */
-    List<Long> nextId(Integer batchSize);
+    List<Long> nextSegmentId(Integer batchSize);
 }
