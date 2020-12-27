@@ -42,7 +42,7 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
         logger.info("bamboo client getWorkerId end, response:" + response);
         if (response == null || "".equals(response.trim())) {
             // 如果获取失败，则使用随机数备用
-            workerId = (int) SnowflakeIdUtils.nextLong(LeafConstant.INIT_WORKERID, LeafConstant.MAX_WORKERID);
+            workerId = (int) SnowflakeIdUtils.nextLong(LeafConstant.INIT_WORKER_ID, LeafConstant.MAX_WORKER_ID);
             logger.error("get workerId is error response is null,random workerId:{}", workerId);
         } else {
             Type type = new TypeReference<ResultResponse<Integer>>() {
@@ -54,7 +54,7 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
             } else {
                 logger.error("request remote is error,msg:{}", resultDto.getErrMsg());
                 // 如果获取失败，则使用随机数备用
-                workerId = (int) SnowflakeIdUtils.nextLong(LeafConstant.INIT_WORKERID, LeafConstant.MAX_WORKERID);
+                workerId = (int) SnowflakeIdUtils.nextLong(LeafConstant.INIT_WORKER_ID, LeafConstant.MAX_WORKER_ID);
                 logger.error("get workerId is error response is :{},random workerId:{}", result, workerId);
             }
         }

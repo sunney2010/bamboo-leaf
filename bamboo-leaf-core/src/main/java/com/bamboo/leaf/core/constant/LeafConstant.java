@@ -71,7 +71,7 @@ public class LeafConstant {
     /**
      * 预加载下个号段的最大百分比
      */
-    public static final int LOADING_PERCENT_MAX = 50;
+    public static final int LOADING_PERCENT_MAX = 60;
 
 
     public static final int RADIX = 36;
@@ -83,11 +83,21 @@ public class LeafConstant {
 
     public static final long DEFAULT_BUFFER = 100000000L;
 
-    public static final int INIT_WORKERID = 0;
-
-    public static final int MAX_WORKERID = 1023;
-
+    /**
+     * 最小workerId
+     */
+    public static final int INIT_WORKER_ID = 0;
+    /**
+     * 最大workerId
+     */
+    public static final int MAX_WORKER_ID = 32768;
+    /**
+     * 日期序列段的最大值
+     */
     public static final long SEGMENT_DATE_MAXVALUE = 99999999999L;
+    /**
+     * 时间序列段的最大值
+     */
     public static final long SEGMENT_TIME_MAXVALUE = 9999999L;
 
 }

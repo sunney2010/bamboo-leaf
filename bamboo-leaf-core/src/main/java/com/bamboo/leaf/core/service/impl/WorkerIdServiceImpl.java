@@ -34,11 +34,11 @@ public class WorkerIdServiceImpl implements WorkerIdService {
                 workerId++;
                 workerIdDAO.insertWorkerId(namespace, hostIp, workerId);
             }
-            if (workerId < LeafConstant.INIT_WORKERID || workerId > LeafConstant.MAX_WORKERID) {
-                logger.error(" workerId is scope [{}-{}],workerId:{}", LeafConstant.INIT_WORKERID,
-                        LeafConstant.MAX_WORKERID, workerId);
+            if (workerId < LeafConstant.INIT_WORKER_ID || workerId > LeafConstant.MAX_WORKER_ID) {
+                logger.error(" workerId is scope [{}-{}],workerId:{}", LeafConstant.INIT_WORKER_ID,
+                        LeafConstant.MAX_WORKER_ID, workerId);
                 throw new BambooLeafException(
-                        "workerId is scope [" + LeafConstant.INIT_WORKERID + "-" + LeafConstant.MAX_WORKERID + "]");
+                        "workerId is scope [" + LeafConstant.INIT_WORKER_ID + "-" + LeafConstant.MAX_WORKER_ID + "]");
             }
         } catch (Exception e) {
             logger.error("getWorkerId is error,msg:", e);
