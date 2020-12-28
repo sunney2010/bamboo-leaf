@@ -30,6 +30,11 @@ import javax.annotation.Resource;
 public class BambooLeafSnowflakeClientImpl extends AbstractWorkerIdGeneratorFactory implements BambooLeafSnowflakeClient, ApplicationContextAware {
     private static final Logger logger = LoggerFactory.getLogger(BambooLeafSnowflakeClientImpl.class);
 
+    private final static int SNOWFLAKE_ID_LENGTH = 13;
+    private final static int SNOWFLAKE_NAMESPACE_LENGTH = 4;
+    private final static int SNOWFLAKE_RANDOM_LENGTH = 3;
+
+
     private ApplicationContext applicationContext;
 
     @Resource(name = "workerIdService")
@@ -58,16 +63,16 @@ public class BambooLeafSnowflakeClientImpl extends AbstractWorkerIdGeneratorFact
         // ------------------------------------------------------
         String snowflakeId = Long.toString(snowflakeId(namespace), LeafConstant.RADIX);
         // 不足13位前面补"0"
-        for (int i = 0; i < (13 - snowflakeId.length()); i++) {
+        for (int i = 0; i < (SNOWFLAKE_ID_LENGTH - snowflakeId.length()); i++) {
             id.append('0');
         }
         id.append(snowflakeId);
         // --------------------------------------------------------
-        String rstr = Long.toString(SnowflakeIdUtils.nextLong(0L, LeafConstant.MAX_RANDOM), LeafConstant.RADIX);
-        for (int i = 0; i < (3 - rstr.length()); i++) {
+        String str = Long.toString(SnowflakeIdUtils.nextLong(0L, LeafConstant.MAX_RANDOM), LeafConstant.RADIX);
+        for (int i = 0; i < (SNOWFLAKE_RANDOM_LENGTH - str.length()); i++) {
             id.append('0');
         }
-        id.append(rstr);
+        id.append(str);
         return id.toString();
     }
 
@@ -80,22 +85,22 @@ public class BambooLeafSnowflakeClientImpl extends AbstractWorkerIdGeneratorFact
         StringBuilder id = new StringBuilder(20);
         String snowflakeId = Long.toString(snowflakeId(namespace), LeafConstant.RADIX);
         // 不足13位前面补"0"
-        for (int i = 0; i < (13 - snowflakeId.length()); i++) {
+        for (int i = 0; i < (SNOWFLAKE_ID_LENGTH - snowflakeId.length()); i++) {
             id.append('0');
         }
         id.append(snowflakeId);
         //
         String namespaceId = Long.toString(getNamespaceId(namespace), LeafConstant.RADIX);
-        for (int i = 0; i < (4 - namespaceId.length()); i++) {
+        for (int i = 0; i < (SNOWFLAKE_NAMESPACE_LENGTH - namespaceId.length()); i++) {
             id.append('0');
         }
         id.append(namespaceId);
         // --------------------------------------------------------
-        String rstr = Long.toString(SnowflakeIdUtils.nextLong(0L, LeafConstant.MAX_RANDOM), LeafConstant.RADIX);
-        for (int i = 0; i < (3 - rstr.length()); i++) {
+        String str = Long.toString(SnowflakeIdUtils.nextLong(0L, LeafConstant.MAX_RANDOM), LeafConstant.RADIX);
+        for (int i = 0; i < (SNOWFLAKE_RANDOM_LENGTH - str.length()); i++) {
             id.append('0');
         }
-        id.append(rstr);
+        id.append(str);
         return id.toString();
     }
 
@@ -135,6 +140,7 @@ public class BambooLeafSnowflakeClientImpl extends AbstractWorkerIdGeneratorFact
         //获取当前的配置的模式
         String mode = ClientConfig.getInstance().getMode();
         if (null == mode || mode.trim().length() == 0) {
+            logger.error("bamboo.leaf.client.mode is not null");
             throw new BambooLeafException("bamboo.leaf.client.mode is not null");
         }
         //判断配置的模式

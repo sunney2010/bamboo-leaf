@@ -34,8 +34,8 @@ public class LeafController {
         return result;
     }
 
-    @RequestMapping("/segment/nextSegment")
-    public ModelMap nextSegment(String namespace) {
+    @RequestMapping("/segment")
+    public ModelMap segment(String namespace) {
         logger.info("nextSegment parameter: namespace:{}", namespace);
         ModelMap result = new ModelMap();
         try {
@@ -63,8 +63,9 @@ public class LeafController {
         }
         return result;
     }
-    @RequestMapping("/snowflake/nextSnowId")
-    public ModelMap nextSnowId(String namespace) {
+
+    @RequestMapping("/snowflake")
+    public ModelMap snowflake(String namespace) {
         logger.info("snowflake parameter: namespace:{}", namespace);
         ModelMap result = new ModelMap();
         try {
@@ -83,5 +84,4 @@ public class LeafController {
         }
         return result;
     }
-
 }

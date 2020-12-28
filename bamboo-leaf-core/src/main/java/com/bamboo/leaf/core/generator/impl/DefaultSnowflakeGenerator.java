@@ -78,7 +78,7 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
         String thatTimeStr = DateUtils.formatByDateTimePattern(thatTime);
 
         // format as string
-        return String.format("{\"UID\":\"%d\",\"timestamp\":\"%s\",\"workerId\":\"%d\",\"sequence\":\"%d\"}",
+        return String.format("{\"snowflakeId\":\"%d\",\"timestamp\":\"%s\",\"workerId\":\"%d\",\"sequence\":\"%d\"}",
                 snowId, thatTimeStr, workerId, sequence);
     }
 

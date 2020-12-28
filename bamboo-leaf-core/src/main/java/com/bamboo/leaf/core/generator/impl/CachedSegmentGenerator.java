@@ -66,7 +66,6 @@ public class CachedSegmentGenerator implements SegmentGenerator {
             }
         }
     }
-
     private SegmentRange querySegmentRange() {
         String message = null;
         try {

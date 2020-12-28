@@ -67,6 +67,14 @@ public class SegmentServiceImpl implements SegmentService {
                 message.append(", please check table ").append(namespace);
                 throw new BambooLeafException(message.toString());
             }
+            // reset
+           /* if (maxVal > 0 && newValue > maxVal) {
+                segmentDAO.resetSegment(namespace, oldValue, segmentDO.getVersion());
+                if (logger.isWarnEnabled()) {
+                    logger.warn("resetSeq is success,namespace:{},curVal:{}", namespace, oldValue);
+                }
+                continue;
+            }*/
             Long newMaxVal = oldValue + segmentDO.getStep();
             SegmentDO updateSegment = new SegmentDO();
             updateSegment.setLeafVal(newMaxVal);

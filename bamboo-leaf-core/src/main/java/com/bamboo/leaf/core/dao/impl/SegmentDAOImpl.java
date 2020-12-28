@@ -56,6 +56,32 @@ public class SegmentDAOImpl extends AbstractDAO implements SegmentDAO {
         return segmentDO;
     }
 
+    @Override
+    public int resetSegment(String namespace, long maxVal, long version) throws BambooLeafException {
+        int val = 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = dataSource.getConnection();
+            stmt = conn.prepareStatement(getResetSegmentSql());
+            stmt.setLong(1, 0);
+            stmt.setLong(2, version + 1);
+            stmt.setString(3, namespace);
+            stmt.setLong(4, maxVal);
+            stmt.setLong(5, version);
+            val = stmt.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("resetSegment is error,msg", e);
+            throw new BambooLeafException(e);
+        } finally {
+            closeStatement(stmt);
+            stmt = null;
+            closeConnection(conn);
+            conn = null;
+        }
+        return val;
+    }
+
     private int insertSegmentSql(SegmentDO segmentDO) throws BambooLeafException {
         int val = 0;
         Connection conn = null;

@@ -5,7 +5,6 @@ import com.bamboo.leaf.core.common.ResultResponse;
 import com.bamboo.leaf.core.entity.SegmentRange;
 import com.bamboo.leaf.core.service.SegmentService;
 import com.bamboo.leaf.core.service.WorkerIdService;
-import com.bamboo.leaf.server.dao.entity.TokenDO;
 import com.bamboo.leaf.server.service.TokenService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,6 +17,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
+ * Bamboo服务Controller层
+ *
  * @author lichunming
  * @date 2020/11/19
  */
@@ -32,11 +33,6 @@ public class LeafController {
     SegmentService segmentService;
     @Resource
     WorkerIdService workerIdService;
-
-    @RequestMapping("/insertToken")
-    public int insertToken(TokenDO tokenDO) {
-        return tokenService.insertToken(tokenDO);
-    }
 
     @RequestMapping("/hello")
     public String hello() {

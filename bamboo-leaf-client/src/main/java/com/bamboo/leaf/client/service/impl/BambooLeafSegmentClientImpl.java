@@ -101,7 +101,7 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
         if (prefix == null || prefix.trim().length() == 0) {
             throw new IllegalArgumentException("prefix is null");
         }
-        if (prefix.trim().length() < 1 || prefix.trim().length() > 10) {
+        if (prefix.trim().length() < 1 || prefix.trim().length() > PREFIX_MAX_LENGTH) {
             throw new IllegalArgumentException("prefix range no in [1,10]");
         }
         return prefix + this.timeSegmentId(namespace);

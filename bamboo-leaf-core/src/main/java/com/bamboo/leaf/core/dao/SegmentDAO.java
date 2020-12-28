@@ -27,11 +27,24 @@ public interface SegmentDAO {
      * @throws BambooLeafException
      */
     int insertSegment(SegmentDO segmentDO) throws BambooLeafException;
+
     /**
      * 查询
+     *
      * @param namespace 命名空间
      * @return 返回序列下一个值
      * @throws BambooLeafException
      */
     SegmentDO selectSegment(String namespace) throws BambooLeafException;
+
+    /**
+     * 重置
+     *
+     * @param namespace 命名空间
+     * @param maxVal    当前最大值
+     * @param version   版本
+     * @return 返回序列下一个值
+     * @throws BambooLeafException
+     */
+    int resetSegment(String namespace, long maxVal, long version) throws BambooLeafException;
 }
