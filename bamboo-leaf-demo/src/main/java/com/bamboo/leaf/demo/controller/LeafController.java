@@ -72,7 +72,7 @@ public class LeafController {
             String snowflakeId16 = bambooLeafSnowflakeClient.snowflakeId16(namespace);
             String snowflakeId20 = bambooLeafSnowflakeClient.snowflakeId20(namespace);
             String parsSnowflakeId = bambooLeafSnowflakeClient.parsSnowflakeId(namespace, snowflakeId);
-            result.put("snowflakeId", snowflakeId);
+            result.put("snowflakeId", snowflakeId + "");
             result.put("snowflakeId16", snowflakeId16);
             result.put("snowflakeId20", snowflakeId20);
             result.put("parsSnowflakeId", parsSnowflakeId);

@@ -93,10 +93,15 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
         // Clock moved backwards, refuse to generate SnowId
         if (currentSecond < lastTimestamp) {
             long refusedSeconds = lastTimestamp - currentSecond;
-            throw new BambooLeafException("Clock moved backwards. Refusing for " + refusedSeconds + " seconds");
-        }
-        // At the same second, increase sequence
-        if (currentSecond == lastTimestamp) {
+            logger.warn("Clock moved backwards. Refusing for {} seconds", refusedSeconds);
+            sequence = (sequence + 1) & bitsAllocator.getMaxSequence();
+            // Exceed the max sequence, we wait the next second to generate SnowId
+            if (sequence == 0) {
+                //使用未来时间
+                currentSecond = lastTimestamp + 1;
+            }
+        } else if (currentSecond == lastTimestamp) {
+            // At the same second, increase sequence
             sequence = (sequence + 1) & bitsAllocator.getMaxSequence();
             // Exceed the max sequence, we wait the next second to generate SnowId
             if (sequence == 0) {
@@ -107,8 +112,9 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
             sequence = 0L;
         }
         lastTimestamp = currentSecond;
+        long deltaSeconds = currentSecond - epochSeconds;
         // Allocate bits for SnowId
-        return bitsAllocator.allocate(currentSecond - epochSeconds, workerId, sequence);
+        return bitsAllocator.allocate(deltaSeconds, workerId, sequence);
     }
 
     /**

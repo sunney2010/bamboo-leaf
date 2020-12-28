@@ -1,5 +1,7 @@
 package com.bamboo.leaf.core.factory;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @description: TODO
  * @Author: Zhuzhi
@@ -9,24 +11,33 @@ public class AbstractSnowflake {
     // ==============================Fields===========================================
 
     /** Bits allocate */
-    /** 机器id所占的位数 */
+    /**
+     * 机器id所占的位数
+     */
     protected final int workerIdBits = 15;
-    /** 序列在id中占的位数 */
+    /**
+     * 序列在id中占的位数
+     */
     protected final int sequenceBits = 15;
-    /** 时间截中占的位数 */
+    /**
+     * 时间截中占的位数
+     */
     protected int timeBits = 33;
 
-    /** 开始时间截 (2019-01-01) */
-    protected final long epochSeconds = 1546272000000L;
+    /**
+     * 开始时间截 (2019-01-01)
+     */
+    protected final long epochSeconds = TimeUnit.MILLISECONDS.toSeconds(1546272000000L);
 
-
-    /** 支持的最大机器id，结果是32768 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数) */
+    /**
+     * 支持的最大机器id，结果是32768 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数)
+     */
     protected final long maxWorkerId = -1L ^ (-1L << workerIdBits);
 
 
-
-
-    /** 机器ID向左移15位 */
+    /**
+     * 机器ID向左移15位
+     */
     protected final long workerIdShift = sequenceBits;
 
 
