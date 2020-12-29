@@ -13,7 +13,7 @@ public abstract class AbstractSegmentGeneratorFactory implements SegmentGenerato
     private static ConcurrentHashMap<String, SegmentGenerator> generatorMap = new ConcurrentHashMap<>();
 
     @Override
-    public SegmentGenerator getSegmentGenerator(String namespace) {
+    public SegmentGenerator getSegmentGenerator(String namespace, long maxValue) {
         if (generatorMap.containsKey(namespace)) {
             return generatorMap.get(namespace);
         }
@@ -21,7 +21,7 @@ public abstract class AbstractSegmentGeneratorFactory implements SegmentGenerato
             if (generatorMap.containsKey(namespace)) {
                 return generatorMap.get(namespace);
             }
-            SegmentGenerator generator = createSegmentGenerator(namespace);
+            SegmentGenerator generator = createSegmentGenerator(namespace, maxValue);
             generatorMap.put(namespace, generator);
             return generator;
         }
@@ -32,9 +32,10 @@ public abstract class AbstractSegmentGeneratorFactory implements SegmentGenerato
      * 根据namespace创建id生成器
      *
      * @param namespace
+     * @param maxValue
      * @return
      */
-    protected abstract SegmentGenerator createSegmentGenerator(String namespace);
+    protected abstract SegmentGenerator createSegmentGenerator(String namespace, long maxValue);
 
 
 }

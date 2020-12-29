@@ -42,7 +42,7 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
         if (namespace == null || namespace.trim().length() == 0) {
             throw new IllegalArgumentException("namespace is null");
         }
-        SegmentGenerator generator = this.getSegmentGenerator(namespace);
+        SegmentGenerator generator = this.getSegmentGenerator(namespace, 0);
         return generator.nextSegmentId();
     }
 
@@ -51,7 +51,7 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
         if (namespace == null || namespace.trim().length() == 0) {
             throw new IllegalArgumentException("namespace is null");
         }
-        SegmentGenerator generator = this.getSegmentGenerator(namespace);
+        SegmentGenerator generator = this.getSegmentGenerator(namespace, LeafConstant.SEGMENT_DATE_MAXVALUE);
         String val = generator.nextSegmentIdFixed(LeafConstant.SEGMENT_DATE_MAXVALUE);
         StringBuilder id = new StringBuilder(20);
         // 获取当前的系统时间
@@ -81,7 +81,7 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
         if (namespace == null || namespace.trim().length() == 0) {
             throw new IllegalArgumentException("namespace is null");
         }
-        SegmentGenerator generator = this.getSegmentGenerator(namespace);
+        SegmentGenerator generator = this.getSegmentGenerator(namespace, LeafConstant.SEGMENT_TIME_MAXVALUE);
         String val = generator.nextSegmentIdFixed(LeafConstant.SEGMENT_TIME_MAXVALUE);
 
         StringBuilder id = new StringBuilder(20);
@@ -109,7 +109,7 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
 
 
     @Override
-    protected SegmentGenerator createSegmentGenerator(String namespace) {
+    protected SegmentGenerator createSegmentGenerator(String namespace, long maxValue) {
         SegmentGenerator segmentGenerator = null;
         //获取当前的配置的模式
         String mode = ClientConfig.getInstance().getMode();
@@ -118,9 +118,9 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
         }
         //判断配置的模式
         if (mode.equalsIgnoreCase(ModeEnum.Remote.name())) {
-            segmentGenerator = new CachedSegmentGenerator(namespace, new RemoteSegmentServiceImpl());
+            segmentGenerator = new CachedSegmentGenerator(namespace, maxValue, new RemoteSegmentServiceImpl());
         } else if (mode.equalsIgnoreCase(ModeEnum.Local.name())) {
-            segmentGenerator = new CachedSegmentGenerator(namespace, localSegmentService);
+            segmentGenerator = new CachedSegmentGenerator(namespace, maxValue, localSegmentService);
         }
         return segmentGenerator;
     }

@@ -1,7 +1,6 @@
 package com.bamboo.leaf.core.factory;
 
 import com.bamboo.leaf.core.generator.SegmentGenerator;
-import com.bamboo.leaf.core.generator.SnowflakeGenerator;
 
 /**
  * @author zhuzhi
@@ -12,9 +11,10 @@ public interface SegmentGeneratorFactory {
      * 根据namespace创建id生成器
      *
      * @param namespace
+     * @param maxValue
      * @return
      */
-    SegmentGenerator getSegmentGenerator(String namespace);
+    SegmentGenerator getSegmentGenerator(String namespace, long maxValue);
 
 
 }

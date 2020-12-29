@@ -44,17 +44,21 @@ public class LeafController {
         logger.info(message);
         return message;
     }
+
     @RequestMapping("/segment/nextSegmentRange")
-    public ResultResponse<SegmentRange> nextSegmentRange(String namespace, String token) {
+    public ResultResponse<SegmentRange> nextSegmentRange(String namespace, Long maxValue, String token) {
         ResultResponse<SegmentRange> response = new ResultResponse<>();
-        logger.info("nextSegmentRange parameter, namespace:{},token:{}",namespace,token);
+        logger.info("nextSegmentRange parameter, namespace:{},token:{}", namespace, token);
         if (!tokenService.canVisit(namespace, token)) {
             response.setResult(ResultCode.FAIL.getMessage());
             response.setErrMsg(ResultCode.TOKEN_ERR.getMessage());
             return response;
         }
+        if (null == maxValue) {
+            maxValue = 0L;
+        }
         try {
-            SegmentRange segment = segmentService.getNextSegmentRange(namespace);
+            SegmentRange segment = segmentService.getNextSegmentRange(namespace, maxValue);
             response.setResultData(segment);
             logger.info("nextSegmentRange is success,namespace:{},leafVal:{}", namespace, segment.getCurrentVal());
         } catch (Exception e) {

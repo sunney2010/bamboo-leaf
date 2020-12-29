@@ -30,7 +30,7 @@ public class SegmentServiceImpl implements SegmentService {
     LeafConfigure leafConfigure;
 
     @Override
-    public SegmentRange getNextSegmentRange(String namespace) {
+    public SegmentRange getNextSegmentRange(String namespace, long maxVal) {
         // 获取NextSegmentRange的时候，有可能存在version冲突，需要重试
         for (int i = 0; i < leafConfigure.getRetry(); i++) {
             SegmentDO segmentDO = segmentDAO.selectSegment(namespace);
@@ -39,7 +39,7 @@ public class SegmentServiceImpl implements SegmentService {
                 segmentDO = new SegmentDO();
                 segmentDO.setNamespace(namespace);
                 segmentDO.setDelta(1);
-                segmentDO.setRemainder(1);
+                segmentDO.setRemainder(0);
                 segmentDO.setStep(leafConfigure.getStep());
                 segmentDO.setLeafVal(LeafConstant.DEFAULT_VALUE);
                 segmentDO.setVersion(1L);
@@ -67,15 +67,19 @@ public class SegmentServiceImpl implements SegmentService {
                 message.append(", please check table ").append(namespace);
                 throw new BambooLeafException(message.toString());
             }
+            Long newMaxVal = oldValue + segmentDO.getStep();
             // reset
-           /* if (maxVal > 0 && newValue > maxVal) {
-                segmentDAO.resetSegment(namespace, oldValue, segmentDO.getVersion());
-                if (logger.isWarnEnabled()) {
-                    logger.warn("resetSeq is success,namespace:{},curVal:{}", namespace, oldValue);
+            if (maxVal > 0 && newMaxVal > maxVal) {
+                int result = segmentDAO.resetSegment(namespace, oldValue, segmentDO.getVersion());
+                //判断执行结果
+                if (result == 1) {
+                    if (logger.isWarnEnabled()) {
+                        logger.warn("resetSeq is success,namespace:{},curVal:{},maxVal:{}", namespace, oldValue, maxVal);
+                    }
                 }
                 continue;
-            }*/
-            Long newMaxVal = oldValue + segmentDO.getStep();
+            }
+
             SegmentDO updateSegment = new SegmentDO();
             updateSegment.setLeafVal(newMaxVal);
             updateSegment.setVersion(segmentDO.getVersion());
@@ -104,6 +108,8 @@ public class SegmentServiceImpl implements SegmentService {
         segmentRange.setCurrentVal(new AtomicLong(segmentDO.getLeafVal() + 1));
         segmentRange.setRemainder(segmentDO.getRemainder() == null ? 0 : segmentDO.getRemainder());
         segmentRange.setDelta(segmentDO.getDelta() == null ? 1 : segmentDO.getDelta());
+        segmentRange.setStep(segmentDO.getStep());
+
         // 默认25%加载
         segmentRange.setLoadingVal(segmentRange.getCurrentVal().get() + segmentDO.getStep() * leafConfigure.getLoadingPercent() / 100);
         return segmentRange;

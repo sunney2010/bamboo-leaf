@@ -32,10 +32,10 @@ public class RemoteSegmentServiceImpl implements SegmentService {
     private static final Logger logger = LoggerFactory.getLogger(RemoteSegmentServiceImpl.class);
 
     @Override
-    public SegmentRange getNextSegmentRange(String namespace) {
-        String url = chooseService(namespace);
-        if(logger.isInfoEnabled()){
-            logger.info("getNextSegmentRange url:{}",url);
+    public SegmentRange getNextSegmentRange(String namespace, long maxValue) {
+        String url = chooseService(namespace, maxValue);
+        if (logger.isInfoEnabled()) {
+            logger.info("getNextSegmentRange url:{}", url);
         }
         String response = HttpUtils.post(url, ClientConfig.getInstance().getReadTimeout(),
                 ClientConfig.getInstance().getConnectTimeout());
@@ -43,7 +43,8 @@ public class RemoteSegmentServiceImpl implements SegmentService {
         if (response == null || "".equals(response.trim())) {
             return null;
         }
-        Type type = new TypeReference<ResultResponse<SegmentRange>>() {}.getType();
+        Type type = new TypeReference<ResultResponse<SegmentRange>>() {
+        }.getType();
         ResultResponse<SegmentRange> resultDto = JSON.parseObject(response, type);
         String result = resultDto.getResult();
         SegmentRange segment = null;
@@ -55,7 +56,7 @@ public class RemoteSegmentServiceImpl implements SegmentService {
         return segment;
     }
 
-    private String chooseService(String namespace) {
+    private String chooseService(String namespace, long maxValue) {
         List<String> segmentServerList = ClientConfig.getInstance().getSegmentServerList();
         if (null == segmentServerList) {
             String leafServer = ClientConfig.getInstance().getLeafServer();
@@ -72,7 +73,7 @@ public class RemoteSegmentServiceImpl implements SegmentService {
             segmentServerList = new ArrayList<String>(leafServers.length);
             for (String server : leafServers) {
                 // segment remote api url
-                String segmentUrl = MessageFormat.format(ClientConstant.segmentServerUrl, server, leafToken);
+                String segmentUrl = MessageFormat.format(ClientConstant.segmentServerUrl, server, leafToken, maxValue);
                 segmentServerList.add(segmentUrl);
 
             }

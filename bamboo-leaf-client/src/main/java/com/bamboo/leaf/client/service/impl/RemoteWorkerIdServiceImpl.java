@@ -79,7 +79,7 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
             snowServerList = new ArrayList<String>(leafServers.length);
             for (String server : leafServers) {
                 // snowUrl remote api url
-                String snowUrl = MessageFormat.format(ClientConstant.snowServerUrl, server, leafToken, PNetUtils.getLocalHost());
+                String snowUrl = MessageFormat.format(ClientConstant.snowflakeServerUrl, server, leafToken, PNetUtils.getLocalHost());
                 snowServerList.add(snowUrl);
 
             }

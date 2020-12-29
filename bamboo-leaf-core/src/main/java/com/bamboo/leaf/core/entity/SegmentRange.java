@@ -29,6 +29,10 @@ public class SegmentRange {
      * mod num
      */
     private int remainder;
+    /**
+     * 步长
+     */
+    private int step;
 
     /**
      * 是否已用完
@@ -165,5 +169,13 @@ public class SegmentRange {
 
     public void setMaxId(long maxId) {
         this.maxId = maxId;
+    }
+
+    public int getStep() {
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
     }
 }
