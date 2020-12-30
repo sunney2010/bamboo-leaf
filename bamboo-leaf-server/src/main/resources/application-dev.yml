@@ -1,18 +1,20 @@
 logging: 
-   level: 
-      # 日志级别调整
-      root: info
+  level:
+    # 日志级别调整
+    root: info
+  config: classpath:log4j2-boot-dev.xml
 server:
   # 服务对外暴露的端口号
-  port: 8086
+  port: 8080
   servlet:
     context-path: /bamboo-leaf
 spring: 
   application:
-    name: bamboo-leaf-demo
+    name: bamboo-leaf-server
   devtools:
     restart:
-      enabled: true  #设置开启热部署
+      #设置开启热部署
+      enabled: true
   profiles:
     active: dev
   datasource:
@@ -70,6 +72,3 @@ bamboo:
     configure:
       retry: 16
       step: 20000
-    client:
-      leafToken: 0504c00e-7971-41d1-87e8-0952399c5816
-      leafServer: 127.0.0.1:8087

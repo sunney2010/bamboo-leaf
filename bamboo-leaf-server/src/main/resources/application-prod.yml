@@ -1,10 +1,11 @@
 logging: 
-   level: 
+  level:
       # 日志级别调整
-      root: info
+    root: info
+  config: classpath:log4j2-boot-prod.xml
 server:
   # 服务对外暴露的端口号
-  port: 8087
+  port: 8080
   servlet:
     context-path: /bamboo-leaf
 spring: 
@@ -14,7 +15,7 @@ spring:
     restart:
       enabled: true  #设置开启热部署
   profiles:
-    active: dev
+    active: prod
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver

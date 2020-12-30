@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.bamboo.leaf</groupId>
         <artifactId>bamboo-leaf</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>bamboo-leaf-server</artifactId>
