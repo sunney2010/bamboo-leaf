@@ -37,6 +37,21 @@ public class SnowflakeController {
         return result;
     }
 
+    @RequestMapping("/snowflake/parsSnowflakeId")
+    public ModelMap parsSnowflakeId(String namespace, Long snowflakeId) {
+        logger.info("snowflakeId parameter: namespace:{}", namespace);
+        ModelMap result = new ModelMap();
+        try {
+            String res = bambooLeafSnowflakeClient.parsSnowflakeId(namespace, snowflakeId);
+            result.put("result", res);
+            result.put("currentTime", LocalDateTime.now());
+            logger.info("snowflakeId is success,namespace:{},snowflakeId:{}", namespace, snowflakeId);
+        } catch (Exception e) {
+            logger.error("snowflakeId error", e);
+        }
+        return result;
+    }
+
     @RequestMapping("/snowflake/snowflakeId16")
     public ModelMap snowflakeId16(String namespace) {
         logger.info("snowflakeId16 parameter: namespace:{}", namespace);

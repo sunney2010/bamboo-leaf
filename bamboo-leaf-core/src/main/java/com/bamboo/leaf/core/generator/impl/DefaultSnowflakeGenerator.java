@@ -92,6 +92,7 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
         long currentSecond = getCurrentSecond();
         // Clock moved backwards, refuse to generate SnowId
         if (currentSecond < lastTimestamp) {
+            //计算时间差
             long refusedSeconds = lastTimestamp - currentSecond;
             logger.warn("Clock moved backwards. Refusing for {} seconds", refusedSeconds);
             sequence = (sequence + 1) & bitsAllocator.getMaxSequence();
@@ -99,6 +100,9 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
             if (sequence == 0) {
                 //使用未来时间
                 currentSecond = lastTimestamp + 1;
+            } else {
+                //使用未来时间
+                currentSecond = lastTimestamp;
             }
         } else if (currentSecond == lastTimestamp) {
             // At the same second, increase sequence

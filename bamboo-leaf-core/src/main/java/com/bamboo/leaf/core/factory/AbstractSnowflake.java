@@ -47,10 +47,10 @@ public class AbstractSnowflake {
     /** 生成序列的掩码，这里为32768 (0b111111111111=0xfff=4095) */
     protected final long sequenceMask = -1L ^ (-1L << sequenceBits);
 
-    /** 工作机器ID(0~32768) */
+    /** 工作机器ID(0~32767) */
     protected long workerId;
 
-    /** 毫秒内序列(0~32768) */
+    /** 毫秒内序列(0~32767) */
     protected long sequence = 0L;
 
     /** 上次生成ID的时间截 */

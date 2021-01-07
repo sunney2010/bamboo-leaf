@@ -21,7 +21,7 @@ spring:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
       type: com.alibaba.druid.pool.DruidDataSource
-      url: jdbc:mysql://29.2.231.222:3306/event?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      url: jdbc:mysql://29.2.231.222:3306/bamboo-leaf?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
       username: deployop
       password: 6r2RaGP4m
       # 初始连接数
