@@ -1,7 +1,7 @@
 package com.bamboo.leaf.core.common;
 
 /**
- * @description: TODO
+ * @description: 返回代码类
  * @Author: Zhuzhi
  * @Date: 2020/12/3 下午7:55
  */

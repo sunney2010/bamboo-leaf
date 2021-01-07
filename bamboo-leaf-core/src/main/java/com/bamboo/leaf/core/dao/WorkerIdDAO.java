@@ -1,9 +1,7 @@
 package com.bamboo.leaf.core.dao;
 
-import com.bamboo.leaf.core.util.PURL;
-
 /**
- * @description: TODO
+ * @description: WorkerId DAO接口
  * @Author: Zhuzhi
  * @Date: 2020/11/29 下午11:32
  */

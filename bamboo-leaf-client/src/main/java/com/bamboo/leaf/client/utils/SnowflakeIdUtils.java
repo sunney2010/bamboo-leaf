@@ -6,8 +6,9 @@ package com.bamboo.leaf.client.utils;
 import java.util.Random;
 
 /**
- * @author PENGQIANQING719
- *
+ * @description: Snowflake算法工具类
+ * @Author: Zhuzhi
+ * @Date: 2020/12/16 下午12:04
  */
 public class SnowflakeIdUtils {
 

@@ -104,6 +104,12 @@ public class BambooLeafSnowflakeClientImpl extends AbstractWorkerIdGeneratorFact
         return id.toString();
     }
 
+    /**
+     * 获取namespace的随机数
+     *
+     * @param namespace namespace
+     * @return
+     */
     private static Long getNamespaceId(String namespace) {
         if (namespace == null || (namespace = namespace.trim()).length() == 0) {
             throw new IllegalArgumentException("namespace requried.");

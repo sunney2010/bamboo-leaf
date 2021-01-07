@@ -1,7 +1,7 @@
 package com.bamboo.leaf.core.constant;
 
 /**
- * @description: TODO
+ * @description: 表定义字段常量类
  * @Author: Zhuzhi
  * @Date: 2020/12/4 下午11:13
  */

@@ -4,7 +4,7 @@ import com.bamboo.leaf.core.entity.SegmentDO;
 import com.bamboo.leaf.core.exception.BambooLeafException;
 
 /**
- * @description: TODO
+ * @description: Segment算法DAO接口
  * @Author: Zhuzhi
  * @Date: 2020/11/30 下午1:09
  */

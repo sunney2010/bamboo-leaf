@@ -56,6 +56,12 @@ public class RemoteSegmentServiceImpl implements SegmentService {
         return segment;
     }
 
+    /**
+     * 远程URL拼装
+     * @param namespace namespace
+     * @param maxValue 最大值
+     * @return
+     */
     private String chooseService(String namespace, long maxValue) {
         List<String> segmentServerList = ClientConfig.getInstance().getSegmentServerList();
         if (null == segmentServerList) {
@@ -67,7 +73,7 @@ public class RemoteSegmentServiceImpl implements SegmentService {
             String leafToken = ClientConfig.getInstance().getLeafToken();
             // 判断服务token
             if (leafToken == null || leafToken.trim().length() == 0) {
-                throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafToken is not null!");
+                throw new BambooLeafException("mode=Remote,bamboo.leaf.client.leafToken is not null!");
             }
             String[] leafServers = ClientConfig.getInstance().getLeafServer().split(",");
             segmentServerList = new ArrayList<String>(leafServers.length);

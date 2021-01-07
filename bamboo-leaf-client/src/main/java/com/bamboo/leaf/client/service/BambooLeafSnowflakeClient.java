@@ -1,7 +1,7 @@
 package com.bamboo.leaf.client.service;
 
 /**
- * @description: TODO
+ * @description: Snowflake算法客户端接口
  * @Author: Zhuzhi
  * @Date: 2020/12/25 下午6:30
  */

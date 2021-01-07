@@ -1,7 +1,7 @@
 package com.bamboo.leaf.client.service;
 
 /**
- * @description: TODO
+ * @description: Segment算法客户端接口
  * @Author: Zhuzhi
  * @Date: 2020/12/16 下午12:03
  */

@@ -3,7 +3,7 @@ package com.bamboo.leaf.client.dto;
 import com.bamboo.leaf.core.entity.SegmentRange;
 
 /**
- * @description: TODO
+ * @description: 结果DTO
  * @Author: Zhuzhi
  * @Date: 2020/12/8 下午12:44
  */

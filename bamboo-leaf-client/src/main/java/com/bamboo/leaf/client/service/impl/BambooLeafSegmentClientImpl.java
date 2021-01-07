@@ -40,6 +40,7 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
     @Override
     public Long segmentId(String namespace) {
         if (namespace == null || namespace.trim().length() == 0) {
+            logger.error("namespace is null");
             throw new IllegalArgumentException("namespace is null");
         }
         SegmentGenerator generator = this.getSegmentGenerator(namespace, 0);
@@ -49,6 +50,7 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
     @Override
     public Long dateSegmentId(String namespace) {
         if (namespace == null || namespace.trim().length() == 0) {
+            logger.error("namespace is null");
             throw new IllegalArgumentException("namespace is null");
         }
         SegmentGenerator generator = this.getSegmentGenerator(namespace, LeafConstant.SEGMENT_DATE_MAXVALUE);

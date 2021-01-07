@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @description: TODO
+ * @description: WorkerId远程服务类
  * @Author: Zhuzhi
  * @Date: 2020/12/23 下午12:58
  */

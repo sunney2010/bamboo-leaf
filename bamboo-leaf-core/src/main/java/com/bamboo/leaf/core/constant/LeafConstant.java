@@ -2,6 +2,7 @@ package com.bamboo.leaf.core.constant;
 
 /**
  * @author zhuzhi
+ * @description: 常量类
  * @date 2020/11/19
  */
 public class LeafConstant {

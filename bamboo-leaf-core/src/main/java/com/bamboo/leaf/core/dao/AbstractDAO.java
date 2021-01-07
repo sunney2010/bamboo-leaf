@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * @description: TODO
+ * @description: DAO抽象类
  * @Author: Zhuzhi
  * @Date: 2020/11/30 上午12:04
  */
