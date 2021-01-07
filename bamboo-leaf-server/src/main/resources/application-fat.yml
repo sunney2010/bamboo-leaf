@@ -2,7 +2,7 @@ logging:
   level:
     # 日志级别调整
     root: info
-  config: classpath:log4j2-boot-dev.xml
+  config: classpath:log4j2-boot-fat.xml
 server:
   # 服务对外暴露的端口号
   port: 8080

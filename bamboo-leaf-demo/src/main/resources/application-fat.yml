@@ -2,7 +2,7 @@ logging:
   level:
       # 日志级别调整
     root: info
-  config: classpath:log4j2-boot-dev.xml
+  config: classpath:log4j2-boot-fat.xml
 server:
   # 服务对外暴露的端口号
   port: 8080
@@ -73,4 +73,5 @@ bamboo:
       step: 20000
     client:
       leafToken: 0504c00e-7971-41d1-87e8-0952399c5816
-      leafServer: 127.0.0.1:8087
+      leafServer: 29.12.26.93:8080
+      mode: Remote
