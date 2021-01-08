@@ -89,6 +89,7 @@
 		<root level="info">
 			<appender-ref ref="Console"/>
 			<appender-ref ref="Filelog"/>
+			<appender-ref ref="RollingFileAll"/>
 			<appender-ref ref="RollingFileInfo"/>
 			<appender-ref ref="RollingFileWarn"/>
 			<appender-ref ref="RollingFileError"/>

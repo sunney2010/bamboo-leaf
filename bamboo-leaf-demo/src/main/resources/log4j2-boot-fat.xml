@@ -26,6 +26,17 @@
 			<PatternLayout pattern="${LOG_PATTERN}"/>
 		</File>
 
+		<!-- 这个会打印出所有的级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+		<RollingFile name="RollingFileAll" fileName="${FILE_PATH}/${FILE_NAME}.log" filePattern="${FILE_PATH}/${FILE_NAME}-%d{yyyy-MM-dd}_%i.log.gz">
+			<PatternLayout pattern="${LOG_PATTERN}"/>
+			<Policies>
+				<!--interval属性用来指定多久滚动一次，默认是1 hour-->
+				<TimeBasedTriggeringPolicy interval="1"/>
+				<SizeBasedTriggeringPolicy size="10MB"/>
+			</Policies>
+			<!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
+			<DefaultRolloverStrategy max="15"/>
+		</RollingFile>
 		<!-- 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
 		<RollingFile name="RollingFileInfo" fileName="${FILE_PATH}/info.log" filePattern="${FILE_PATH}/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log.gz">
 			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
@@ -87,6 +98,7 @@
 		<root level="debug">
 			<appender-ref ref="Console"/>
 			<appender-ref ref="Filelog"/>
+			<appender-ref ref="RollingFileAll"/>
 			<appender-ref ref="RollingFileInfo"/>
 			<appender-ref ref="RollingFileWarn"/>
 			<appender-ref ref="RollingFileError"/>
