@@ -5,6 +5,7 @@ import com.bamboo.leaf.core.generator.SegmentGenerator;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * Segment算法抽象
  * @author zhuzhi
  * @date 2020/11/19
  */

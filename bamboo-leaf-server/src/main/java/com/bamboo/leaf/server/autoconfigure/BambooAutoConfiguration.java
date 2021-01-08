@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @description: TODO
+ * @description: 自动配置类
  * @Author: Zhuzhi
  * @Date: 2020/11/30 下午1:10
  */

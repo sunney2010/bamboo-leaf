@@ -4,7 +4,7 @@ import com.bamboo.leaf.core.generator.WorkerIdGenerator;
 import com.bamboo.leaf.core.service.WorkerIdService;
 
 /**
- * @description: TODO
+ * @description: WorkerId默认实现类
  * @Author: Zhuzhi
  * @Date: 2020/12/23 下午9:35
  */

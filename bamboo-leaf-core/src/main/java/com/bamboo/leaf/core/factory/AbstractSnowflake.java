@@ -3,7 +3,7 @@ package com.bamboo.leaf.core.factory;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @description: TODO
+ * @description: 雪花抽象类
  * @Author: Zhuzhi
  * @Date: 2020/12/22 下午7:10
  */

@@ -4,6 +4,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * 线程名称工厂
  * @author zhuzhi
  * @date 2020/11/19
  */

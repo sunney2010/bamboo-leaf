@@ -3,6 +3,7 @@ package com.bamboo.leaf.core.generator;
 import java.util.List;
 
 /**
+ * Segment通用接口
  * @author zhuzhi
  * @date 2020/11/19
  */

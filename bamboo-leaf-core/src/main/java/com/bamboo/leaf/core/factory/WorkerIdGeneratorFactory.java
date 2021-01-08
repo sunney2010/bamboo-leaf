@@ -3,7 +3,7 @@ package com.bamboo.leaf.core.factory;
 import com.bamboo.leaf.core.generator.SnowflakeGenerator;
 
 /**
- * @description: TODO
+ * @description: WorkerId通用接口
  * @Author: Zhuzhi
  * @Date: 2020/12/25 下午10:03
  */

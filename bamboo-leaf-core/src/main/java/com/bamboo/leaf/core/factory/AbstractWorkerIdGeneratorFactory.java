@@ -5,8 +5,8 @@ import com.bamboo.leaf.core.generator.SnowflakeGenerator;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @description: TODO
- * @Author: Zhuzhi
+ * @description: workerId抽象工厂
+ * @Author: zhuzhi
  * @Date: 2020/12/25 下午10:05
  */
 public abstract class AbstractWorkerIdGeneratorFactory implements WorkerIdGeneratorFactory {

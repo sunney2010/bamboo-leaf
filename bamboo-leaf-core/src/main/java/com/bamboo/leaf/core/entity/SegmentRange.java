@@ -3,6 +3,7 @@ package com.bamboo.leaf.core.entity;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
+ * Segment区间实体
  * @author zhuzhi
  * @date 2020/11/19
  */

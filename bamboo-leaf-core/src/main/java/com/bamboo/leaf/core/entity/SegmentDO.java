@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @description: TODO
+ * @description: Segment算法实体
  * @Author: Zhuzhi
  * @Date: 2020/12/2 下午12:12
  */

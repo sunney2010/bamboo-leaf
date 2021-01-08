@@ -1,6 +1,7 @@
 package com.bamboo.leaf.core.entity;
 
 /**
+ * Segment状态枚举
  * @author zhuzhi
  * @date 2020/11/19
  */
