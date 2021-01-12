@@ -146,32 +146,38 @@ public class BambooAutoConfiguration {
         }
         clientConfig.setMode(mode);
 
-            // 服务地址
-            String leafServer = leafClientProperties.getLeafServer();
-            if ((leafServer == null || leafServer.trim().length() == 0) && null != properties) {
-                leafServer = properties.getProperty("bamboo.leaf.client.leafServer");
-            }
-            clientConfig.setLeafServer(leafServer);
+        // 服务地址
+        String leafServer = leafClientProperties.getLeafServer();
+        if ((leafServer == null || leafServer.trim().length() == 0) && null != properties) {
+            leafServer = properties.getProperty("bamboo.leaf.client.leafServer");
+        }
+        clientConfig.setLeafServer(leafServer);
+        // 服务地址
+        String leafPort = leafClientProperties.getLeafPort();
+        if ((leafPort == null || leafPort.trim().length() == 0) && null != properties) {
+            leafPort = properties.getProperty("bamboo.leaf.client.leafPort");
+        }
+        clientConfig.setLeafPort(leafPort);
 
-            //Token
-            String leafToken = leafClientProperties.getLeafToken();
-            if ((leafToken == null || leafToken.trim().length() == 0) && null != properties) {
-                leafToken = properties.getProperty("bamboo.leaf.client.leafToken");
-            }
+        //Token
+        String leafToken = leafClientProperties.getLeafToken();
+        if ((leafToken == null || leafToken.trim().length() == 0) && null != properties) {
+            leafToken = properties.getProperty("bamboo.leaf.client.leafToken");
+        }
 
-            clientConfig.setLeafToken(leafToken);
+        clientConfig.setLeafToken(leafToken);
 
-            int readTimeout = leafClientProperties.getReadTimeout() == null ? 0 : leafClientProperties.getReadTimeout();
-            if (readTimeout == 0 && null != properties) {
-                readTimeout = NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.readTimeout"), ClientConstant.DEFAULT_TIME_OUT);
-            }
-            clientConfig.setReadTimeout(readTimeout);
+        int readTimeout = leafClientProperties.getReadTimeout() == null ? 0 : leafClientProperties.getReadTimeout();
+        if (readTimeout == 0 && null != properties) {
+            readTimeout = NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.readTimeout"), ClientConstant.DEFAULT_TIME_OUT);
+        }
+        clientConfig.setReadTimeout(readTimeout);
 
-            int connectTimeout = leafClientProperties.getConnectTimeout() == null ? 0 : leafClientProperties.getConnectTimeout();
-            if (connectTimeout == 0 && null != properties) {
-                connectTimeout = NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.connectTimeout"), ClientConstant.DEFAULT_TIME_OUT);
-            }
-            clientConfig.setConnectTimeout(connectTimeout);
+        int connectTimeout = leafClientProperties.getConnectTimeout() == null ? 0 : leafClientProperties.getConnectTimeout();
+        if (connectTimeout == 0 && null != properties) {
+            connectTimeout = NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.connectTimeout"), ClientConstant.DEFAULT_TIME_OUT);
+        }
+        clientConfig.setConnectTimeout(connectTimeout);
 
         return clientConfig;
 

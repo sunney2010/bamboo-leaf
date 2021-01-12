@@ -1,5 +1,6 @@
 package com.bamboo.leaf.autoconfigure;
 
+import com.bamboo.leaf.core.util.PURL;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +28,15 @@ public class LeafClientProperties {
      */
     private String leafServer;
 
+    /**
+     * Remote:服务模式时的端口
+     */
+    private String leafPort;
+
+    /**
+     * purl
+     */
+    private PURL purl;
     /**
      * segment算法服务地址
      */
@@ -94,5 +104,21 @@ public class LeafClientProperties {
 
     public void setConnectTimeout(Integer connectTimeout) {
         this.connectTimeout = connectTimeout;
+    }
+
+    public String getLeafPort() {
+        return leafPort;
+    }
+
+    public void setLeafPort(String leafPort) {
+        this.leafPort = leafPort;
+    }
+
+    public PURL getPurl() {
+        return purl;
+    }
+
+    public void setPurl(PURL purl) {
+        this.purl = purl;
     }
 }

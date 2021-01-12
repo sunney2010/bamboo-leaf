@@ -12,15 +12,14 @@ import com.bamboo.leaf.core.constant.LeafConstant;
 import com.bamboo.leaf.core.exception.BambooLeafException;
 import com.bamboo.leaf.core.service.WorkerIdService;
 import com.bamboo.leaf.core.util.PNetUtils;
+import com.bamboo.leaf.core.util.PURL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @description: WorkerId远程服务类
@@ -62,37 +61,34 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
     }
 
     private String chooseService(String namespace) {
-        List<String> snowServerList = ClientConfig.getInstance().getSnowServerList();
-        if (null == snowServerList) {
+        String snowflakeUrl = ClientConfig.getInstance().getSnowServerUrl();
+        if (null == snowflakeUrl) {
             String leafServer = ClientConfig.getInstance().getLeafServer();
             // 判断服务地址
             if (leafServer == null || leafServer.trim().length() == 0) {
                 throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafServer is not null!");
             }
+            String leafPort = ClientConfig.getInstance().getLeafPort();
+            // 判断服务地址
+            if (leafPort == null || leafPort.trim().length() == 0) {
+                throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafPort is not null!");
+            }
+
             String leafToken = ClientConfig.getInstance().getLeafToken();
             // 判断服务token
             if (leafToken == null || leafToken.trim().length() == 0) {
                 throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafToken is not null!");
             }
 
-            String[] leafServers = ClientConfig.getInstance().getLeafServer().split(",");
-            snowServerList = new ArrayList<String>(leafServers.length);
-            for (String server : leafServers) {
-                // snowUrl remote api url
-                String snowUrl = MessageFormat.format(ClientConstant.snowflakeServerUrl, server, leafToken, PNetUtils.getLocalHost());
-                snowServerList.add(snowUrl);
+            Map<String, String> parameters = new HashMap<String, String>(4);
+            parameters.put(ClientConstant.LEAF_TOKEN, leafToken);
+            parameters.put(ClientConstant.LEAF_HOSP_IP, PNetUtils.getLocalHost());
+            parameters.put(ClientConstant.LEAF_NAMESPACE, namespace);
 
-            }
-            ClientConfig.getInstance().setSnowServerList(snowServerList);
+            PURL purl = new PURL("http", leafServer, Integer.parseInt(leafPort), ClientConstant.LEAF_SNOWFLAKE_PATH, parameters);
+            snowflakeUrl = purl.toFullString();
+            ClientConfig.getInstance().setSnowServerUrl(snowflakeUrl);
         }
-        String url = "";
-        if (snowServerList != null && snowServerList.size() == 1) {
-            url = snowServerList.get(0);
-        } else if (snowServerList != null && snowServerList.size() > 1) {
-            Random r = new Random();
-            url = snowServerList.get(r.nextInt(snowServerList.size()));
-        }
-        url += namespace;
-        return url;
+        return snowflakeUrl;
     }
 }

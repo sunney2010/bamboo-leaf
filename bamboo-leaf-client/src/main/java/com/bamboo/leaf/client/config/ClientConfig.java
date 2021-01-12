@@ -1,5 +1,7 @@
 package com.bamboo.leaf.client.config;
 
+import com.bamboo.leaf.core.util.PURL;
+
 import java.util.List;
 
 /**
@@ -23,13 +25,24 @@ public class ClientConfig {
     private String leafServer;
 
     /**
+     * Remote:服务模式时的端口
+     */
+    private String leafPort;
+
+    /**
+     * purl
+     */
+    private PURL purl;
+
+    /**
      * segment算法服务地址
      */
-    private List<String> segmentServerList;
+    private String segmentServerUrl;
     /**
      * snowflake算法服务地址
      */
-    private List<String> snowServerList;
+    private String snowServerUrl;
+
 
     private Integer readTimeout;
 
@@ -70,20 +83,20 @@ public class ClientConfig {
         this.leafServer = leafServer;
     }
 
-    public List<String> getSegmentServerList() {
-        return segmentServerList;
+    public String getSegmentServerUrl() {
+        return segmentServerUrl;
     }
 
-    public void setSegmentServerList(List<String> segmentServerList) {
-        this.segmentServerList = segmentServerList;
+    public void setSegmentServerUrl(String segmentServerUrl) {
+        this.segmentServerUrl = segmentServerUrl;
     }
 
-    public List<String> getSnowServerList() {
-        return snowServerList;
+    public String getSnowServerUrl() {
+        return snowServerUrl;
     }
 
-    public void setSnowServerList(List<String> snowServerList) {
-        this.snowServerList = snowServerList;
+    public void setSnowServerUrl(String snowServerUrl) {
+        this.snowServerUrl = snowServerUrl;
     }
 
     public Integer getReadTimeout() {
@@ -108,5 +121,21 @@ public class ClientConfig {
 
     public void setMode(String mode) {
         this.mode = mode;
+    }
+
+    public String getLeafPort() {
+        return leafPort;
+    }
+
+    public void setLeafPort(String leafPort) {
+        this.leafPort = leafPort;
+    }
+
+    public PURL getPurl() {
+        return purl;
+    }
+
+    public void setPurl(PURL purl) {
+        this.purl = purl;
     }
 }

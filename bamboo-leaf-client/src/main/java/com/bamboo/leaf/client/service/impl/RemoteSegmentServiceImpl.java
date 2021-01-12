@@ -10,15 +10,14 @@ import com.bamboo.leaf.core.common.ResultResponse;
 import com.bamboo.leaf.core.entity.SegmentRange;
 import com.bamboo.leaf.core.exception.BambooLeafException;
 import com.bamboo.leaf.core.service.SegmentService;
+import com.bamboo.leaf.core.util.PURL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -63,36 +62,33 @@ public class RemoteSegmentServiceImpl implements SegmentService {
      * @return
      */
     private String chooseService(String namespace, long maxValue) {
-        List<String> segmentServerList = ClientConfig.getInstance().getSegmentServerList();
-        if (null == segmentServerList) {
+
+        String segmentUrl = ClientConfig.getInstance().getSegmentServerUrl();
+        if (null == segmentUrl) {
             String leafServer = ClientConfig.getInstance().getLeafServer();
             // 判断服务地址
             if (leafServer == null || leafServer.trim().length() == 0) {
                 throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafServer is not null!");
+            }
+            String leafPort = ClientConfig.getInstance().getLeafPort();
+            // 判断服务地址
+            if (leafPort == null || leafPort.trim().length() == 0) {
+                throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafPort is not null!");
             }
             String leafToken = ClientConfig.getInstance().getLeafToken();
             // 判断服务token
             if (leafToken == null || leafToken.trim().length() == 0) {
                 throw new BambooLeafException("mode=Remote,bamboo.leaf.client.leafToken is not null!");
             }
-            String[] leafServers = ClientConfig.getInstance().getLeafServer().split(",");
-            segmentServerList = new ArrayList<String>(leafServers.length);
-            for (String server : leafServers) {
-                // segment remote api url
-                String segmentUrl = MessageFormat.format(ClientConstant.segmentServerUrl, server, leafToken, maxValue);
-                segmentServerList.add(segmentUrl);
+            Map<String, String> parameters = new HashMap<String, String>(4);
+            parameters.put(ClientConstant.LEAF_TOKEN, leafToken);
+            parameters.put(ClientConstant.LEAF_MAXVALUE, maxValue + "");
+            parameters.put(ClientConstant.LEAF_NAMESPACE, namespace);
 
-            }
-            ClientConfig.getInstance().setSegmentServerList(segmentServerList);
+            PURL purl = new PURL("http", leafServer, Integer.parseInt(leafPort), ClientConstant.LEAF_SEGMENT_PATH, parameters);
+            segmentUrl = purl.toFullString();
+            ClientConfig.getInstance().setSegmentServerUrl(segmentUrl);
         }
-        String url = "";
-        if (segmentServerList != null && segmentServerList.size() == 1) {
-            url = segmentServerList.get(0);
-        } else if (segmentServerList != null && segmentServerList.size() > 1) {
-            Random r = new Random();
-            url = segmentServerList.get(r.nextInt(segmentServerList.size()));
-        }
-        url += namespace;
-        return url;
+        return segmentUrl;
     }
 }
