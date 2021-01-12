@@ -91,7 +91,7 @@ public class LeafConstant {
     /**
      * 最大workerId
      */
-    public static final int MAX_WORKER_ID = 32768;
+    public static final int MAX_WORKER_ID = 16383;
     /**
      * 日期序列段的最大值
      */

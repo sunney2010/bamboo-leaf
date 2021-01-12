@@ -16,9 +16,6 @@ public class ClientConstant {
      */
     public static final int DEFAULT_TIME_OUT = 5000;
 
-    public static final String LEAF_SEGMENT_KEY = "segment";
-    public static final String LEAF_SNOWFLAKE_KEY = "snowflake";
-
 
     public static final String LEAF_TOKEN = "token";
     public static final String LEAF_MAXVALUE = "maxValue";
@@ -26,14 +23,5 @@ public class ClientConstant {
     public static final String LEAF_HOSP_IP = "hostIp";
     public static final String LEAF_SEGMENT_PATH = "/bamboo-leaf/segment/nextSegmentRange";
     public static final String LEAF_SNOWFLAKE_PATH = "/bamboo-leaf/snowflake/queryWorkerId";
-
-    /**
-     * Segment算法URL
-     */
-    public static final String segmentServerUrl = "http://{0}/bamboo-leaf/segment/nextSegmentRange?token={1}&maxValue={2}&namespace=";
-    /**
-     * Snowflake算法URL
-     */
-    public static final String snowflakeServerUrl = "http://{0}/bamboo-leaf/snowflake/queryWorkerId?token={1}&hostIp={2}&namespace=";
 
 }
