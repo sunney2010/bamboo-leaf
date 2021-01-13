@@ -90,8 +90,15 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
      */
     protected synchronized long nextSnowId() {
         long currentSecond = getCurrentSecond();
-        // Clock moved backwards, refuse to generate SnowId
-        if (currentSecond < lastTimestamp) {
+        if (currentSecond == lastTimestamp) {
+            // At the same second, increase sequence
+            sequence = (sequence + 1) & bitsAllocator.getMaxSequence();
+            // Exceed the max sequence, we wait the next second to generate SnowId
+            if (sequence == 0) {
+                currentSecond = getNextSecond(lastTimestamp);
+            }
+        } else if (currentSecond < lastTimestamp) {
+            // Clock moved backwards, refuse to generate SnowId
             //计算时间差
             long refusedSeconds = lastTimestamp - currentSecond;
             logger.warn("Clock moved backwards. Refusing for {} seconds", refusedSeconds);
@@ -104,15 +111,8 @@ public class DefaultSnowflakeGenerator extends AbstractSnowflake implements Snow
                 //使用未来时间
                 currentSecond = lastTimestamp;
             }
-        } else if (currentSecond == lastTimestamp) {
-            // At the same second, increase sequence
-            sequence = (sequence + 1) & bitsAllocator.getMaxSequence();
-            // Exceed the max sequence, we wait the next second to generate SnowId
-            if (sequence == 0) {
-                currentSecond = getNextSecond(lastTimestamp);
-            }
-            // At the different second, sequence restart from zero
         } else {
+            // At the different second, sequence restart from zero
             sequence = 0L;
         }
         lastTimestamp = currentSecond;

@@ -73,5 +73,6 @@ bamboo:
       step: 20000
     client:
       leafToken: 0504c00e-7971-41d1-87e8-0952399c5816
-      leafServer: 127.0.0.1:8087
+      leafServer: 127.0.0.1
+      leafPort: 8080
       mode: Remote
