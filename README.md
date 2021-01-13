@@ -5,7 +5,7 @@
 [更详细文档请看](https://gitee.com/sunney/bamboo-leaf/wikis/Home?sort_id=3295968)
 
 # bamboo-leaf架构图
-![架构图]( "../doc/image/bamboo-leaf.jpg")
+![架构图](./doc/image/bamboo-leaf.jpg)
 
 # bamboo-leaf代码结构
 bamboo-leaf
@@ -64,3 +64,6 @@ bamboo-leaf-client方式，id为本地生成，号段长度(step)越长，qps越
 
  # 依赖
 JDK1.8+,maven,mysql, java client目前仅依赖jdk.
+
+ # 加入QQ交流群
+ ![架构图](./doc/image/QQ-club.png)

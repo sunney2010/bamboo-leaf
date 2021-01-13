@@ -29,9 +29,9 @@ leaf-snowflake在原生雪花算法的基本上进行了优化，在保持优点
 4、workid节点个数增加到16383个。
 
 **结构图如下:**
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0113/133130_8e50ec16_68305.jpeg "leaf-snowflake.jpg")
+![输入图片说明]( image/leaf-snowflake.jpg)
 
 **时钟回拨解决方案**
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0113/133438_faf7674e_68305.jpeg "leaf-snowflake1.jpg")
+![输入图片说明](image/leaf-snowflake-time.jpg)
 
 总结：利用未来时间，来解决时钟回拨。
