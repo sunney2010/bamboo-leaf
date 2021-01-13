@@ -2,8 +2,10 @@
 > Bamboo-leaf是用Java开发的一款分布式id生成系统，基于数据库号段算法、雪花(snowflake)算法实现，基于数据库号段算法是参考了滴滴出行的tinyid及阿里巴巴的TDDL-Sequence的思路，取了两都的优点，同时加入了新的实现方式，让接入更方便简洁。雪花(snowflake)算法,参考了百度(uid-generator)实现方式，重定义了snowflake各段的长度，解决了workerid的节点限制问题及时间回拨序列重复的问题，提升了每毫秒产生的序列个数。
 同时提供了Bamboo-leaf-client(sdk)使id生成本地化，获得了更好的性能与可用性。均通过Bamboo-leaf-client方式接入，每天生成百亿级别的id。
 
+[更详细文档请看](https://gitee.com/sunney/bamboo-leaf/wikis/Home?sort_id=3295968)
+
 # bamboo-leaf架构图
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0109/232350_635a122a_68305.jpeg "bamboo-leaf.jpg")
+![架构图]( "../doc/image/bamboo-leaf.jpg")
 
 # bamboo-leaf代码结构
 bamboo-leaf
