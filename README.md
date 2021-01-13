@@ -7,20 +7,20 @@
 
 # bamboo-leaf代码结构
 bamboo-leaf
-----bamboo-leaf-server
-----bamboo-leaf-client
-----bamboo-leaf-core
-----bamboo-leaf-autoconfigure
-----bamboo-leaf-demo
+- ---bamboo-leaf-server
+- ---bamboo-leaf-client
+- ---bamboo-leaf-core
+- ---bamboo-leaf-autoconfigure
+- ---bamboo-leaf-demo
 
 # bamboo-leaf接口列表
 ## 1、snowflake算法接口列表
    接口类：BambooLeafSnowflakeClient
 | 序号 | 接口 | 名称 | 功能说明 |
 |----|----|----|------|
-|   1|public long snowflakeId(String namespace);| 原生雪花算法   |   返回Long类型   |
-|   2|public String snowflakeId16(String namespace); |  原生雪花算法+随机数  | 返回16位字段串:<br>13位(原生雪花算法转36进制), <br>3位(随机数转36进制)   |
-|   3|public String snowflakeId20(String namespace); |  原生雪花算法+namespace+随机数  |  返回20位字段串:<br>13位(原生雪花算法转36进制), <br>3位(namespace转36进制)， <br>3位(随机数转36进制)    |
+|   1|public long snowflakeId(String namespace);| 雪花算法   |   返回Long类型   |
+|   2|public String snowflakeId16(String namespace); |  雪花算法+随机数  | 返回16位字段串:<br>13位(原生雪花算法转36进制), <br>3位(随机数转36进制)   |
+|   3|public String snowflakeId20(String namespace); |  雪花算法+namespace+随机数  |  返回20位字段串:<br>13位(原生雪花算法转36进制), <br>3位(namespace转36进制)， <br>3位(随机数转36进制)    |
 
 ## 2、segment算法接口列表
 接口类：BambooLeafSnowflakeClient
@@ -42,23 +42,23 @@ bamboo-leaf-client方式，id为本地生成，号段长度(step)越长，qps越
 
 
 # Bamboo的特性
-1、全局唯一的long型id。
-2、趋势递增的id（即不保证下一个id一定比上一个大）.
-3、非连续性。
-4、提供中心化server模式和去中心化模式方式接入。
-5、支持批量获取id。
-6、支持segment及snowflake两种基础算法扩展算法。
-7、segment支持生成1,3,5,7,9...序列的id.
+1. 全局唯一的long型id。
+2. 趋势递增的id（即不保证下一个id一定比上一个大）.
+3. 非连续性。
+4. 提供中心化server模式和去中心化模式方式接入。
+5. 支持批量获取id。
+6. 支持segment及snowflake两种基础算法扩展算法。
+7. segment支持生成1,3,5,7,9...序列的id.
 
 # 使用场景
-适用场景：
-1、纯数字的序列（如：日志表ID编号).
-2、有业务属性的序列（如订单号:P2101010101010000001).
-3、完全无序的字符串序列（如二维码号：023eqt01pd6o001a04ui）.
-4、分库分表，多机房部署的，各表的ID序列。
+## 适用场景：
+1. 纯数字的序列（如：日志表ID编号).
+2. 有业务属性的序列（如订单号:P2101010101010000001).
+3. 完全无序的字符串序列（如二维码号：023eqt01pd6o001a04ui）.
+4. 分库分表，多机房部署的，各表的ID序列。
 
-不适用场景:
-1、对顺序有严格要求的场景。
+## 不适用场景:
+1. 对顺序有严格要求的场景。
 
  # 依赖
 JDK1.8+,maven,mysql, java client目前仅依赖jdk.

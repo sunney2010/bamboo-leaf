@@ -33,7 +33,7 @@ public class AbstractSnowflake {
     /** 工作机器ID(0~16383) */
     protected long workerId;
 
-    /** 毫秒内序列(0~262413) */
+    /** 秒内序列(0~262413) */
     protected long sequence = 0L;
 
     /** 上次生成ID的时间截 */

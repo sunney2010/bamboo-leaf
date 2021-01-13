@@ -14,7 +14,7 @@ public class ClientConstant {
     /**
      * 默认超时间
      */
-    public static final int DEFAULT_TIME_OUT = 5000;
+    public static final int DEFAULT_TIME_OUT = 30000;
 
 
     public static final String LEAF_TOKEN = "token";
