@@ -30,6 +30,7 @@ leafToken:   服务端分配的密钥，用于授权访问API。
 leafServer:  服务端HTTP接口IP.
 leafPort:    服务端HTTP接口端口.
 mode:        远程模式
+**说明：Remote远程模式必须部署bamboo-server,并配置bamboo-server的IP地址及端口**
 
 2. Local模式
 
