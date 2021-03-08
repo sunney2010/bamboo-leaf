@@ -1,5 +1,7 @@
 # bamboo-leaf简介
-> Bamboo-leaf是用Java开发的一款分布式id生成系统，基于数据库号段(segment)算法、雪花(snowflake)算法实现，基于数据库号段(segment)算法是参考了滴滴出行的tinyid及阿里巴巴的tddl-Sequence的思路，取了两都的优点，同时加入了新的实现方式，扩展算法。让能适合更多的场景，高并发、高可用得到提升，接入更方便简洁。雪花(snowflake)算法,参考了原生算法及百度(uid-generator)实现方式，重定义了snowflake各段的长度，解决了workerid的节点限制问题及时间回拨序列重复的问题，提升了每毫秒产生的序列个数。
+> Bamboo-leaf是用Java开发的一款分布式id生成系统，leaf-segment算法是基于数据库号段(segment)算法进行深度优化及扩展。
+leaf-snowflake算法是基于原生雪花(snowflake)算法进行深度优化及扩展。重定义了snowflake各段的长度，解决了workerid的节点限制问题及时间回拨序列重复的问题，提升了每毫秒产生的序列个数。
+Bamboo-leaf 分步式序列能适合更多的场景，高并发、高可用得到提升，接入更方便简洁。
 同时提供了Bamboo-leaf-client(sdk)使id生成本地化，获得了更好的性能与可用性。均通过Bamboo-leaf-client方式接入，每天生成百亿级别的id。
 [更详细文档请看](https://gitee.com/sunney/bamboo-leaf/wikis/Home?sort_id=3295968)
 
@@ -69,10 +71,11 @@ bamboo-leaf
 ## 不适用场景:
 1. 对顺序有严格要求的场景。
 
- # 依赖
+# 依赖
 JDK1.8+,maven,mysql, java client目前仅依赖jdk.
- # 微信
-  ![微信](./doc/image/weixin.png)
- # 加入QQ交流群
+#联系方式
+## 微信
+ ![微信](./doc/image/weixin.png)
+## 加入QQ交流群
  ![QQ](./doc/image/qq-club.png)
  
