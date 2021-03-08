@@ -30,7 +30,11 @@ public class SegmentServiceImpl implements SegmentService {
     LeafConfigure leafConfigure;
 
     @Override
-    public SegmentRange getNextSegmentRange(String namespace, long maxVal) {
+    public SegmentRange getNextSegmentRange(String namespace, long maxVal, Integer step) {
+        // step为空获取默认步长
+        if (null == step || step == 0) {
+            step = leafConfigure.getStep();
+        }
         // 获取NextSegmentRange的时候，有可能存在version冲突，需要重试
         for (int i = 0; i < leafConfigure.getRetry(); i++) {
             SegmentDO segmentDO = segmentDAO.selectSegment(namespace);
@@ -40,7 +44,7 @@ public class SegmentServiceImpl implements SegmentService {
                 segmentDO.setNamespace(namespace);
                 segmentDO.setDelta(1);
                 segmentDO.setRemainder(0);
-                segmentDO.setStep(leafConfigure.getStep());
+                segmentDO.setStep(step);
                 segmentDO.setLeafVal(LeafConstant.DEFAULT_VALUE);
                 segmentDO.setVersion(1L);
                 segmentDO.setRetry(leafConfigure.getRetry());
@@ -67,7 +71,7 @@ public class SegmentServiceImpl implements SegmentService {
                 message.append(", please check table ").append(namespace);
                 throw new BambooLeafException(message.toString());
             }
-            Long newMaxVal = oldValue + segmentDO.getStep();
+            Long newMaxVal = oldValue + step;
             // reset
             if (maxVal > 0 && newMaxVal > maxVal) {
                 int result = segmentDAO.resetSegment(namespace, oldValue, segmentDO.getVersion());
@@ -84,6 +88,8 @@ public class SegmentServiceImpl implements SegmentService {
             updateSegment.setLeafVal(newMaxVal);
             updateSegment.setVersion(segmentDO.getVersion());
             updateSegment.setNamespace(namespace);
+            //更新动态步长
+            updateSegment.setStep(step);
             int row = segmentDAO.updateSegment(updateSegment, oldValue);
             //判断是否更新成功
             if (row == 0) {
@@ -109,7 +115,8 @@ public class SegmentServiceImpl implements SegmentService {
         segmentRange.setRemainder(segmentDO.getRemainder() == null ? 0 : segmentDO.getRemainder());
         segmentRange.setDelta(segmentDO.getDelta() == null ? 1 : segmentDO.getDelta());
         segmentRange.setStep(segmentDO.getStep());
-
+        // current Second
+        segmentRange.setTime(System.currentTimeMillis() / 1000);
         // 默认25%加载
         segmentRange.setLoadingVal(segmentRange.getCurrentVal().get() + segmentDO.getStep() * leafConfigure.getLoadingPercent() / 100);
         return segmentRange;

@@ -21,14 +21,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @description: TODO
+ * @description: 客户端实现类
  * @Author: Zhuzhi
  * @Date: 2020/12/16 下午12:04
  */
 @Service
 public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory implements BambooLeafSegmentClient, ApplicationContextAware {
 
-    private static final Logger logger = LoggerFactory.getLogger(BambooLeafSegmentClientImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    /**
+     * 前缀最大长度
+     */
     private static final Integer PREFIX_MAX_LENGTH = 10;
 
     private ApplicationContext applicationContext;
@@ -120,8 +123,10 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
         }
         //判断配置的模式
         if (mode.equalsIgnoreCase(ModeEnum.Remote.name())) {
+            // 远程模式
             segmentGenerator = new CachedSegmentGenerator(namespace, maxValue, new RemoteSegmentServiceImpl());
         } else if (mode.equalsIgnoreCase(ModeEnum.Local.name())) {
+            // 本地模式
             segmentGenerator = new CachedSegmentGenerator(namespace, maxValue, localSegmentService);
         }
         return segmentGenerator;

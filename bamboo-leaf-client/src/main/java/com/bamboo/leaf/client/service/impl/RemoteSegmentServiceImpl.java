@@ -28,11 +28,11 @@ import java.util.Map;
 @Component("remoteSegmentService")
 public class RemoteSegmentServiceImpl implements SegmentService {
 
-    private static final Logger logger = LoggerFactory.getLogger(RemoteSegmentServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public SegmentRange getNextSegmentRange(String namespace, long maxValue) {
-        String url = chooseService(namespace, maxValue);
+    public SegmentRange getNextSegmentRange(String namespace, long maxValue, Integer step) {
+        String url = chooseService(namespace, maxValue, step);
         if (logger.isInfoEnabled()) {
             logger.info("getNextSegmentRange url:{}", url);
         }
@@ -57,11 +57,13 @@ public class RemoteSegmentServiceImpl implements SegmentService {
 
     /**
      * 远程URL拼装
+     *
      * @param namespace namespace
-     * @param maxValue 最大值
+     * @param maxValue  最大值
+     * @param step      动态步长
      * @return
      */
-    private String chooseService(String namespace, long maxValue) {
+    private String chooseService(String namespace, long maxValue, Integer step) {
 
         String segmentUrl = ClientConfig.getInstance().getSegmentServerUrl();
         if (null == segmentUrl) {
@@ -83,6 +85,7 @@ public class RemoteSegmentServiceImpl implements SegmentService {
             Map<String, String> parameters = new HashMap<String, String>(4);
             parameters.put(ClientConstant.LEAF_TOKEN, leafToken);
             parameters.put(ClientConstant.LEAF_MAXVALUE, maxValue + "");
+            parameters.put(ClientConstant.LEAF_STEP, step + "");
             parameters.put(ClientConstant.LEAF_NAMESPACE, namespace);
 
             PURL purl = new PURL("http", leafServer, Integer.parseInt(leafPort), ClientConstant.LEAF_SEGMENT_PATH, parameters);
@@ -91,4 +94,5 @@ public class RemoteSegmentServiceImpl implements SegmentService {
         }
         return segmentUrl;
     }
+
 }

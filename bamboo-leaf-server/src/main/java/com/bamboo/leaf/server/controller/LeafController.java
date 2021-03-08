@@ -46,7 +46,7 @@ public class LeafController {
     }
 
     @RequestMapping("/segment/nextSegmentRange")
-    public ResultResponse<SegmentRange> nextSegmentRange(String namespace, long maxValue, String token) {
+    public ResultResponse<SegmentRange> nextSegmentRange(String namespace, long maxValue, Integer step, String token) {
         ResultResponse<SegmentRange> response = new ResultResponse<>();
         logger.info("nextSegmentRange parameter, namespace:{},token:{}", namespace, token);
         if (!tokenService.canVisit(namespace, token)) {
@@ -55,7 +55,7 @@ public class LeafController {
             return response;
         }
         try {
-            SegmentRange segment = segmentService.getNextSegmentRange(namespace, maxValue);
+            SegmentRange segment = segmentService.getNextSegmentRange(namespace, maxValue, step);
             response.setResultData(segment);
             logger.info("nextSegmentRange is success,namespace:{},leafVal:{}", namespace, segment.getCurrentVal());
         } catch (Exception e) {

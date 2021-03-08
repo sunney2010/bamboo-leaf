@@ -2,8 +2,6 @@ package com.bamboo.leaf.client.config;
 
 import com.bamboo.leaf.core.util.PURL;
 
-import java.util.List;
-
 /**
  * @description: 客户端配置
  * @Author: Zhuzhi

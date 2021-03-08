@@ -15,8 +15,9 @@ public interface SegmentService {
      *
      * @param namespace 命名空间
      * @param maxVal    序列的最大值
+     * @param step      动态步长
      * @return
      */
-    SegmentRange getNextSegmentRange(String namespace, long maxVal);
+    SegmentRange getNextSegmentRange(String namespace, long maxVal, Integer step);
 
 }

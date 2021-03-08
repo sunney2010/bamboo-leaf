@@ -51,13 +51,13 @@ bamboo-leaf
 总结:Local client去中心化的模式最高可用性,不因bamboo-server中心化服务不可用而影响。
 
 # Bamboo的特性
-1、全局唯一的long型id.
-2、趋势递增,整体连续.
-3、提供中心化 Remote server模式和去中心化 Local client模式方式接入。
-4、支持segment及snowflake两种基础算法扩展算法。
-5、leaf-segment支持不同IDC同序列不同的序号生成机制(A机房：1、3、5... B机房：2.4.6...)。
-6、leaf-snowflake解决workerid的节点限制问题及时间回拨序列重复的问题
-7、支持高并发、高可用的保障机制。
+1. 全局唯一的long型id.
+2. 趋势递增,整体连续.
+3. 提供中心化 Remote server模式和去中心化 Local client模式方式接入。
+4. 支持segment及snowflake两种基础算法扩展算法。
+5. leaf-segment支持不同IDC同序列不同的序号生成机制(A机房：1、3、5... B机房：2.4.6...)。
+6. leaf-snowflake解决workerid的节点限制问题及时间回拨序列重复的问题
+7. 支持高并发、高可用的保障机制。
 
 # 使用场景
 ## 适用场景：
@@ -71,6 +71,8 @@ bamboo-leaf
 
  # 依赖
 JDK1.8+,maven,mysql, java client目前仅依赖jdk.
-
+ # 微信
+  ![微信](./doc/image/weixin.png)
  # 加入QQ交流群
- ![架构图](./doc/image/QQ-club.png)
+ ![QQ](./doc/image/qq-club.png)
+ 

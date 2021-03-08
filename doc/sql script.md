@@ -10,7 +10,7 @@
 | 3  | bamboo-leaf-token    | server对客户端的Token管理  |    Remote     |
 
 # 数据库脚本
-1、bamboo-leaf-segment
+1. bamboo-leaf-segment
 
 ```
 CREATE TABLE `bamboo_leaf_segment` (
@@ -31,7 +31,7 @@ CREATE TABLE `bamboo_leaf_segment` (
 
 ```
 
-2、bamboo-leaf-workerid 
+2. bamboo-leaf-workerid 
 
 ```
 CREATE TABLE `bamboo_leaf_workerId` (
@@ -49,7 +49,7 @@ CREATE TABLE `bamboo_leaf_workerId` (
 
 ```
 
-3、bamboo-leaf-token 
+3. bamboo-leaf-token 
 
 
 ```

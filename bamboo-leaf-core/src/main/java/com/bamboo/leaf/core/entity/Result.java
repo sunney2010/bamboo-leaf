@@ -8,9 +8,26 @@ package com.bamboo.leaf.core.entity;
  */
 public class Result {
 
+    /**
+     * 当前值
+     */
     private long val;
-    
+
+    /**
+     * 动态步长
+     */
+    private int nextStep;
+    /**
+     * 结果
+     */
     private ResultEnum resultEnum;
+
+
+    public Result(long val, int nextStep, ResultEnum resultEnum) {
+        this.val = val;
+        this.nextStep = nextStep;
+        this.resultEnum = resultEnum;
+    }
 
     public Result(long val, ResultEnum resultEnum) {
         this.val = val;
@@ -25,14 +42,12 @@ public class Result {
     }
 
 
-
     /**
      * @param val the val to set
      */
     public void setVal(long val) {
         this.val = val;
     }
-
 
 
     /**
@@ -43,11 +58,17 @@ public class Result {
     }
 
     /**
-     * @param resultEnum
-     *            the resultEnum to set
+     * @param resultEnum the resultEnum to set
      */
     public void setResultEnum(ResultEnum resultEnum) {
         this.resultEnum = resultEnum;
     }
 
+    public int getNextStep() {
+        return nextStep;
+    }
+
+    public void setNextStep(int nextStep) {
+        this.nextStep = nextStep;
+    }
 }

@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class CachedSegmentGenerator implements SegmentGenerator {
 
-    private static final Logger logger = LoggerFactory.getLogger(CachedSegmentGenerator.class);
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected SegmentService segmentService;
 
@@ -31,7 +31,9 @@ public class CachedSegmentGenerator implements SegmentGenerator {
      * 命名空间
      */
     protected String namespace;
-
+    /**
+     * 最大值
+     */
     protected long maxValue = 0L;
     /**
      * 当前号段
@@ -55,25 +57,32 @@ public class CachedSegmentGenerator implements SegmentGenerator {
         this.namespace = namespace;
         this.segmentService = segmentService;
         this.maxValue = maxValue;
-        loadCurrent(maxValue);
+        loadCurrent(maxValue, 0);
     }
 
-    public synchronized void loadCurrent(long maxVal) {
+    public synchronized void loadCurrent(long maxVal, int nextStep) {
         if (currentSegment == null || !currentSegment.isOver()) {
             if (nextSegment == null) {
-                SegmentRange segmentRange = querySegmentRange(maxVal);
+                SegmentRange segmentRange = querySegmentRange(maxVal, nextStep);
                 this.currentSegment = segmentRange;
             } else {
+                // 预加载段赋给当前段
                 currentSegment = nextSegment;
                 nextSegment = null;
             }
         }
     }
 
-    private SegmentRange querySegmentRange(long maxVal) {
+    /**
+     * 获取数据段
+     * @param maxVal 最大值
+     * @param nextStep 下个步长
+     * @return
+     */
+    private SegmentRange querySegmentRange(long maxVal, int nextStep) {
         String message = null;
         try {
-            SegmentRange segmentRange = segmentService.getNextSegmentRange(namespace, maxVal);
+            SegmentRange segmentRange = segmentService.getNextSegmentRange(namespace, maxVal, nextStep);
             if (segmentRange != null) {
                 return segmentRange;
             }
@@ -83,7 +92,7 @@ public class CachedSegmentGenerator implements SegmentGenerator {
         throw new BambooLeafException("error query segmentRange: " + message);
     }
 
-    public void loadNext(long maxVal) {
+    public void loadNext(long maxVal, int nextStep) {
         if (nextSegment == null && !isLoadingNext) {
             synchronized (lock) {
                 if (nextSegment == null && !isLoadingNext) {
@@ -93,7 +102,7 @@ public class CachedSegmentGenerator implements SegmentGenerator {
                         public void run() {
                             try {
                                 // 无论获取下个segmentId成功与否，都要将isLoadingNext赋值为false
-                                nextSegment = querySegmentRange(maxVal);
+                                nextSegment = querySegmentRange(maxVal, nextStep);
                                 logger.info("loading nextSegment is success,range:{}->{}", nextSegment.getCurrentVal(), nextSegment.getMaxId());
                             } finally {
                                 isLoadingNext = false;
@@ -109,15 +118,16 @@ public class CachedSegmentGenerator implements SegmentGenerator {
     public Long nextSegmentId() {
         while (true) {
             if (currentSegment == null) {
-                loadCurrent(maxValue);
+                loadCurrent(maxValue, 0);
                 continue;
             }
             Result result = currentSegment.nextId();
             if (result.getResultEnum() == ResultEnum.OVER) {
-                loadCurrent(maxValue);
+                loadCurrent(maxValue, result.getNextStep());
             } else {
+                // 预加载下一段序列
                 if (result.getResultEnum() == ResultEnum.LOADING) {
-                    loadNext(maxValue);
+                    loadNext(maxValue, result.getNextStep());
                 }
                 return result.getVal();
             }

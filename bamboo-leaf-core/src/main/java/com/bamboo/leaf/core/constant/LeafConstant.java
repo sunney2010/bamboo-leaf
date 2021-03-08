@@ -39,7 +39,7 @@ public class LeafConstant {
     /**
      * 最大步长
      */
-    public static final int STEP_MAX = 100000;
+    public static final int STEP_MAX = 1000000;
     /**
      * 默认步长
      */

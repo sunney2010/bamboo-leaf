@@ -1,13 +1,23 @@
 package com.bamboo.leaf.core.entity;
 
+import com.bamboo.leaf.core.constant.LeafConstant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Segment区间实体
+ *
  * @author zhuzhi
  * @date 2020/11/19
  */
 public class SegmentRange {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private static int MAX_TIME = 40;
+    private static int MIN_TIME = 20;
 
     /**
      * 当前段最大值
@@ -34,6 +44,10 @@ public class SegmentRange {
      * 步长
      */
     private int step;
+    /**
+     * 加载的时间，单位秒
+     */
+    private long time;
 
     /**
      * 是否已用完
@@ -46,8 +60,6 @@ public class SegmentRange {
     public SegmentRange() {
 
     }
-
-
     /**
      * 这个方法主要为了1,4,7,10...这种序列准备的 设置好初始值之后，会以delta的方式递增，保证无论开始id是多少都能生成正确的序列 如当前是号段是(1000,2000]，delta=3,
      * remainder=0，则经过这个方法后，currentId会先递增到1002,之后每次增加delta
@@ -91,12 +103,44 @@ public class SegmentRange {
         init();
         long val = currentVal.addAndGet(delta);
         if (val > maxId) {
-            return new Result(val, ResultEnum.OVER);
+            return new Result(val, step, ResultEnum.OVER);
+        } else if (val >= loadingVal) {
+            int nextStep = nextStep();
+            return new Result(val, nextStep, ResultEnum.LOADING);
+        } else {
+            return new Result(val, step, ResultEnum.NORMAL);
         }
-        if (val >= loadingVal) {
-            return new Result(val, ResultEnum.LOADING);
+    }
+
+    /**
+     * 动态步长
+     * (0-20)分钟步长加倍,但不能大于最大步长
+     * [20-40]分钟步不变
+     * (大于40)分钟步长减半,但不能小于最小步长
+     *
+     * @return
+     */
+    private int nextStep() {
+        long currentSecond = System.currentTimeMillis() / 1000;
+        long diff = currentSecond - time;
+        if (logger.isInfoEnabled()) {
+            logger.info("nextId Range:[{}~{}],time:{} second", maxId - step, maxId, diff);
         }
-        return new Result(val, ResultEnum.NORMAL);
+        if (diff > MAX_TIME) {
+            // 大于40分钟 步长减半
+            int tempStep = step / 2;
+            // 步长不能小于默认最小步长
+            return tempStep < LeafConstant.DEFAULT_STEP ? LeafConstant.DEFAULT_STEP : tempStep;
+
+        } else if (diff < MIN_TIME) {
+            // 大于20分钟 步长加倍
+            int tempStep = step * 2;
+            // 步长不能小于默认最小步长
+            return tempStep > LeafConstant.STEP_MAX ? LeafConstant.STEP_MAX : tempStep;
+        } else {
+            //[30~60]步长不变
+            return step;
+        }
     }
 
     public boolean useful() {
@@ -178,5 +222,13 @@ public class SegmentRange {
 
     public void setStep(int step) {
         this.step = step;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }

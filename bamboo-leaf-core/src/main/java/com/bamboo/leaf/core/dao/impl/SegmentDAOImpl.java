@@ -118,9 +118,10 @@ public class SegmentDAOImpl extends AbstractDAO implements SegmentDAO {
             stmt = conn.prepareStatement(getUpdateSegmentSql());
             stmt.setLong(1, segmentDO.getLeafVal());
             stmt.setLong(2, segmentDO.getVersion()+1);
-            stmt.setString(3, segmentDO.getNamespace());
-            stmt.setLong(4, oldLeafVal);
-            stmt.setLong(5, segmentDO.getVersion());
+            stmt.setLong(3, segmentDO.getStep());
+            stmt.setString(4, segmentDO.getNamespace());
+            stmt.setLong(5, oldLeafVal);
+            stmt.setLong(6, segmentDO.getVersion());
             val = stmt.executeUpdate();
         } catch (SQLException e) {
             logger.error("updateSegmentSql is error,msg", e);
