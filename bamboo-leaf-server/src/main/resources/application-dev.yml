@@ -71,4 +71,4 @@ bamboo:
       remarkColumnName: remark
     configure:
       retry: 16
-      step: 20000
+      step: 2000

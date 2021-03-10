@@ -61,16 +61,16 @@ public class CachedSegmentGenerator implements SegmentGenerator {
     }
 
     public synchronized void loadCurrent(long maxVal, int nextStep) {
-        if (currentSegment == null || !currentSegment.isOver()) {
-            if (nextSegment == null) {
-                SegmentRange segmentRange = querySegmentRange(maxVal, nextStep);
-                this.currentSegment = segmentRange;
-            } else {
-                // 预加载段赋给当前段
-                currentSegment = nextSegment;
-                nextSegment = null;
-            }
+        if (nextSegment == null) {
+            SegmentRange segmentRange = querySegmentRange(maxVal, nextStep);
+            this.currentSegment = segmentRange;
+        } else if (currentSegment.isOver() && nextSegment != null) {
+            // 预加载段赋给当前段
+            currentSegment = nextSegment;
+            nextSegment = null;
+            logger.info("currentSegment is over,nextSegment-->currentSegment!");
         }
+
     }
 
     /**
@@ -103,7 +103,7 @@ public class CachedSegmentGenerator implements SegmentGenerator {
                             try {
                                 // 无论获取下个segmentId成功与否，都要将isLoadingNext赋值为false
                                 nextSegment = querySegmentRange(maxVal, nextStep);
-                                logger.info("loading nextSegment is success,range:{}->{}", nextSegment.getCurrentVal(), nextSegment.getMaxId());
+                                logger.info("loading nextSegment is success,nextStep:{},nextRange:{}->{}", nextStep, nextSegment.getCurrentVal(), nextSegment.getMaxId());
                             } finally {
                                 isLoadingNext = false;
                             }

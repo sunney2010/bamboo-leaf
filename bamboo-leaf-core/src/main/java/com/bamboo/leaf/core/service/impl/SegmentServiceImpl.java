@@ -31,10 +31,7 @@ public class SegmentServiceImpl implements SegmentService {
 
     @Override
     public SegmentRange getNextSegmentRange(String namespace, long maxVal, Integer step) {
-        // step为空获取默认步长
-        if (null == step || step == 0) {
-            step = leafConfigure.getStep();
-        }
+
         // 获取NextSegmentRange的时候，有可能存在version冲突，需要重试
         for (int i = 0; i < leafConfigure.getRetry(); i++) {
             SegmentDO segmentDO = segmentDAO.selectSegment(namespace);
@@ -44,7 +41,8 @@ public class SegmentServiceImpl implements SegmentService {
                 segmentDO.setNamespace(namespace);
                 segmentDO.setDelta(1);
                 segmentDO.setRemainder(0);
-                segmentDO.setStep(step);
+                // 初始化时用默认或配置的步长
+                segmentDO.setStep(leafConfigure.getStep());
                 segmentDO.setLeafVal(LeafConstant.DEFAULT_VALUE);
                 segmentDO.setVersion(1L);
                 segmentDO.setRetry(leafConfigure.getRetry());
@@ -52,11 +50,15 @@ public class SegmentServiceImpl implements SegmentService {
                 //判断插入是否成功,不成功要重试
                 if (val == 1) {
                     if (logger.isInfoEnabled()) {
-                        logger.info("bamboo-leaf init success,namespace:{}", namespace);
+                        logger.info("bamboo-leaf init success,namespace:{},step:{}", namespace, step);
                     }
                     // retry
                     continue;
                 }
+            }
+            // 动态步长不存存时用当前步长
+            if (null == step || step <= 0) {
+                step = segmentDO.getStep();
             }
             Long oldValue = segmentDO.getLeafVal();
             if (oldValue < 0) {
@@ -99,7 +101,7 @@ public class SegmentServiceImpl implements SegmentService {
             //对象转换
             SegmentRange segmentRange = convert(segmentDO);
             if (logger.isInfoEnabled()) {
-                logger.info("new range is success,namespace:{},range:{}->{}", namespace, oldValue, newMaxVal);
+                logger.info("new range is success,namespace:{},step:{},range:{}->{}", namespace, step, oldValue, newMaxVal);
             }
             return segmentRange;
         }

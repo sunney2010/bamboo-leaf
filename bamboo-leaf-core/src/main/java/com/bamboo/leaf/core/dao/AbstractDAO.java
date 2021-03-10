@@ -166,7 +166,7 @@ public abstract class AbstractDAO {
                     buffer.append("update ").append(tableConfigure.getSegmentTableName());
                     buffer.append(" set ");
                     buffer.append(tableConfigure.getLeafValueColumnName()).append(" = ?, ");
-                    buffer.append(tableConfigure.getVersionColumnName()).append(" = ? ");
+                    buffer.append(tableConfigure.getVersionColumnName()).append(" = ?, ");
                     buffer.append(tableConfigure.getStepColumnName()).append(" = ? ");
                     buffer.append(" where ");
                     buffer.append(tableConfigure.getNamespaceColumnName()).append(" = ?  and ");

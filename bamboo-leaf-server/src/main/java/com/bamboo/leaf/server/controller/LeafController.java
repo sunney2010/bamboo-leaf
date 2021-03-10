@@ -46,9 +46,9 @@ public class LeafController {
     }
 
     @RequestMapping("/segment/nextSegmentRange")
-    public ResultResponse<SegmentRange> nextSegmentRange(String namespace, long maxValue, Integer step, String token) {
+    public ResultResponse<SegmentRange> nextSegmentRange(String namespace, Long maxValue, Integer step, String token) {
         ResultResponse<SegmentRange> response = new ResultResponse<>();
-        logger.info("nextSegmentRange parameter, namespace:{},token:{}", namespace, token);
+        logger.info("nextSegmentRange parameter, namespace:{},maxValue:{},step:{},token:{},", namespace, maxValue, step, token);
         if (!tokenService.canVisit(namespace, token)) {
             response.setResult(ResultCode.FAIL.getMessage());
             response.setErrMsg(ResultCode.TOKEN_ERR.getMessage());
