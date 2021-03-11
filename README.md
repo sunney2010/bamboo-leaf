@@ -78,6 +78,7 @@ JDK1.8+,maven,mysql, java client目前仅依赖jdk.
 
 ## 微信
  加微信后拉入微信群
+ 
  ![微信](./doc/image/weixin.png)
  
 ## 加入QQ交流群
