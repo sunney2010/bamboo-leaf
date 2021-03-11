@@ -73,7 +73,9 @@ bamboo-leaf
 
 # 依赖
 JDK1.8+,maven,mysql, java client目前仅依赖jdk.
+
 #联系方式
+
 ## 微信
  ![微信](./doc/image/weixin.png)
 ## 加入QQ交流群

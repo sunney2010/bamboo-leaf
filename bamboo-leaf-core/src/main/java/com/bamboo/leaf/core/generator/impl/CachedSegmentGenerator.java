@@ -123,7 +123,9 @@ public class CachedSegmentGenerator implements SegmentGenerator {
             }
             Result result = currentSegment.nextId();
             if (result.getResultEnum() == ResultEnum.OVER) {
+                currentSegment.setOver(true);
                 loadCurrent(maxValue, result.getNextStep());
+
             } else {
                 // 预加载下一段序列
                 if (result.getResultEnum() == ResultEnum.LOADING) {

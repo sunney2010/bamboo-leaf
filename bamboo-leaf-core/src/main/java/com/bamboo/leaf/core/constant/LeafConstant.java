@@ -63,16 +63,16 @@ public class LeafConstant {
     /**
      * 预加载下个号段的默认百分比
      */
-    public static final int DEFAULT_LOADING_PERCENT = 25;
+    public static final int DEFAULT_LOADING_PERCENT = 75;
     /**
      * 预加载下个号段的最小百分比
      */
-    public static final int LOADING_PERCENT_MIN = 10;
+    public static final int LOADING_PERCENT_MIN = 50;
 
     /**
      * 预加载下个号段的最大百分比
      */
-    public static final int LOADING_PERCENT_MAX = 60;
+    public static final int LOADING_PERCENT_MAX = 90;
 
 
     public static final int RADIX = 36;

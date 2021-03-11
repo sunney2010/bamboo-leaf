@@ -27,14 +27,12 @@ import java.util.Map;
  */
 @Component("remoteSegmentService")
 public class RemoteSegmentServiceImpl implements SegmentService {
-
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @Override
     public SegmentRange getNextSegmentRange(String namespace, long maxValue, Integer step) {
         String url = chooseService(namespace, maxValue, step);
         if (logger.isInfoEnabled()) {
-            logger.info("getNextSegmentRange url:{}", url);
+            logger.info(" request nextSegmentRange URL:{}", url);
         }
         String response = HttpUtils.post(url, ClientConfig.getInstance().getReadTimeout(),
                 ClientConfig.getInstance().getConnectTimeout());
@@ -56,7 +54,7 @@ public class RemoteSegmentServiceImpl implements SegmentService {
     }
 
     /**
-     * 远程URL拼装
+     * 远程URL拼装,因为step为动态，每次请求重新并装URL
      *
      * @param namespace namespace
      * @param maxValue  最大值
@@ -65,34 +63,29 @@ public class RemoteSegmentServiceImpl implements SegmentService {
      */
     private String chooseService(String namespace, long maxValue, Integer step) {
 
-        String segmentUrl = ClientConfig.getInstance().getSegmentServerUrl();
-        if (null == segmentUrl) {
-            String leafServer = ClientConfig.getInstance().getLeafServer();
-            // 判断服务地址
-            if (leafServer == null || leafServer.trim().length() == 0) {
-                throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafServer is not null!");
-            }
-            String leafPort = ClientConfig.getInstance().getLeafPort();
-            // 判断服务地址
-            if (leafPort == null || leafPort.trim().length() == 0) {
-                throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafPort is not null!");
-            }
-            String leafToken = ClientConfig.getInstance().getLeafToken();
-            // 判断服务token
-            if (leafToken == null || leafToken.trim().length() == 0) {
-                throw new BambooLeafException("mode=Remote,bamboo.leaf.client.leafToken is not null!");
-            }
-            Map<String, String> parameters = new HashMap<String, String>(4);
-            parameters.put(ClientConstant.LEAF_TOKEN, leafToken);
-            parameters.put(ClientConstant.LEAF_MAXVALUE, maxValue + "");
-            parameters.put(ClientConstant.LEAF_STEP, step + "");
-            parameters.put(ClientConstant.LEAF_NAMESPACE, namespace);
-
-            PURL purl = new PURL("http", leafServer, Integer.parseInt(leafPort), ClientConstant.LEAF_SEGMENT_PATH, parameters);
-            segmentUrl = purl.toFullString();
-            ClientConfig.getInstance().setSegmentServerUrl(segmentUrl);
+        String leafServer = ClientConfig.getInstance().getLeafServer();
+        // 判断服务地址
+        if (leafServer == null || leafServer.trim().length() == 0) {
+            throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafServer is not null!");
         }
+        String leafPort = ClientConfig.getInstance().getLeafPort();
+        // 判断服务地址
+        if (leafPort == null || leafPort.trim().length() == 0) {
+            throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafPort is not null!");
+        }
+        String leafToken = ClientConfig.getInstance().getLeafToken();
+        // 判断服务token
+        if (leafToken == null || leafToken.trim().length() == 0) {
+            throw new BambooLeafException("mode=Remote,bamboo.leaf.client.leafToken is not null!");
+        }
+        Map<String, String> parameters = new HashMap<String, String>(4);
+        parameters.put(ClientConstant.LEAF_TOKEN, leafToken);
+        parameters.put(ClientConstant.LEAF_MAXVALUE, (maxValue + ""));
+        parameters.put(ClientConstant.LEAF_STEP, (step + ""));
+        parameters.put(ClientConstant.LEAF_NAMESPACE, namespace);
+
+        PURL purl = new PURL("http", leafServer, Integer.parseInt(leafPort), ClientConstant.LEAF_SEGMENT_PATH, parameters);
+        String segmentUrl = purl.toFullString();
         return segmentUrl;
     }
-
 }

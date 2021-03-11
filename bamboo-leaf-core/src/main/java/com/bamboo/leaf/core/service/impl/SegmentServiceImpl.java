@@ -113,13 +113,13 @@ public class SegmentServiceImpl implements SegmentService {
     private SegmentRange convert(SegmentDO segmentDO) {
         SegmentRange segmentRange = new SegmentRange();
         segmentRange.setMaxId(segmentDO.getLeafVal() + segmentDO.getStep());
-        segmentRange.setCurrentVal(new AtomicLong(segmentDO.getLeafVal() + 1));
+        segmentRange.setCurrentVal(new AtomicLong(segmentDO.getLeafVal()));
         segmentRange.setRemainder(segmentDO.getRemainder() == null ? 0 : segmentDO.getRemainder());
         segmentRange.setDelta(segmentDO.getDelta() == null ? 1 : segmentDO.getDelta());
         segmentRange.setStep(segmentDO.getStep());
         // current Second
         segmentRange.setTime(System.currentTimeMillis() / 1000);
-        // 默认25%加载
+        // 默认75%加载
         segmentRange.setLoadingVal(segmentRange.getCurrentVal().get() + segmentDO.getStep() * leafConfigure.getLoadingPercent() / 100);
         return segmentRange;
     }

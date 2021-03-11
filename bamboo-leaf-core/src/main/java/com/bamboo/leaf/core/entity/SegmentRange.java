@@ -16,8 +16,8 @@ public class SegmentRange {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private static int MAX_TIME = 40;
-    private static int MIN_TIME = 20;
+    private static int MAX_TIME = 40 * 60;
+    private static int MIN_TIME = 20 * 60;
 
     /**
      * 当前段最大值
@@ -104,7 +104,7 @@ public class SegmentRange {
         long val = currentVal.addAndGet(delta);
         if (val > maxId) {
             return new Result(val, step, ResultEnum.OVER);
-        } else if (val >= loadingVal) {
+        } else if (val == loadingVal) {
             int nextStep = nextStep();
             return new Result(val, nextStep, ResultEnum.LOADING);
         } else {
@@ -123,8 +123,8 @@ public class SegmentRange {
     private int nextStep() {
         long currentSecond = System.currentTimeMillis() / 1000;
         long diff = currentSecond - time;
-        if (logger.isInfoEnabled()) {
-            logger.info("nextId Range:[{}~{}],time:{} second", maxId - step, maxId, diff);
+        if (logger.isDebugEnabled()) {
+            logger.debug("nextId Range:[{}~{}],time:{} second", (maxId - step), maxId, diff);
         }
         if (diff > MAX_TIME) {
             // 大于40分钟 步长减半
