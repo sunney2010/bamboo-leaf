@@ -18,6 +18,10 @@ public class SegmentRange {
 
     private static int MAX_TIME = 40 * 60;
     private static int MIN_TIME = 20 * 60;
+    /**
+     * 当前段namespace
+     */
+    private String namespace;
 
     /**
      * 当前段最大值
@@ -230,5 +234,13 @@ public class SegmentRange {
 
     public void setTime(long time) {
         this.time = time;
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
     }
 }

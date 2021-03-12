@@ -30,7 +30,7 @@ public class SegmentServiceImpl implements SegmentService {
     LeafConfigure leafConfigure;
 
     @Override
-    public SegmentRange getNextSegmentRange(String namespace, long maxVal, Integer step) {
+    public synchronized SegmentRange getNextSegmentRange(String namespace, long maxVal, Integer step) {
 
         // 获取NextSegmentRange的时候，有可能存在version冲突，需要重试
         for (int i = 0; i < leafConfigure.getRetry(); i++) {
@@ -101,7 +101,7 @@ public class SegmentServiceImpl implements SegmentService {
             //对象转换
             SegmentRange segmentRange = convert(segmentDO);
             if (logger.isInfoEnabled()) {
-                logger.info("new range is success,namespace:{},step:{},range:{}->{}", namespace, step, oldValue, newMaxVal);
+                logger.info("new range is success,namespace:{},step:{},range:{}->{}", namespace, step, oldValue + 1, newMaxVal);
             }
             return segmentRange;
         }
@@ -110,8 +110,15 @@ public class SegmentServiceImpl implements SegmentService {
         throw new BambooLeafException(msg);
     }
 
+    /**
+     * 对象转换
+     *
+     * @param segmentDO 源对象
+     * @return
+     */
     private SegmentRange convert(SegmentDO segmentDO) {
         SegmentRange segmentRange = new SegmentRange();
+        segmentRange.setNamespace(segmentDO.getNamespace());
         segmentRange.setMaxId(segmentDO.getLeafVal() + segmentDO.getStep());
         segmentRange.setCurrentVal(new AtomicLong(segmentDO.getLeafVal()));
         segmentRange.setRemainder(segmentDO.getRemainder() == null ? 0 : segmentDO.getRemainder());

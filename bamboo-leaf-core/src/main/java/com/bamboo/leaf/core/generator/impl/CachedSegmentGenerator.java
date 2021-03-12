@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 public class CachedSegmentGenerator implements SegmentGenerator {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     protected SegmentService segmentService;
 
     /**
@@ -61,16 +60,23 @@ public class CachedSegmentGenerator implements SegmentGenerator {
     }
 
     public synchronized void loadCurrent(long maxVal, int nextStep) {
-        if (nextSegment == null) {
-            SegmentRange segmentRange = querySegmentRange(maxVal, nextStep);
-            this.currentSegment = segmentRange;
-        } else if (currentSegment.isOver() && nextSegment != null) {
-            // 预加载段赋给当前段
-            currentSegment = nextSegment;
-            nextSegment = null;
-            logger.info("currentSegment is over,nextSegment-->currentSegment!");
+        if (currentSegment == null) {
+            currentSegment = querySegmentRange(maxVal, nextStep);
+        } else if (currentSegment.isOver()) {
+            // 判断预加载是否成功
+            if (nextSegment != null) {
+                // 预加载段赋给当前段
+                currentSegment = nextSegment;
+                nextSegment = null;
+                logger.info("namespace:{} currentSegment is over,nextSegment-->currentSegment! nextRange:{}->{} ",
+                        currentSegment.getNamespace(), currentSegment.getCurrentVal().get() + 1, currentSegment.getMaxId());
+            } else {
+                // 重新实时加载
+                currentSegment = querySegmentRange(maxVal, nextStep);
+                logger.info("namespace:{} currentSegment is over,reload currentSegment! nextRange:{}->{}",
+                        currentSegment.getNamespace(), currentSegment.getCurrentVal().get() + 1, currentSegment.getMaxId());
+            }
         }
-
     }
 
     /**
@@ -80,18 +86,26 @@ public class CachedSegmentGenerator implements SegmentGenerator {
      * @return
      */
     private SegmentRange querySegmentRange(long maxVal, int nextStep) {
-        String message = null;
         try {
             SegmentRange segmentRange = segmentService.getNextSegmentRange(namespace, maxVal, nextStep);
             if (segmentRange != null) {
                 return segmentRange;
+            } else {
+                throw new BambooLeafException("query getNextSegmentRange is null");
             }
         } catch (Exception e) {
             logger.error(" querySegmentRange is error,msg:", e);
+            throw new BambooLeafException("error query segmentRange: " + e.getMessage());
         }
-        throw new BambooLeafException("error query segmentRange: " + message);
     }
 
+    /**
+     * 异步获取下个数据段
+     *
+     * @param maxVal   最大值
+     * @param nextStep 下个步长
+     * @return
+     */
     public void loadNext(long maxVal, int nextStep) {
         if (nextSegment == null && !isLoadingNext) {
             synchronized (lock) {
@@ -103,7 +117,8 @@ public class CachedSegmentGenerator implements SegmentGenerator {
                             try {
                                 // 无论获取下个segmentId成功与否，都要将isLoadingNext赋值为false
                                 nextSegment = querySegmentRange(maxVal, nextStep);
-                                logger.info("loading nextSegment is success,nextStep:{},nextRange:{}->{}", nextStep, nextSegment.getCurrentVal(), nextSegment.getMaxId());
+                                logger.info("namespace:{} loading nextSegment is success,nextStep:{},nextRange:{}->{}",
+                                        nextSegment.getNamespace(), nextStep, nextSegment.getCurrentVal().get() + 1, nextSegment.getMaxId());
                             } finally {
                                 isLoadingNext = false;
                             }
@@ -125,8 +140,9 @@ public class CachedSegmentGenerator implements SegmentGenerator {
             if (result.getResultEnum() == ResultEnum.OVER) {
                 currentSegment.setOver(true);
                 loadCurrent(maxValue, result.getNextStep());
-
+                continue;
             } else {
+                // LOADING AND NORMAL
                 // 预加载下一段序列
                 if (result.getResultEnum() == ResultEnum.LOADING) {
                     loadNext(maxValue, result.getNextStep());
@@ -148,7 +164,6 @@ public class CachedSegmentGenerator implements SegmentGenerator {
         }
         id.append(val);
         return id.toString();
-
     }
 
     @Override
