@@ -16,10 +16,11 @@ import java.time.LocalDateTime;
  * @Date: 2020/12/28 下午10:56
  */
 @RestController
-public class SegmentController {
+public class SegmentController extends BaseController{
     private static final Logger logger = LoggerFactory.getLogger(SegmentController.class);
     @Resource
     BambooLeafSegmentClient bambooLeafSegmentClient;
+
 
     @RequestMapping("/segment/segmentId")
     public ModelMap segmentId(String namespace) {
@@ -27,6 +28,8 @@ public class SegmentController {
         ModelMap result = new ModelMap();
         try {
             long leafVal = bambooLeafSegmentClient.segmentId(namespace);
+            super.insertDemo(leafVal+"",namespace,"segmentId");
+
             result.put("leafVal", leafVal);
             result.put("currentTime", LocalDateTime.now());
             logger.info("nextSegment is success,namespace:{}", namespace);
@@ -44,6 +47,8 @@ public class SegmentController {
         ModelMap result = new ModelMap();
         try {
             long dateVal = bambooLeafSegmentClient.dateSegmentId(namespace);
+            super.insertDemo(dateVal+"",namespace,"dateSegmentId");
+
             result.put("dateVal", dateVal + "");
             result.put("currentTime", LocalDateTime.now());
             logger.info("dateSegmentId is success,namespace:{}", namespace);
@@ -61,6 +66,8 @@ public class SegmentController {
         ModelMap result = new ModelMap();
         try {
             long timeVal = bambooLeafSegmentClient.timeSegmentId(namespace);
+            super.insertDemo(timeVal+"",namespace,"timeSegmentId");
+
             result.put("timeVal", timeVal + "");
             result.put("currentTime", LocalDateTime.now());
             logger.info("timeSegmentId is success,namespace:{}", namespace);
@@ -78,6 +85,8 @@ public class SegmentController {
         ModelMap result = new ModelMap();
         try {
             String timePixedVal = bambooLeafSegmentClient.timeSegmentId(namespace, prefix);
+            super.insertDemo(timePixedVal+"",namespace,"timeSegmentIdPrefix");
+
             result.put("timePixedVal", timePixedVal);
             result.put("currentTime", LocalDateTime.now());
             logger.info("nextSegment is success,namespace:{}", namespace);
@@ -95,6 +104,9 @@ public class SegmentController {
         ModelMap result = new ModelMap();
         try {
             String datePixedVal = bambooLeafSegmentClient.dateSegmentId(namespace, prefix);
+
+            super.insertDemo(datePixedVal + "", namespace, "dateSegmentIdPrefix");
+
             result.put("datePixedVal", datePixedVal);
             result.put("currentTime", LocalDateTime.now());
             logger.info("nextSegment is success,namespace:{}", namespace);

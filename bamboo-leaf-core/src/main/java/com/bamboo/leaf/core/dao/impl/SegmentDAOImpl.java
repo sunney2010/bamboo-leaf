@@ -18,6 +18,7 @@ import java.sql.SQLException;
  * @Date: 2020/11/30 下午1:10
  */
 public class SegmentDAOImpl extends AbstractDAO implements SegmentDAO {
+
     private static final Logger logger = LoggerFactory.getLogger(SegmentDAOImpl.class);
 
     @Override
