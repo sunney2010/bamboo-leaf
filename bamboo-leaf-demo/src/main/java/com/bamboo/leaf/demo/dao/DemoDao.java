@@ -2,6 +2,7 @@ package com.bamboo.leaf.demo.dao;
 
 import com.bamboo.leaf.core.exception.BambooLeafException;
 import com.bamboo.leaf.demo.entity.DemoDO;
+import com.bamboo.leaf.demo.entity.DemoErrorDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class DemoDao {
     protected DataSource dataSource;
 
     private volatile String insertDemoSql;
+    private volatile String insertDemoErrorSql;
 
     /**
      * 新增
@@ -51,6 +53,45 @@ public class DemoDao {
             val = stmt.executeUpdate();
         } catch (SQLException e) {
             logger.error("bamboo-leaf-demo is error,msg:", e);
+            // 测试异常写入错误信息表
+            DemoErrorDO demoErrorDO = new DemoErrorDO();
+            demoErrorDO.setMessage(e.getStackTrace().toString());
+            demoErrorDO.setNamespace(demoDO.getNamespace());
+            demoErrorDO.setRemark(demoDO.getRemark());
+            demoErrorDO.setSeq(demoDO.getId());
+            insertDemoError(demoErrorDO);
+        } finally {
+            closeStatement(stmt);
+            stmt = null;
+            closeConnection(conn);
+            conn = null;
+        }
+        return val;
+
+    }
+
+    /**
+     * 新增
+     *
+     * @param demoErrorDO 插入对象
+     * @return 返回序列下一个值
+     * @throws BambooLeafException
+     */
+    public int insertDemoError(DemoErrorDO demoErrorDO) throws BambooLeafException {
+        int val = 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = dataSource.getConnection();
+            stmt = conn.prepareStatement(getInsertDemoErrorSql());
+            stmt.setString(1, demoErrorDO.getSeq());
+            stmt.setString(2, demoErrorDO.getNamespace());
+            stmt.setString(3, demoErrorDO.getMessage());
+            stmt.setString(4, demoErrorDO.getRemark());
+
+            val = stmt.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("bamboo_leaf_demo_error is error,msg:", e);
         } finally {
             closeStatement(stmt);
             stmt = null;
@@ -74,6 +115,21 @@ public class DemoDao {
             }
         }
         return insertDemoSql;
+    }
+
+    private String getInsertDemoErrorSql() {
+        if (insertDemoErrorSql == null) {
+            synchronized (this) {
+                if (insertDemoErrorSql == null) {
+                    StringBuilder buffer = new StringBuilder();
+                    buffer.append("INSERT INTO bamboo_leaf_demo_error ");
+                    buffer.append("(seq,namespace,message,remark)");
+                    buffer.append(" VALUES(?,?,?,?)");
+                    insertDemoErrorSql = buffer.toString();
+                }
+            }
+        }
+        return insertDemoErrorSql;
     }
 
     private void closeStatement(Statement stmt) {

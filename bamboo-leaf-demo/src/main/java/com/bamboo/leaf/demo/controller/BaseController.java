@@ -18,7 +18,7 @@ public class BaseController {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
-    DemoDao demoDao;
+    protected DemoDao demoDao;
 
     protected void insertDemo(String id, String namespace, String remark) {
         DemoDO demo = new DemoDO();

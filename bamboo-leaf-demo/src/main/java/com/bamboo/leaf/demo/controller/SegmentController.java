@@ -1,6 +1,7 @@
 package com.bamboo.leaf.demo.controller;
 
 import com.bamboo.leaf.client.service.BambooLeafSegmentClient;
+import com.bamboo.leaf.demo.entity.DemoErrorDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.ModelMap;
@@ -28,8 +29,8 @@ public class SegmentController extends BaseController{
         ModelMap result = new ModelMap();
         try {
             long leafVal = bambooLeafSegmentClient.segmentId(namespace);
-            super.insertDemo(leafVal+"",namespace,"segmentId");
-
+            super.insertDemo(leafVal + "", namespace, "segmentId");
+            
             result.put("leafVal", leafVal);
             result.put("currentTime", LocalDateTime.now());
             logger.info("nextSegment is success,namespace:{}", namespace);
