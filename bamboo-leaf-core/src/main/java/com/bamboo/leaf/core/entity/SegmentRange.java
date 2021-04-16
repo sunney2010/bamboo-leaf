@@ -134,13 +134,13 @@ public class SegmentRange {
             // 大于40分钟 步长减半
             int tempStep = step / 2;
             // 步长不能小于默认最小步长
-            return tempStep < LeafConstant.DEFAULT_STEP ? LeafConstant.DEFAULT_STEP : tempStep;
+            return Math.max(tempStep, LeafConstant.DEFAULT_STEP);
 
         } else if (diff < MIN_TIME) {
             // 大于20分钟 步长加倍
             int tempStep = step * 2;
             // 步长不能小于默认最小步长
-            return tempStep > LeafConstant.STEP_MAX ? LeafConstant.STEP_MAX : tempStep;
+            return Math.min(tempStep, LeafConstant.STEP_MAX);
         } else {
             //[30~60]步长不变
             return step;
