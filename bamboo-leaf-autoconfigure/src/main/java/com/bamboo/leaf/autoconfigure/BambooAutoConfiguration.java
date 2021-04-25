@@ -167,15 +167,15 @@ public class BambooAutoConfiguration {
 
         if (ModeEnum.Remote.name().equals(mode)) {
             // 判断服务地址
-            if (leafServer == null || (leafServer = leafServer.trim()).length() == 0) {
+            if (leafServer == null || leafServer.trim().length() == 0) {
                 throw new BambooLeafException("bamboo.leaf.client.leafServer is not null!");
             }
             // 判断服务端口
-            if (leafPort == null || (leafPort = leafPort.trim()).length() == 0) {
+            if (leafPort == null || leafPort.trim().length() == 0) {
                 throw new BambooLeafException("bamboo.leaf.client.leafPort is not null!");
             }
             // 判断服务端口
-            if (leafToken == null || (leafToken = leafToken.trim()).length() == 0) {
+            if (leafToken == null || leafToken.trim().length() == 0) {
                 throw new BambooLeafException("bamboo.leaf.client.leafToken is not null!");
             }
         }
