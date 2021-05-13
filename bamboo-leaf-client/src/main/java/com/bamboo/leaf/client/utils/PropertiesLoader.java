@@ -33,7 +33,7 @@ public class PropertiesLoader {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    logger.error("error close inputstream", e);
+                    logger.error("error close inputStream", e);
                 }
             }
         }
