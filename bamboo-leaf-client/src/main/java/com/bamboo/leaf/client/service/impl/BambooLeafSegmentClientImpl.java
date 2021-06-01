@@ -56,8 +56,8 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
             logger.error("namespace is null");
             throw new IllegalArgumentException("namespace is null");
         }
-        SegmentGenerator generator = this.getSegmentGenerator(namespace, LeafConstant.SEGMENT_DATE_MAXVALUE);
-        String val = generator.nextSegmentIdFixed(LeafConstant.SEGMENT_DATE_MAXVALUE);
+        SegmentGenerator generator = this.getSegmentGenerator(namespace, LeafConstant.SEGMENT_ELEVEN_MAXVALUE);
+        String val = generator.nextSegmentIdFixed(LeafConstant.SEGMENT_ELEVEN_MAXVALUE);
         StringBuilder id = new StringBuilder(20);
         // 获取当前的系统时间
         Date dt = new Date();
@@ -82,12 +82,44 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
     }
 
     @Override
+    public Long shortDateSegmentId(String namespace) {
+        if (namespace == null || namespace.trim().length() == 0) {
+            logger.error("namespace is null");
+            throw new IllegalArgumentException("namespace is null");
+        }
+        SegmentGenerator generator = this.getSegmentGenerator(namespace, LeafConstant.SEGMENT_TEN_MAXVALUE);
+        String val = generator.nextSegmentIdFixed(LeafConstant.SEGMENT_TEN_MAXVALUE);
+        StringBuilder id = new StringBuilder(20);
+        // 获取当前的系统时间
+        Date dt = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyMMdd");
+        id.append(formatter.format(dt));
+        id.append(val);
+        return Long.valueOf(id.toString());
+    }
+
+    @Override
+    public String shortDateSegmentId(String namespace, String prefix) {
+        if (namespace == null || namespace.trim().length() == 0) {
+            throw new IllegalArgumentException("namespace is null");
+        }
+        if (prefix == null || prefix.trim().length() == 0) {
+            throw new IllegalArgumentException("prefix is null");
+        }
+        if (prefix.trim().length() < 1 || prefix.trim().length() > PREFIX_MAX_LENGTH) {
+            throw new IllegalArgumentException("prefix range no in [1,10]");
+        }
+        return prefix + this.shortDateSegmentId(namespace);
+    }
+
+
+    @Override
     public Long timeSegmentId(String namespace) {
         if (namespace == null || namespace.trim().length() == 0) {
             throw new IllegalArgumentException("namespace is null");
         }
-        SegmentGenerator generator = this.getSegmentGenerator(namespace, LeafConstant.SEGMENT_TIME_MAXVALUE);
-        String val = generator.nextSegmentIdFixed(LeafConstant.SEGMENT_TIME_MAXVALUE);
+        SegmentGenerator generator = this.getSegmentGenerator(namespace, LeafConstant.SEGMENT_SEVEN_MAXVALUE);
+        String val = generator.nextSegmentIdFixed(LeafConstant.SEGMENT_SEVEN_MAXVALUE);
 
         StringBuilder id = new StringBuilder(20);
         // 获取当前的系统时间

@@ -93,12 +93,18 @@ public class LeafConstant {
      */
     public static final int MAX_WORKER_ID = 16383;
     /**
-     * 日期序列段的最大值
+     * 序列段的11位最大值
      */
-    public static final long SEGMENT_DATE_MAXVALUE = 99999999999L;
+    public static final long SEGMENT_ELEVEN_MAXVALUE = 99999999999L;
+
     /**
-     * 时间序列段的最大值
+     * 序列段的10位最大值
      */
-    public static final long SEGMENT_TIME_MAXVALUE = 9999999L;
+    public static final long SEGMENT_TEN_MAXVALUE = 9999999999L;
+
+    /**
+     * 序列段的7位最大值
+     */
+    public static final long SEGMENT_SEVEN_MAXVALUE = 9999999L;
 
 }
