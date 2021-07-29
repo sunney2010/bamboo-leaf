@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * @description: TODO
+ * @description: SegmentService实现类
  * @Author: Zhuzhi
  * @Date: 2020/11/30 下午11:12
  */
@@ -96,6 +96,8 @@ public class SegmentServiceImpl implements SegmentService {
             //判断是否更新成功
             if (row == 0) {
                 // retry
+                logger.warn("bamboo-leaf apply range retry,namespace:{},time:{}", namespace, i + 1);
+                sleep();
                 continue;
             }
             //对象转换
@@ -129,6 +131,19 @@ public class SegmentServiceImpl implements SegmentService {
         // 默认75%加载
         segmentRange.setLoadingVal(segmentRange.getCurrentVal().get() + segmentDO.getStep() * leafConfigure.getLoadingPercent() / 100);
         return segmentRange;
+    }
+
+    /**
+     * 随机休息
+     */
+    private void sleep() {
+        try {
+            //随机休息[10~100]毫秒
+            int time = (int) (Math.random() * (100 - 10) + 10);
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            logger.error("Thread.sleep error", e);
+        }
     }
 
     public SegmentDAO getSegmentDAO() {

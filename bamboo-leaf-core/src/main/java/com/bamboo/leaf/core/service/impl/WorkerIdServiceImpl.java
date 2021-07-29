@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * @description: TODO
+ * @description: WorkerId业务实现类
  * @Author: Zhuzhi
  * @Date: 2020/12/4 上午11:20
  */
