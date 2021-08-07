@@ -76,6 +76,7 @@ public class LeafController {
             return response;
         }
         if (!tokenService.canVisit(namespace, token)) {
+            logger.warn("Access Denied,namespace:{},token:{}", namespace, token);
             response.setResult(ResultCode.FAIL.getMessage());
             response.setErrMsg(ResultCode.TOKEN_ERR.getMessage());
             return response;

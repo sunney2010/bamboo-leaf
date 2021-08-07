@@ -72,7 +72,7 @@ bamboo:
       retry: 16
       step: 20000
     client:
-      leafToken: 0504c00e-7971-41d1-87e8-0952399c5816
+      leafToken: 79B16AEC1C654788838785C2D1063616
       leafServer: 29.12.26.93
       leafPort: 8080
       mode: Remote
