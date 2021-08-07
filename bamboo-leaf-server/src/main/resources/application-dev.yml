@@ -21,9 +21,9 @@ spring:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
       type: com.alibaba.druid.pool.DruidDataSource
-      url: jdbc:mysql://www.zhuzhi.vip:3306/bamboo-leaf?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      url: jdbc:mysql://www.zhuzhi.vip:3306/bamboo-leaf?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
       username: root
-      password: zhuzhi2020
+      password: Zhuzhi2020!
       # 初始连接数
       initialSize: 5
       # 最小连接池数量
