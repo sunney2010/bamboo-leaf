@@ -20,6 +20,7 @@ Desktop.ini
 # ignore Maven generated target folders
 target
 out
+build
 target/
 .DS_Store
 

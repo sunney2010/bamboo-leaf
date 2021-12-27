@@ -19,11 +19,12 @@ import java.time.LocalDateTime;
 public class LeafController {
 
     private static final Logger logger = LoggerFactory.getLogger(LeafController.class);
-    @Resource
-    BambooLeafSegmentClient bambooLeafSegmentClient;
+
 
     @Resource
     BambooLeafSnowflakeClient bambooLeafSnowflakeClient;
+    @Resource
+    BambooLeafSegmentClient bambooLeafSegmentClient;
 
     @RequestMapping("/segment/hello")
     public ModelMap hello() {

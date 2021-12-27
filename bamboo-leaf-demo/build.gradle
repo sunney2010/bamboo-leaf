@@ -5,7 +5,15 @@
 plugins {
     id 'com.bamboo.leaf.java-conventions'
 }
-
+configurations.all {
+    all*.exclude module: 'spring-boot-starter-logging'
+    resolutionStrategy {
+        force 'org.apache.logging.log4j:log4j-core:2.17.0'
+        force 'org.apache.logging.log4j:log4j-api:2.17.0'
+        force 'org.apache.logging.log4j:log4j-jul:2.17.0'
+        force 'org.apache.logging.log4j:log4j-slf4j-impl:2.17.0'
+    }
+}
 dependencies {
     implementation project(':bamboo-leaf-autoconfigure')
     implementation project(':bamboo-leaf-client')

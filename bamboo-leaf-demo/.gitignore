@@ -20,7 +20,7 @@ Desktop.ini
 # ignore Maven generated target folders
 target
 out
-
+build
 # ignore eclipse files
 .project
 .classpath

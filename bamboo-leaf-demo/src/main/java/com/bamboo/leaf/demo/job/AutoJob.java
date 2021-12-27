@@ -49,7 +49,7 @@ public class AutoJob {
     @Resource
     BambooLeafSegmentClient bambooLeafSegmentClient;
 
-    @Scheduled(fixedRate = 1000, initialDelay = 1000)
+    //@Scheduled(fixedRate = 1000, initialDelay = 1000)
     public void AutoJobTest() {
         AutoRun();
     }
