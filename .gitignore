@@ -16,6 +16,7 @@ Desktop.ini
 /.classpath
 /.project
 /.idea
+/.gradle
 
 # ignore Maven generated target folders
 target
