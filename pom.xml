@@ -7,15 +7,23 @@
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>bamboo-leaf</name>
+	<modules>
+		<module>bamboo-leaf-core</module>
+		<module>bamboo-leaf-server</module>
+		<module>bamboo-leaf-client</module>
+		<module>bamboo-leaf-autoconfigure</module>
+		<module>bamboo-leaf-demo</module>
+		<module>bamboo-leaf-plugin</module>
+	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
-		<druid.version>1.2.3</druid.version>
+		<druid.version>1.2.8</druid.version>
 		<fastjson.version>1.2.73</fastjson.version>
 		<spring.version>2.4.0</spring.version>
-		<mysql.version>8.0.22</mysql.version>
+		<mysql.version>8.0.28</mysql.version>
 		<lang3.version>3.9</lang3.version>
 		<slf4j.version>1.7.30</slf4j.version>
 	</properties>
@@ -106,7 +114,7 @@
 			<dependency>
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
-				<version>1.9.3</version>
+				<version>1.9.4</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
@@ -115,12 +123,4 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-	<modules>
-		<module>bamboo-leaf-core</module>
-		<module>bamboo-leaf-server</module>
-		<module>bamboo-leaf-client</module>
-		<module>bamboo-leaf-autoconfigure</module>
-        <module>bamboo-leaf-demo</module>
-	</modules>
 </project>

@@ -34,14 +34,18 @@ func QuerySegment(conn *gorm.DB, namespace string) (segment *Segment) {
 	conn.Raw("select id,namespace,leaf_val,step,delta,remainder,retry,version,remark from bamboo_leaf_segment where namespace=? ", namespace).Scan(&segment)
 	return segment
 }
-func UpdateSegment(conn *gorm.DB, segment *Segment)()  {
-	conn.Debug().Where(" namespace=? and version=? and leaf_val=?",segment.Namespace,segment.Version,segment.LeafVal).
-		Update(Segment{LeafVal: 100,Step: 90,Version: 1})
 
+// UpdateSegment 更新记录
+func UpdateSegment(conn *gorm.DB, segment *Segment) {
+	m1 := map[string]interface{}{
+		"leaf_val": gorm.Expr("leaf_val+?", segment.Step),
+		"Version":  gorm.Expr("Version  + ?", 1),
+	}
+	conn.Debug().Where(" namespace=? and version=? and leaf_val=?", segment.Namespace, segment.Version, segment.LeafVal).UpdateColumns(m1)
 	//conn.Raw("update bamboo_leaf_segment set leaf_val=?,step=?,version=? where namespace=? and version=? and leaf_val=? ",
 	//	segment.LeafVal,segment.Step,segment.Version+1,segment.Namespace,segment.Version,segment.LeafVal).Scan()
-	
+
 }
-func ResetSegment()  {
+func ResetSegment() {
 
 }

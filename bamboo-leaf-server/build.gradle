@@ -9,21 +9,21 @@ plugins {
 configurations.all {
     all*.exclude module: 'spring-boot-starter-logging'
     resolutionStrategy {
-        force 'org.apache.logging.log4j:log4j-core:2.17.0'
-        force 'org.apache.logging.log4j:log4j-api:2.17.0'
-        force 'org.apache.logging.log4j:log4j-jul:2.17.0'
-        force 'org.apache.logging.log4j:log4j-slf4j-impl:2.17.0'
+        force 'org.apache.logging.log4j:log4j-core:2.17.1'
+        force 'org.apache.logging.log4j:log4j-api:2.17.1'
+        force 'org.apache.logging.log4j:log4j-jul:2.17.1'
+        force 'org.apache.logging.log4j:log4j-slf4j-impl:2.17.1'
     }
 }
 dependencies {
     implementation project(':bamboo-leaf-core')
-    implementation 'com.alibaba:druid:1.2.3'
+    implementation 'com.alibaba:druid:1.2.8'
     implementation 'org.springframework.boot:spring-boot-starter-web:2.4.0'
     implementation 'org.springframework.boot:spring-boot-starter-tomcat:2.4.0'
     implementation 'org.springframework.boot:spring-boot-starter-log4j2:2.4.0'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc:2.4.0'
-    implementation 'mysql:mysql-connector-java:8.0.22'
-    implementation 'commons-beanutils:commons-beanutils:1.9.3'
+    implementation 'mysql:mysql-connector-java:8.0.28'
+    implementation 'commons-beanutils:commons-beanutils:1.9.4'
     implementation 'org.apache.commons:commons-lang3:3.9'
     implementation 'org.springframework.boot:spring-boot-devtools:2.4.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.0'
