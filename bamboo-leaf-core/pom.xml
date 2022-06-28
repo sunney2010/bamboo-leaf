@@ -28,7 +28,7 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
-            <optional>true</optional>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
