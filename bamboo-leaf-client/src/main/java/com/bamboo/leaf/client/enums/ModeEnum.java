@@ -1,4 +1,4 @@
-package com.bamboo.leaf.client.constant;
+package com.bamboo.leaf.client.enums;
 
 /**
  * @description: 模式枚举,
@@ -7,7 +7,7 @@ package com.bamboo.leaf.client.constant;
  * @Author: Zhuzhi
  * @Date: 2020/12/2 下午10:59
  */
-public enum  ModeEnum {
+public enum ModeEnum {
 
     Local,Remote;
 }

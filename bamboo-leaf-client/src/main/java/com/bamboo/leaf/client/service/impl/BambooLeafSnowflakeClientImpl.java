@@ -1,10 +1,10 @@
 package com.bamboo.leaf.client.service.impl;
 
 import com.bamboo.leaf.client.config.ClientConfig;
-import com.bamboo.leaf.client.constant.ModeEnum;
 import com.bamboo.leaf.client.service.BambooLeafSnowflakeClient;
 import com.bamboo.leaf.client.utils.SnowflakeIdUtils;
 import com.bamboo.leaf.core.constant.LeafConstant;
+import com.bamboo.leaf.client.enums.ModeEnum;
 import com.bamboo.leaf.core.exception.BambooLeafException;
 import com.bamboo.leaf.core.factory.AbstractWorkerIdGeneratorFactory;
 import com.bamboo.leaf.core.generator.SnowflakeGenerator;

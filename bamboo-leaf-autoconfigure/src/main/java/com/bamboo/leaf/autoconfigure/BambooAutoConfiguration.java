@@ -2,7 +2,6 @@ package com.bamboo.leaf.autoconfigure;
 
 import com.bamboo.leaf.client.config.ClientConfig;
 import com.bamboo.leaf.client.constant.ClientConstant;
-import com.bamboo.leaf.client.constant.ModeEnum;
 import com.bamboo.leaf.client.service.BambooLeafSegmentClient;
 import com.bamboo.leaf.client.service.BambooLeafSnowflakeClient;
 import com.bamboo.leaf.client.service.impl.BambooLeafSegmentClientImpl;

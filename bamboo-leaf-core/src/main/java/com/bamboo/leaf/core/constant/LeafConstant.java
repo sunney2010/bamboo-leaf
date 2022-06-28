@@ -29,7 +29,6 @@ public class LeafConstant {
     public static final String DEFAULT_WORKERID_COLUMN_NAME = " worker_id ";
 
 
-
     //================END=============
 
     /**
@@ -95,16 +94,32 @@ public class LeafConstant {
     /**
      * 序列段的11位最大值
      */
-    public static final long SEGMENT_ELEVEN_MAXVALUE = 99999999999L;
+    public static final long SEGMENT_11_MAXVALUE = 99999999999L;
 
     /**
      * 序列段的10位最大值
      */
-    public static final long SEGMENT_TEN_MAXVALUE = 9999999999L;
+    public static final long SEGMENT_10_MAXVALUE = 9999999999L;
+    /**
+     * 序列段的9位最大值
+     */
+    public static final long SEGMENT_9_MAXVALUE = 9999999L;
+    /**
+     * 序列段的8位最大值
+     */
+    public static final long SEGMENT_8_MAXVALUE = 9999999L;
 
     /**
      * 序列段的7位最大值
      */
-    public static final long SEGMENT_SEVEN_MAXVALUE = 9999999L;
+    public static final long SEGMENT_7_MAXVALUE = 9999999L;
+    /**
+     * 序列段的6位最大值
+     */
+    public static final long SEGMENT_6_MAXVALUE = 9999999L;
+    /**
+     * 序列段的5位最大值
+     */
+    public static final long SEGMENT_5_MAXVALUE = 9999999L;
 
 }
