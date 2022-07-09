@@ -10,6 +10,7 @@ import org.apache.ibatis.plugin.Signature;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Properties;
 
 @Intercepts({@Signature(
         type = Executor.class,
@@ -33,18 +34,25 @@ public class BambooLeafPlugin implements Interceptor {
         if (!SqlCommandType.INSERT.equals(statement.getSqlCommandType())) {
             return invocation.proceed();
         }
-
         Object parameter = args[1];
         if (!(parameter instanceof Map)) {
             //cosIdSupport.ensureId(parameter);
             return invocation.proceed();
         }
-
         Collection entityList = (Collection) ((Map) parameter).get(DEFAULT_LIST_KEY);
-
         for (Object entity : entityList) {
             //cosIdSupport.ensureId(entity);
         }
         return invocation.proceed();
+    }
+
+    @Override
+    public Object plugin(Object target) {
+        return Interceptor.super.plugin(target);
+    }
+
+    @Override
+    public void setProperties(Properties properties) {
+        Interceptor.super.setProperties(properties);
     }
 }

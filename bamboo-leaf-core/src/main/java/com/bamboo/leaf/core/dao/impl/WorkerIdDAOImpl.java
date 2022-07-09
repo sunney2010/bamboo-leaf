@@ -26,7 +26,6 @@ public class WorkerIdDAOImpl extends AbstractDAO implements WorkerIdDAO {
     }
 
     public WorkerIdDAOImpl(DataSource dataSource) {
-
         super.dataSource = dataSource;
     }
 

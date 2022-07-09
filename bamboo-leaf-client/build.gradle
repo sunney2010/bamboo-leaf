@@ -9,9 +9,10 @@ plugins {
 dependencies {
     implementation project(':bamboo-leaf-core')
     implementation 'org.slf4j:slf4j-api:1.7.30'
-    implementation 'com.alibaba:fastjson:1.2.73'
+    implementation 'com.alibaba:fastjson:1.2.83'
     implementation 'org.springframework.boot:spring-boot-starter-web:2.4.0'
     implementation 'org.apache.commons:commons-lang3:3.9'
+    implementation 'net.jcip:jcip-annotations:1.0'
 }
 
 description = 'bamboo-leaf-client'
