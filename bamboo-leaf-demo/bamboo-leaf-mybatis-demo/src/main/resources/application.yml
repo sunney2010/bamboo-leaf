@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: dev
+    # 这里是告诉mybatis 扫描我们的xml文件的它会和上面的注解进行匹配
+    # classpath* 代表扫描全局,也就是所有的子模块,
+    # ** 代表中间不管有多少级目录,最终找到mapper,找到任意名称的xml文件
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml

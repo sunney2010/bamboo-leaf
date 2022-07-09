@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="om.bamboo.leaf.demo.mapper.BambooDemoMapper">
+<mapper namespace="com.bamboo.leaf.demo.mybatis.mapper.BambooDemoMapper">
     
-    <resultMap type="BambooModel" id="result">
+    <resultMap type="com.bamboo.leaf.demo.mybatis.Model.BambooDemoModel" id="result">
         <result property="id"    column="id"    />
         <result property="namespace"    column="namespace"    />
         <result property="createTime"    column="create_time"    />
@@ -14,12 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="queryBambooDemoById" parameterType="Long" resultMap="result">
        select id,namespace,create_time,update_time,remark
-        from bamboo-leaf-demo
+        from bamboo_leaf_demo
         where id = #{id}
     </select>
         
-    <insert id="insertBambooDemo" parameterType="BpmnModel" useGeneratedKeys="true" keyProperty="id">
-        insert into bamboo-leaf-demo (id,namespace,remark)
+    <insert id="insertBambooDemo" parameterType="com.bamboo.leaf.demo.mybatis.Model.BambooDemoModel" useGeneratedKeys="true" keyProperty="id">
+        insert into bamboo_leaf_demo (id,namespace,remark)
         value (#{id},#{namespace},#{remark})
     </insert>
 
