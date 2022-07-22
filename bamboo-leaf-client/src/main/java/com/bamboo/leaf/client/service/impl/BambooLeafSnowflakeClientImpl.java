@@ -136,6 +136,11 @@ public class BambooLeafSnowflakeClientImpl extends AbstractWorkerIdGeneratorFact
     }
 
     @Override
+    public Integer queryWorkerId(String namespace, String ip) {
+        return this.createWorkerId(namespace,ip);
+    }
+
+    @Override
     protected SnowflakeGenerator createSnowflakeGenerator(int workerId) {
         return new DefaultSnowflakeGenerator(workerId);
     }

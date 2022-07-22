@@ -40,4 +40,12 @@ public interface BambooLeafSnowflakeClient {
      */
     public String parsSnowflakeId(String namespace, long snowflakeId);
 
+    /**
+     * get workerId
+     * @param namespace 命名空间
+     * @param ip ip
+     * @return
+     */
+    public Integer queryWorkerId(String namespace,String ip);
+
 }

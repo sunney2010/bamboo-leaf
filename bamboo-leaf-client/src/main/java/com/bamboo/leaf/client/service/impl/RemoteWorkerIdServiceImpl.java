@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.bamboo.leaf.client.config.ClientConfig;
 import com.bamboo.leaf.client.constant.ClientConstant;
+import com.bamboo.leaf.client.utils.HttpClientUtils;
 import com.bamboo.leaf.client.utils.HttpUtils;
 import com.bamboo.leaf.client.utils.SnowflakeIdUtils;
 import com.bamboo.leaf.core.common.ResultCode;
@@ -13,6 +14,7 @@ import com.bamboo.leaf.core.exception.BambooLeafException;
 import com.bamboo.leaf.core.service.WorkerIdService;
 import com.bamboo.leaf.core.util.PNetUtils;
 import com.bamboo.leaf.core.util.PURL;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -36,8 +38,7 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
         if (logger.isInfoEnabled()) {
             logger.info("getWorkerId url:{}", url);
         }
-        String response = HttpUtils.post(url, ClientConfig.getInstance().getReadTimeout(),
-                ClientConfig.getInstance().getConnectTimeout());
+        String response= HttpClientUtils.get(url);
         logger.info("bamboo client getWorkerId end, response:" + response);
         if (response == null || "".equals(response.trim())) {
             // 如果获取失败，则使用随机数备用
@@ -62,7 +63,7 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
 
     private String chooseService(String namespace) {
         String snowflakeUrl = ClientConfig.getInstance().getSnowServerUrl();
-        if (null == snowflakeUrl) {
+        if (StringUtils.isBlank(snowflakeUrl) ){
             String leafServer = ClientConfig.getInstance().getLeafServer();
             // 判断服务地址
             if (leafServer == null || leafServer.trim().length() == 0) {

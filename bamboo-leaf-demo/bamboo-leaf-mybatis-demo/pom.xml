@@ -78,6 +78,11 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.2.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.bamboo.leaf</groupId>
+            <artifactId>bamboo-leaf-plugin-mybatis</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
     <profiles>
     </profiles>

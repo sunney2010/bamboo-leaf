@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.bamboo.leaf.client.config.ClientConfig;
 import com.bamboo.leaf.client.constant.ClientConstant;
+import com.bamboo.leaf.client.utils.HttpClientUtils;
 import com.bamboo.leaf.client.utils.HttpUtils;
 import com.bamboo.leaf.core.common.ResultCode;
 import com.bamboo.leaf.core.common.ResultResponse;
@@ -34,8 +35,7 @@ public class RemoteSegmentServiceImpl implements SegmentService {
         if (logger.isInfoEnabled()) {
             logger.info(" request nextSegmentRange URL:{}", url);
         }
-        String response = HttpUtils.post(url, ClientConfig.getInstance().getReadTimeout(),
-                ClientConfig.getInstance().getConnectTimeout());
+        String response= HttpClientUtils.get(url);
         logger.info("bamboo client getNextSegmentId end, response:" + response);
         if (response == null || "".equals(response.trim())) {
             return null;

@@ -1,6 +1,7 @@
 package com.bamboo.leaf.demo.mybatis.controller;
 
 import com.bamboo.leaf.client.service.BambooLeafSnowflakeClient;
+import com.bamboo.leaf.core.util.PNetUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.ModelMap;
@@ -86,6 +87,22 @@ public class SnowflakeController extends BaseController {
             logger.info("snowflakeId20 is success,namespace:{},snowflakeId:{}", namespace, snowflakeId20);
         } catch (Exception e) {
             logger.error("snowflakeId20 error", e);
+        }
+        return result;
+    }
+    @RequestMapping("/snowflake/queryWorkerId")
+    public ModelMap queryWorkerId(String namespace) {
+        logger.info("queryWorkerId parameter: namespace:{}", namespace);
+        ModelMap result = new ModelMap();
+        try {
+            String hospIp = PNetUtils.getLocalHost();
+            Integer workerId = bambooLeafSnowflakeClient.queryWorkerId(namespace,hospIp);
+            result.put("workerId", workerId + "");
+            result.put("currentIp", hospIp + "");
+            result.put("currentTime", LocalDateTime.now());
+            logger.info("queryWorkerId is success,namespace:{},queryWorkerId:{}", namespace, workerId);
+        } catch (Exception e) {
+            logger.error("queryWorkerId error", e);
         }
         return result;
     }
