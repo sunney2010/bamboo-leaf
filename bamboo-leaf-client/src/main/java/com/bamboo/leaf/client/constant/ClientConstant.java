@@ -20,6 +20,7 @@ public class ClientConstant {
     public static final String LEAF_TOKEN = "token";
     public static final String LEAF_MAXVALUE = "maxValue";
     public static final String LEAF_NAMESPACE = "namespace";
+    public static final String LEAF_APPID = "appId";
     public static final String LEAF_STEP = "step";
     public static final String LEAF_HOSP_IP = "hostIp";
     public static final String LEAF_SEGMENT_PATH = "/bamboo-leaf/segment/nextSegmentRange";

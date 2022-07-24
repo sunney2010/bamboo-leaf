@@ -7,10 +7,21 @@ package com.bamboo.leaf.client.utils;
  */
 public class NumberUtils {
 
+    /**
+     * String 转 int ,默认为O
+     * @param str 字符串
+     * @return
+     */
     public static int toInt(String str) {
         return toInt(str, 0);
     }
 
+    /**
+     * String 转 int
+     * @param str 字符串
+     * @param defaultValue 默认值
+     * @return
+     */
     public static int toInt(String str, int defaultValue) {
         if (str == null) {
             return defaultValue;

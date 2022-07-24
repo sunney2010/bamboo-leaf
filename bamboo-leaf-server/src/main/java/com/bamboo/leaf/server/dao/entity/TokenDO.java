@@ -17,14 +17,25 @@ public class TokenDO implements Serializable {
 
     private Integer id;
 
-    private String namespace;
-
+    /**
+     * 应用编号
+     */
+    private String appId;
+    /**
+     * TOKEN
+     */
     private String token;
-
+    /**
+     * 创建时间
+     */
     private Date createTime;
-
+    /**
+     * 最后更新时间
+     */
     private Date updateTime;
-
+    /**
+     * T
+     */
     private String remark;
 
 
@@ -36,12 +47,12 @@ public class TokenDO implements Serializable {
         this.id = id;
     }
 
-    public String getNamespace() {
-        return namespace;
+    public String getAppId() {
+        return appId;
     }
 
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 
     public String getToken() {
@@ -80,7 +91,7 @@ public class TokenDO implements Serializable {
     public String toString() {
         return "TokenDO{" +
                 "id=" + id +
-                ", namespace='" + namespace + '\'' +
+                ", namespace='" + appId + '\'' +
                 ", token='" + token + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +

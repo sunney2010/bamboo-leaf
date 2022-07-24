@@ -29,8 +29,8 @@ public abstract class AbstractWorkerIdGeneratorFactory implements WorkerIdGenera
     }
 
     @Override
-    public Integer getWorkerId(String namespace, String hostIp) {
-        String key = namespace + "-" + hostIp;
+    public Integer getWorkerId(String appId, String hostIp) {
+        String key = appId + "-" + hostIp;
         if (workerIdMap.containsKey(key)) {
             return workerIdMap.get(key);
         }
@@ -38,7 +38,7 @@ public abstract class AbstractWorkerIdGeneratorFactory implements WorkerIdGenera
             if (workerIdMap.containsKey(key)) {
                 return workerIdMap.get(key);
             }
-            Integer workerId = createWorkerId(namespace, hostIp);
+            Integer workerId = createWorkerId(appId, hostIp);
             workerIdMap.put(key, workerId);
             return workerId;
         }
@@ -53,12 +53,12 @@ public abstract class AbstractWorkerIdGeneratorFactory implements WorkerIdGenera
     protected abstract SnowflakeGenerator createSnowflakeGenerator(int workerId);
 
     /**
-     * 根据namespace创建id生成器
+     * 根据appId创建id生成器
      *
-     * @param namespace
+     * @param appId
      * @param hostIp
      * @return
      */
-    protected abstract Integer createWorkerId(String namespace, String hostIp);
+    protected abstract Integer createWorkerId(String appId, String hostIp);
 
 }

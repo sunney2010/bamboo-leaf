@@ -132,9 +132,10 @@ public class BambooAutoConfiguration {
                 properties = PropertiesLoader.loadProperties(ClientConstant.DEFAULT_PROPERTIES);
                 leafClientProperties = new LeafClientProperties();
                 leafClientProperties.setMode(properties.getProperty("bamboo.leaf.client.mode"));
+                leafClientProperties.setAppId(properties.getProperty("bamboo.leaf.client.appId"));
                 leafClientProperties.setLeafToken(properties.getProperty("bamboo.leaf.client.leafToken"));
                 leafClientProperties.setLeafServer(properties.getProperty("bamboo.leaf.client.leafServer"));
-                leafClientProperties.setLeafPort(properties.getProperty("bamboo.leaf.client.leafPort"));
+                leafClientProperties.setLeafPort(properties.getProperty("bamboo.leaf.client.leafPort","8080"));
                 leafClientProperties.setConnectTimeout(NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.readTimeout"), ClientConstant.DEFAULT_TIME_OUT));
                 leafClientProperties.setReadTimeout(NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.readTimeout"), ClientConstant.DEFAULT_TIME_OUT));
             } catch (Exception e) {

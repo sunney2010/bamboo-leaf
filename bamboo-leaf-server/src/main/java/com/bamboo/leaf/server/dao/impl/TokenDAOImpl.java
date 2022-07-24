@@ -23,16 +23,16 @@ public class TokenDAOImpl implements TokenDAO {
 
     @Override
     public List<TokenDO> selectAll() {
-        String sql = "select id, token, namespace, remark, " +
+        String sql = "select id, token, appId, remark, " +
                 "create_time, update_time from bamboo_leaf_token";
         return jdbcTemplate.query(sql, new TokenDAOImpl.TokenRowMapper());
     }
 
     @Override
     public int insertToken(TokenDO tokenDO) {
-        String sql = "insert bamboo_leaf_token(token,namespace,remark) " +
+        String sql = "insert bamboo_leaf_token(token,appId,remark) " +
                 "values(?,?,?)";
-        return jdbcTemplate.update(sql, tokenDO.getToken(), tokenDO.getNamespace(), tokenDO.getRemark());
+        return jdbcTemplate.update(sql, tokenDO.getToken(), tokenDO.getAppId(), tokenDO.getRemark());
     }
 
     public static class TokenRowMapper implements RowMapper<TokenDO> {
@@ -41,12 +41,11 @@ public class TokenDAOImpl implements TokenDAO {
             TokenDO token = new TokenDO();
             token.setId(resultSet.getInt("id"));
             token.setToken(resultSet.getString("token"));
-            token.setNamespace(resultSet.getString("namespace"));
+            token.setAppId(resultSet.getString("appId"));
             token.setRemark(resultSet.getString("remark"));
             token.setCreateTime(resultSet.getDate("create_time"));
             token.setUpdateTime(resultSet.getDate("update_time"));
             return token;
         }
     }
-
   }

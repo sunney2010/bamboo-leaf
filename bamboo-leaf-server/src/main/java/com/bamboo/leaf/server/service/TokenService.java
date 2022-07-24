@@ -9,11 +9,11 @@
 public interface TokenService {
     /**
      * 是否有权限
-     * @param namespace
-     * @param token
+     * @param appId 应用编号
+     * @param token token
      * @return
      */
-    boolean canVisit(String namespace, String token);
+    boolean canVisit(String appId, String token);
 
      /**
       * 新增

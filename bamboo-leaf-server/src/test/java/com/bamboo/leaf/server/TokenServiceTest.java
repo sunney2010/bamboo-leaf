@@ -22,7 +22,7 @@ public class TokenServiceTest extends BaseJunit {
     public void insertTokenTest() {
         logger.info("=======insert token start=====");
         TokenDO tokenDO = new TokenDO();
-        tokenDO.setNamespace("Test");
+        tokenDO.setAppId("Test");
         tokenDO.setToken(UUID.randomUUID().toString());
         tokenService.insertToken(tokenDO);
         logger.info("=======insert token end=====");

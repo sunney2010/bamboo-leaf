@@ -30,7 +30,7 @@ public class TokenServiceImpl implements TokenService {
     /**
      * 1分钟刷新一次token
      */
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
     public void refresh() {
         init();
     }
@@ -51,7 +51,7 @@ public class TokenServiceImpl implements TokenService {
                 if (!map.containsKey(tokenDO.getToken())) {
                     map.put(tokenDO.getToken(), new HashSet<String>());
                 }
-                map.get(tokenDO.getToken()).add(tokenDO.getNamespace());
+                map.get(tokenDO.getToken()).add(tokenDO.getAppId());
             }
         }
         return map;
@@ -62,12 +62,12 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public boolean canVisit(String namespace, String token) {
-        if (StringUtils.isEmpty(namespace) || StringUtils.isEmpty(token)) {
+    public boolean canVisit(String appId, String token) {
+        if (StringUtils.isEmpty(appId) || StringUtils.isEmpty(token)) {
             return false;
         }
         Set<String> namespaceSet = tokenMap.get(token);
-        boolean val=(namespaceSet != null && namespaceSet.contains(namespace));
+        boolean val=(namespaceSet != null && namespaceSet.contains(appId));
         return val;
     }
 

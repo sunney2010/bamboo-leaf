@@ -67,24 +67,24 @@ public class LeafController {
     }
 
     @RequestMapping("/snowflake/queryWorkerId")
-    public ResultResponse<Integer> queryWorkerId(String namespace, String hostIp, String token) {
-        logger.info("queryWorkerId parameter: namespace:{},hostIp:{},token:{}", namespace, hostIp, token);
+    public ResultResponse<Integer> queryWorkerId(String appId, String hostIp, String token) {
+        logger.info("queryWorkerId parameter: appId:{},hostIp:{},token:{}", appId, hostIp, token);
         ResultResponse<Integer> response = new ResultResponse<>();
-        if (StringUtils.isEmpty(namespace) || StringUtils.isEmpty(hostIp) || StringUtils.isEmpty(token)) {
+        if (StringUtils.isEmpty(appId) || StringUtils.isEmpty(hostIp) || StringUtils.isEmpty(token)) {
             response.setResult(ResultCode.FAIL.getMessage());
             response.setErrMsg(ResultCode.PARA_ERR.getMessage());
             return response;
         }
-        if (!tokenService.canVisit(namespace, token)) {
-            logger.warn("Access Denied,namespace:{},token:{}", namespace, token);
+        if (!tokenService.canVisit(appId, token)) {
+            logger.warn("Access Denied,appId:{},token:{}", appId, token);
             response.setResult(ResultCode.FAIL.getMessage());
             response.setErrMsg(ResultCode.TOKEN_ERR.getMessage());
             return response;
         }
         try {
-            int workerId = workerIdService.getWorkerId(namespace, hostIp);
+            int workerId = workerIdService.getWorkerId(appId, hostIp);
             response.setResultData(workerId);
-            logger.info("queryWorkerId success,namespace:{},hostIp:{},workerId:{}", namespace, hostIp, workerId);
+            logger.info("queryWorkerId success,appId:{},hostIp:{},workerId:{}", appId, hostIp, workerId);
         } catch (Exception e) {
             response.setResult(ResultCode.FAIL.getMessage());
             response.setErrMsg(ResultCode.SYS_ERR.getMessage());

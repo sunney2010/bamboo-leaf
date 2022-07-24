@@ -14,6 +14,12 @@ public class ClientConfig {
     private String mode;
 
     /**
+     * 应用编号
+     * mode=Remote:服务模式有效
+     */
+    private String appId;
+
+    /**
      * Remote:服务模式时，通信的Token
      */
     private String leafToken;
@@ -135,5 +141,13 @@ public class ClientConfig {
 
     public void setPurl(PURL purl) {
         this.purl = purl;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 }

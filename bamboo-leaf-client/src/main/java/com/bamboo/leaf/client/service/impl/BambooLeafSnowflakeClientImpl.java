@@ -127,9 +127,12 @@ public class BambooLeafSnowflakeClientImpl extends AbstractWorkerIdGeneratorFact
         if (namespace == null) {
             throw new IllegalArgumentException("namespace is null");
         }
+        // current ip
         String hospIp = PNetUtils.getLocalHost();
+        //appId
+        String appId=ClientConfig.getInstance().getAppId();
         // get workerId
-        Integer workerId = this.getWorkerId(namespace, hospIp);
+        Integer workerId = this.getWorkerId(appId,hospIp);
         SnowflakeGenerator SnowflakeGenerator = this.getSnowflakeGenerator(namespace, workerId);
 
         return SnowflakeGenerator.parseSnowId(snowflakeId);

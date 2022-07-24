@@ -55,6 +55,7 @@ public class HttpClientUtils {
 
     /**
      * 获取HttpClient对象
+     *
      * @param url url
      * @return
      */
@@ -82,7 +83,7 @@ public class HttpClientUtils {
         ConnectionSocketFactory plainsf = PlainConnectionSocketFactory.getSocketFactory();
         LayeredConnectionSocketFactory sslsf = SSLConnectionSocketFactory.getSocketFactory();
         Registry<ConnectionSocketFactory> registry = RegistryBuilder
-                .<ConnectionSocketFactory> create().register("http", plainsf).register("https", sslsf).build();
+                .<ConnectionSocketFactory>create().register("http", plainsf).register("https", sslsf).build();
         PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(registry);
         // 将最大连接数增加
         cm.setMaxTotal(maxTotal);
@@ -95,8 +96,10 @@ public class HttpClientUtils {
         // 请求重试处理
         HttpRequestRetryHandler httpRequestRetryHandler = new HttpRequestRetryHandler() {
             private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
             public boolean retryRequest(IOException exception, int executionCount, HttpContext context) {
-                logger.warn("Connection is error,executionCount:{}",executionCount);
+                logger.warn("Connection remote server:{} is error,retry times:{}",
+                        context.getAttribute(HttpClientContext.COOKIE_ORIGIN), executionCount);
                 // 如果已经重试了5次，就放弃
                 if (executionCount >= 5) {
                     return false;
@@ -121,7 +124,7 @@ public class HttpClientUtils {
                 if (exception instanceof ConnectTimeoutException) {
                     return false;
                 }
-                if(exception instanceof HttpHostConnectException){
+                if (exception instanceof HttpHostConnectException) {
                     return true;
                 }
                 // SSL握手异常
@@ -145,8 +148,9 @@ public class HttpClientUtils {
 
     /**
      * POST请求
-     * @param url URL
-     * @param data 参数
+     *
+     * @param url       URL
+     * @param data      参数
      * @param headerMap header
      * @return
      * @throws IOException
@@ -155,7 +159,7 @@ public class HttpClientUtils {
         HttpPost httppost = new HttpPost(url);
         config(httppost);
         if (headerMap != null) {
-            for(Map.Entry<String, String> entry : headerMap.entrySet()){
+            for (Map.Entry<String, String> entry : headerMap.entrySet()) {
                 httppost.setHeader(entry.getKey(), entry.getValue());
             }
         }
@@ -183,6 +187,7 @@ public class HttpClientUtils {
 
     /**
      * GET请求
+     *
      * @param url
      * @return
      */

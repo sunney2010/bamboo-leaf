@@ -32,9 +32,9 @@ import java.util.Map;
 public class RemoteWorkerIdServiceImpl implements WorkerIdService {
     private static final Logger logger = LoggerFactory.getLogger(RemoteWorkerIdServiceImpl.class);
     @Override
-    public int getWorkerId(String namespace, String hostIp) {
+    public int getWorkerId(String appId, String hostIp) {
         int workerId = 0;
-        String url = chooseService(namespace);
+        String url = chooseService();
         if (logger.isInfoEnabled()) {
             logger.info("getWorkerId url:{}", url);
         }
@@ -61,7 +61,11 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
         return workerId;
     }
 
-    private String chooseService(String namespace) {
+    /**
+     * 获取服务器URL
+     * @return
+     */
+    private String chooseService() {
         String snowflakeUrl = ClientConfig.getInstance().getSnowServerUrl();
         if (StringUtils.isBlank(snowflakeUrl) ){
             String leafServer = ClientConfig.getInstance().getLeafServer();
@@ -80,11 +84,16 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
             if (leafToken == null || leafToken.trim().length() == 0) {
                 throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafToken is not null!");
             }
+            String appId=ClientConfig.getInstance().getAppId();
+            // 判断服务appId
+            if(appId == null || appId.trim().length() == 0){
+                throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.appId is not null!");
+            }
 
             Map<String, String> parameters = new HashMap<String, String>(4);
             parameters.put(ClientConstant.LEAF_TOKEN, leafToken);
             parameters.put(ClientConstant.LEAF_HOSP_IP, PNetUtils.getLocalHost());
-            parameters.put(ClientConstant.LEAF_NAMESPACE, namespace);
+            parameters.put(ClientConstant.LEAF_APPID, appId);
 
             PURL purl = new PURL("http", leafServer, Integer.parseInt(leafPort), ClientConstant.LEAF_SNOWFLAKE_PATH, parameters);
             snowflakeUrl = purl.toFullString();

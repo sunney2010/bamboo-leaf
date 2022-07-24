@@ -1,6 +1,5 @@
 package com.bamboo.leaf.core.service;
 
-import com.bamboo.leaf.core.util.PURL;
 
 /**
  * @description: TODO
@@ -9,10 +8,10 @@ import com.bamboo.leaf.core.util.PURL;
  */
 public interface WorkerIdService {
     /**
-     * 通过nameSpace,hostIp获取workerId
-     * @param namespace 命名空间
+     * 通过 appId,hostIp获取workerId
+     * @param appId 应用编号
      * @param hostIp 主机IP
      * @return
      */
-    int getWorkerId(String namespace, String hostIp);
+    int getWorkerId(String appId, String hostIp);
 }
