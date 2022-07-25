@@ -91,16 +91,16 @@ public class SnowflakeController extends BaseController {
         return result;
     }
     @RequestMapping("/snowflake/queryWorkerId")
-    public ModelMap queryWorkerId(String appId) {
-        logger.info("queryWorkerId parameter: appId:{}", appId);
+    public ModelMap queryWorkerId(String namespace) {
+        logger.info("queryWorkerId parameter: namespace:{}", namespace);
         ModelMap result = new ModelMap();
         try {
             String hospIp = PNetUtils.getLocalHost();
-            Integer workerId = bambooLeafSnowflakeClient.queryWorkerId(appId,hospIp);
+            Integer workerId = bambooLeafSnowflakeClient.queryWorkerId(namespace,hospIp);
             result.put("workerId", workerId + "");
             result.put("currentIp", hospIp + "");
             result.put("currentTime", LocalDateTime.now());
-            logger.info("queryWorkerId is success,appId:{},queryWorkerId:{}", appId, workerId);
+            logger.info("queryWorkerId is success,namespace:{},queryWorkerId:{}", namespace, workerId);
         } catch (Exception e) {
             logger.error("queryWorkerId error", e);
         }

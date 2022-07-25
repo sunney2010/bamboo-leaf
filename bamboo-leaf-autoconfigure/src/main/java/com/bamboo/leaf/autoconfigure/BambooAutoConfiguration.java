@@ -166,6 +166,10 @@ public class BambooAutoConfiguration {
         String leafToken = leafClientProperties.getLeafToken();
         clientConfig.setLeafToken(leafToken);
 
+        //appId
+        String appId = leafClientProperties.getAppId();
+        clientConfig.setAppId(appId);
+
         if (ModeEnum.Remote.name().equals(mode)) {
             // 判断服务地址
             if (leafServer == null || leafServer.trim().length() == 0) {
@@ -178,6 +182,10 @@ public class BambooAutoConfiguration {
             // 判断服务端口
             if (leafToken == null || leafToken.trim().length() == 0) {
                 throw new BambooLeafException("bamboo.leaf.client.leafToken is not null!");
+            }
+            // APPID
+            if (appId == null || appId.trim().length() == 0) {
+                throw new BambooLeafException("bamboo.leaf.client.appId is not null!");
             }
         }
 

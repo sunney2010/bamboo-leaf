@@ -8,10 +8,10 @@ package com.bamboo.leaf.core.service;
  */
 public interface WorkerIdService {
     /**
-     * 通过 appId,hostIp获取workerId
-     * @param appId 应用编号
+     * 通过 namespace,hostIp获取workerId
+     * @param namespace namespace
      * @param hostIp 主机IP
      * @return
      */
-    int getWorkerId(String appId, String hostIp);
+    int getWorkerId(String namespace, String hostIp);
 }

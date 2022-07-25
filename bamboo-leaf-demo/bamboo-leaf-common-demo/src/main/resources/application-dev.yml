@@ -76,3 +76,4 @@ bamboo:
       leafServer: 127.0.0.1
       leafPort: 8080
       mode: Remote
+      appId: 10086

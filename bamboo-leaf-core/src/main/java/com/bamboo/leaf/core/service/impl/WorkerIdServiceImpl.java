@@ -24,15 +24,15 @@ public class WorkerIdServiceImpl implements WorkerIdService {
     WorkerIdDAO workerIdDAO;
 
     @Override
-    public synchronized int getWorkerId(String appId, String hostIp) {
+    public synchronized int getWorkerId(String namespace, String hostIp) {
         int workerId = 0;
         try {
-            workerId = workerIdDAO.queryWorkerId(appId, hostIp);
+            workerId = workerIdDAO.queryWorkerId(namespace, hostIp);
             if (workerId <= 0) {
-                workerId = workerIdDAO.queryMaxWorkerId(appId, hostIp);
+                workerId = workerIdDAO.queryMaxWorkerId(namespace, hostIp);
                 //在前最大的workerId+1
                 workerId++;
-                workerIdDAO.insertWorkerId(appId, hostIp, workerId);
+                workerIdDAO.insertWorkerId(namespace, hostIp, workerId);
             }
             if (workerId < LeafConstant.INIT_WORKER_ID || workerId > LeafConstant.MAX_WORKER_ID) {
                 logger.error(" workerId is scope [{}-{}],workerId:{}", LeafConstant.INIT_WORKER_ID,

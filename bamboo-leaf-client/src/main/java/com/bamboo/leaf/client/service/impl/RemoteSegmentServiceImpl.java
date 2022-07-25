@@ -85,7 +85,6 @@ public class RemoteSegmentServiceImpl implements SegmentService {
         parameters.put(ClientConstant.LEAF_NAMESPACE, namespace);
 
         PURL purl = new PURL("http", leafServer, Integer.parseInt(leafPort), ClientConstant.LEAF_SEGMENT_PATH, parameters);
-        String segmentUrl = purl.toFullString();
-        return segmentUrl;
+        return purl.toFullString();
     }
 }

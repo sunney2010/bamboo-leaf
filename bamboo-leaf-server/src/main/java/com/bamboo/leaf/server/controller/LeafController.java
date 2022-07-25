@@ -67,10 +67,10 @@ public class LeafController {
     }
 
     @RequestMapping("/snowflake/queryWorkerId")
-    public ResultResponse<Integer> queryWorkerId(String appId, String hostIp, String token) {
-        logger.info("queryWorkerId parameter: appId:{},hostIp:{},token:{}", appId, hostIp, token);
+    public ResultResponse<Integer> queryWorkerId(String namespace,String appId, String hostIp, String token) {
+        logger.info("queryWorkerId parameter: namespace:{},appId:{},hostIp:{},token:{}", namespace,appId, hostIp, token);
         ResultResponse<Integer> response = new ResultResponse<>();
-        if (StringUtils.isEmpty(appId) || StringUtils.isEmpty(hostIp) || StringUtils.isEmpty(token)) {
+        if (StringUtils.isEmpty(namespace)||StringUtils.isEmpty(appId) || StringUtils.isEmpty(hostIp) || StringUtils.isEmpty(token)) {
             response.setResult(ResultCode.FAIL.getMessage());
             response.setErrMsg(ResultCode.PARA_ERR.getMessage());
             return response;
@@ -82,7 +82,7 @@ public class LeafController {
             return response;
         }
         try {
-            int workerId = workerIdService.getWorkerId(appId, hostIp);
+            int workerId = workerIdService.getWorkerId(namespace, hostIp);
             response.setResultData(workerId);
             logger.info("queryWorkerId success,appId:{},hostIp:{},workerId:{}", appId, hostIp, workerId);
         } catch (Exception e) {

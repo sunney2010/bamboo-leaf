@@ -112,7 +112,7 @@ public class BambooLeafSnowflakeClientImpl extends AbstractWorkerIdGeneratorFact
      */
     private static Long getNamespaceId(String namespace) {
         if (namespace == null || (namespace = namespace.trim()).length() == 0) {
-            throw new IllegalArgumentException("namespace requried.");
+            throw new IllegalArgumentException("namespace required.");
         }
         int[] ints = SnowflakeIdUtils.toCodePoints(namespace);
         int sums = 0;
@@ -129,12 +129,9 @@ public class BambooLeafSnowflakeClientImpl extends AbstractWorkerIdGeneratorFact
         }
         // current ip
         String hospIp = PNetUtils.getLocalHost();
-        //appId
-        String appId=ClientConfig.getInstance().getAppId();
         // get workerId
-        Integer workerId = this.getWorkerId(appId,hospIp);
+        Integer workerId = this.getWorkerId(namespace,hospIp);
         SnowflakeGenerator SnowflakeGenerator = this.getSnowflakeGenerator(namespace, workerId);
-
         return SnowflakeGenerator.parseSnowId(snowflakeId);
     }
 

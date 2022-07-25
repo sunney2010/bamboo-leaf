@@ -5,7 +5,6 @@ import com.alibaba.fastjson.TypeReference;
 import com.bamboo.leaf.client.config.ClientConfig;
 import com.bamboo.leaf.client.constant.ClientConstant;
 import com.bamboo.leaf.client.utils.HttpClientUtils;
-import com.bamboo.leaf.client.utils.HttpUtils;
 import com.bamboo.leaf.client.utils.SnowflakeIdUtils;
 import com.bamboo.leaf.core.common.ResultCode;
 import com.bamboo.leaf.core.common.ResultResponse;
@@ -32,9 +31,9 @@ import java.util.Map;
 public class RemoteWorkerIdServiceImpl implements WorkerIdService {
     private static final Logger logger = LoggerFactory.getLogger(RemoteWorkerIdServiceImpl.class);
     @Override
-    public int getWorkerId(String appId, String hostIp) {
+    public int getWorkerId(String namespace, String hostIp) {
         int workerId = 0;
-        String url = chooseService();
+        String url = chooseService(namespace);
         if (logger.isInfoEnabled()) {
             logger.info("getWorkerId url:{}", url);
         }
@@ -63,11 +62,11 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
 
     /**
      * 获取服务器URL
+     * @param namespace namespace
      * @return
      */
-    private String chooseService() {
-        String snowflakeUrl = ClientConfig.getInstance().getSnowServerUrl();
-        if (StringUtils.isBlank(snowflakeUrl) ){
+    private String chooseService(String namespace) {
+
             String leafServer = ClientConfig.getInstance().getLeafServer();
             // 判断服务地址
             if (leafServer == null || leafServer.trim().length() == 0) {
@@ -94,11 +93,10 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
             parameters.put(ClientConstant.LEAF_TOKEN, leafToken);
             parameters.put(ClientConstant.LEAF_HOSP_IP, PNetUtils.getLocalHost());
             parameters.put(ClientConstant.LEAF_APPID, appId);
+            parameters.put(ClientConstant.LEAF_NAMESPACE, namespace);
 
             PURL purl = new PURL("http", leafServer, Integer.parseInt(leafPort), ClientConstant.LEAF_SNOWFLAKE_PATH, parameters);
-            snowflakeUrl = purl.toFullString();
-            ClientConfig.getInstance().setSnowServerUrl(snowflakeUrl);
-        }
-        return snowflakeUrl;
+            return  purl.toFullString();
+
     }
 }
