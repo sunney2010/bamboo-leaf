@@ -130,14 +130,14 @@ public class BambooLeafSnowflakeClientImpl extends AbstractWorkerIdGeneratorFact
         // current ip
         String hospIp = PNetUtils.getLocalHost();
         // get workerId
-        Integer workerId = this.getWorkerId(namespace,hospIp);
+        Integer workerId = this.getWorkerId(namespace, hospIp);
         SnowflakeGenerator SnowflakeGenerator = this.getSnowflakeGenerator(namespace, workerId);
         return SnowflakeGenerator.parseSnowId(snowflakeId);
     }
 
     @Override
     public Integer queryWorkerId(String namespace, String ip) {
-        return this.createWorkerId(namespace,ip);
+        return this.createWorkerId(namespace, ip);
     }
 
     @Override
@@ -151,8 +151,11 @@ public class BambooLeafSnowflakeClientImpl extends AbstractWorkerIdGeneratorFact
         //获取当前的配置的模式
         String mode = ClientConfig.getInstance().getMode();
         if (null == mode || mode.trim().length() == 0) {
-            logger.error("bamboo.leaf.client.mode is not null");
-            throw new BambooLeafException("bamboo.leaf.client.mode is not null");
+            if (logger.isWarnEnabled()) {
+                logger.warn("bamboo.leaf.client.mode is null,default set mode=Local");
+            }
+            // 默认为本地模式
+            mode = ModeEnum.Local.name();
         }
         //判断配置的模式
         if (mode.equalsIgnoreCase(ModeEnum.Remote.name())) {

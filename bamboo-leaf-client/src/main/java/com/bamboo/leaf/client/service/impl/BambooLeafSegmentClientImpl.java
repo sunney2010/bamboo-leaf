@@ -329,7 +329,11 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
         SegmentGenerator segmentGenerator = null;
         //判断当前模式不能为空
         if (null == mode || mode.trim().length() == 0) {
-            throw new BambooLeafException("bamboo.leaf.client.mode is not null");
+            if (logger.isWarnEnabled()) {
+                logger.warn("bamboo.leaf.client.mode is  null,default set mode=Local");
+            }
+            // 默认为本地模式
+            mode = ModeEnum.Local.name();
         }
         //判断配置的模式
         if (mode.equalsIgnoreCase(ModeEnum.Remote.name())) {
