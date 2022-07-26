@@ -30,6 +30,7 @@ import java.util.Map;
 @Component("remoteWorkerIdService")
 public class RemoteWorkerIdServiceImpl implements WorkerIdService {
     private static final Logger logger = LoggerFactory.getLogger(RemoteWorkerIdServiceImpl.class);
+
     @Override
     public int getWorkerId(String namespace, String hostIp) {
         int workerId = 0;
@@ -37,7 +38,7 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
         if (logger.isInfoEnabled()) {
             logger.info("getWorkerId url:{}", url);
         }
-        String response= HttpClientUtils.get(url);
+        String response = HttpClientUtils.get(url);
         logger.info("bamboo client getWorkerId end, response:" + response);
         if (response == null || "".equals(response.trim())) {
             // 如果获取失败，则使用随机数备用
@@ -62,41 +63,42 @@ public class RemoteWorkerIdServiceImpl implements WorkerIdService {
 
     /**
      * 获取服务器URL
+     *
      * @param namespace namespace
      * @return
      */
     private String chooseService(String namespace) {
 
-            String leafServer = ClientConfig.getInstance().getLeafServer();
-            // 判断服务地址
-            if (leafServer == null || leafServer.trim().length() == 0) {
-                throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafServer is not null!");
-            }
-            String leafPort = ClientConfig.getInstance().getLeafPort();
-            // 判断服务地址
-            if (leafPort == null || leafPort.trim().length() == 0) {
-                throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafPort is not null!");
-            }
+        String leafServer = ClientConfig.getInstance().getLeafServer();
+        // 判断服务地址
+        if (leafServer == null || leafServer.trim().length() == 0) {
+            throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafServer is not null!");
+        }
+        String leafPort = ClientConfig.getInstance().getLeafPort();
+        // 判断服务地址
+        if (leafPort == null || leafPort.trim().length() == 0) {
+            throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafPort is not null!");
+        }
 
-            String leafToken = ClientConfig.getInstance().getLeafToken();
-            // 判断服务token
-            if (leafToken == null || leafToken.trim().length() == 0) {
-                throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafToken is not null!");
-            }
-            String appId=ClientConfig.getInstance().getAppId();
-            // 判断服务appId
-            if(appId == null || appId.trim().length() == 0){
-                throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.appId is not null!");
-            }
+        String leafToken = ClientConfig.getInstance().getLeafToken();
+        // 判断服务token
+        if (leafToken == null || leafToken.trim().length() == 0) {
+            throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.leafToken is not null!");
+        }
+        String appId = ClientConfig.getInstance().getAppId();
+        // 判断服务appId
+        if (appId == null || appId.trim().length() == 0) {
+            throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.appId is not null!");
+        }
 
-            Map<String, String> parameters = new HashMap<String, String>(4);
-            parameters.put(ClientConstant.LEAF_TOKEN, leafToken);
-            parameters.put(ClientConstant.LEAF_HOSP_IP, PNetUtils.getLocalHost());
-            parameters.put(ClientConstant.LEAF_APPID, appId);
-            parameters.put(ClientConstant.LEAF_NAMESPACE, namespace);
+        Map<String, String> parameters = new HashMap<String, String>(4);
+        parameters.put(ClientConstant.LEAF_TOKEN, leafToken);
+        parameters.put(ClientConstant.LEAF_HOSP_IP, PNetUtils.getLocalHost());
+        parameters.put(ClientConstant.LEAF_APPID, appId);
+        parameters.put(ClientConstant.LEAF_NAMESPACE, namespace);
 
-            PURL purl = new PURL("http", leafServer, Integer.parseInt(leafPort), ClientConstant.LEAF_SNOWFLAKE_PATH, parameters);
-            return  purl.toFullString();
+        PURL purl = new PURL("http", leafServer, Integer.parseInt(leafPort), ClientConstant.LEAF_SNOWFLAKE_PATH, parameters);
+        return purl.toFullString();
 
     }
 }

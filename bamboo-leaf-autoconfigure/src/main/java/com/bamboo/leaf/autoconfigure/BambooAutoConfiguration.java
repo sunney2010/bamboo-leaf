@@ -135,7 +135,7 @@ public class BambooAutoConfiguration {
                 leafClientProperties.setAppId(properties.getProperty("bamboo.leaf.client.appId"));
                 leafClientProperties.setLeafToken(properties.getProperty("bamboo.leaf.client.leafToken"));
                 leafClientProperties.setLeafServer(properties.getProperty("bamboo.leaf.client.leafServer"));
-                leafClientProperties.setLeafPort(properties.getProperty("bamboo.leaf.client.leafPort","8080"));
+                leafClientProperties.setLeafPort(properties.getProperty("bamboo.leaf.client.leafPort", "8080"));
                 leafClientProperties.setConnectTimeout(NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.readTimeout"), ClientConstant.DEFAULT_TIME_OUT));
                 leafClientProperties.setReadTimeout(NumberUtils.toInt(properties.getProperty("bamboo.leaf.client.readTimeout"), ClientConstant.DEFAULT_TIME_OUT));
             } catch (Exception e) {
@@ -154,39 +154,36 @@ public class BambooAutoConfiguration {
         }
         clientConfig.setMode(mode);
 
-        // 服务地址
-        String leafServer = leafClientProperties.getLeafServer();
-        clientConfig.setLeafServer(leafServer);
-
-        // 服务端口
-        String leafPort = leafClientProperties.getLeafPort();
-        clientConfig.setLeafPort(leafPort);
-
-        //Token
-        String leafToken = leafClientProperties.getLeafToken();
-        clientConfig.setLeafToken(leafToken);
-
-        //appId
-        String appId = leafClientProperties.getAppId();
-        clientConfig.setAppId(appId);
-
         if (ModeEnum.Remote.name().equals(mode)) {
+            // 服务地址
+            String leafServer = leafClientProperties.getLeafServer();
             // 判断服务地址
             if (leafServer == null || leafServer.trim().length() == 0) {
                 throw new BambooLeafException("bamboo.leaf.client.leafServer is not null!");
             }
+            clientConfig.setLeafServer(leafServer);
+            // 服务端口
+            String leafPort = leafClientProperties.getLeafPort();
             // 判断服务端口
             if (leafPort == null || leafPort.trim().length() == 0) {
                 throw new BambooLeafException("bamboo.leaf.client.leafPort is not null!");
             }
+            clientConfig.setLeafPort(leafPort);
+
+            //Token
+            String leafToken = leafClientProperties.getLeafToken();
             // 判断服务端口
             if (leafToken == null || leafToken.trim().length() == 0) {
                 throw new BambooLeafException("bamboo.leaf.client.leafToken is not null!");
             }
+            clientConfig.setLeafToken(leafToken);
+            //appId
+            String appId = leafClientProperties.getAppId();
             // APPID
             if (appId == null || appId.trim().length() == 0) {
                 throw new BambooLeafException("bamboo.leaf.client.appId is not null!");
             }
+            clientConfig.setAppId(appId);
         }
 
         int readTimeout = leafClientProperties.getReadTimeout() == null ? 0 : leafClientProperties.getReadTimeout();
