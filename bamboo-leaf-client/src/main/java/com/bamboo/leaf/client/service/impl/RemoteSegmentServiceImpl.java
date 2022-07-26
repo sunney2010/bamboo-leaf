@@ -29,13 +29,14 @@ import java.util.Map;
 @Component("remoteSegmentService")
 public class RemoteSegmentServiceImpl implements SegmentService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
     public SegmentRange getNextSegmentRange(String namespace, long maxValue, Integer step) {
         String url = chooseService(namespace, maxValue, step);
         if (logger.isInfoEnabled()) {
             logger.info(" request nextSegmentRange URL:{}", url);
         }
-        String response= HttpClientUtils.get(url);
+        String response = HttpClientUtils.get(url);
         logger.info("bamboo client getNextSegmentId end, response:" + response);
         if (response == null || "".equals(response.trim())) {
             return null;
@@ -48,7 +49,9 @@ public class RemoteSegmentServiceImpl implements SegmentService {
         if ((ResultCode.SUCCESS.name()).equalsIgnoreCase(result)) {
             segment = resultDto.getResultData();
         } else {
-            logger.error("request remote is error,msg:{}", resultDto.getErrMsg());
+            String msg = "request remote is error,msg:" + resultDto.getErrMsg();
+            logger.error(msg);
+            throw new BambooLeafException(msg);
         }
         return segment;
     }
@@ -78,11 +81,18 @@ public class RemoteSegmentServiceImpl implements SegmentService {
         if (leafToken == null || leafToken.trim().length() == 0) {
             throw new BambooLeafException("mode=Remote,bamboo.leaf.client.leafToken is not null!");
         }
+        String appId = ClientConfig.getInstance().getAppId();
+        // 判断服务appId
+        if (appId == null || appId.trim().length() == 0) {
+            throw new BambooLeafException("mode=Remote ,bamboo.leaf.client.appId is not null!");
+        }
+
         Map<String, String> parameters = new HashMap<String, String>(4);
         parameters.put(ClientConstant.LEAF_TOKEN, leafToken);
         parameters.put(ClientConstant.LEAF_MAXVALUE, (maxValue + ""));
         parameters.put(ClientConstant.LEAF_STEP, (step + ""));
         parameters.put(ClientConstant.LEAF_NAMESPACE, namespace);
+        parameters.put(ClientConstant.LEAF_APPID, appId);
 
         PURL purl = new PURL("http", leafServer, Integer.parseInt(leafPort), ClientConstant.LEAF_SEGMENT_PATH, parameters);
         return purl.toFullString();
