@@ -1,0 +1,22 @@
+server:
+  # 服务对外暴露的端口号
+  port: 8080
+  servlet:
+    context-path: /bamboo-leaf
+spring: 
+  application:
+    name: bamboo-leaf-server
+  devtools:
+    restart:
+      #设置开启热部署
+      enabled: true
+  profiles:
+    active: ${ENV:dev}
+bamboo:
+  leaf:
+    table:
+      segmentTableName: bamboo_leaf_segment
+      remarkColumnName: remark
+    configure:
+      retry: 16
+      step: 2000

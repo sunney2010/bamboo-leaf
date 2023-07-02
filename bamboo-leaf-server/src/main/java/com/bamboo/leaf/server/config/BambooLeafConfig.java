@@ -9,7 +9,6 @@ import com.bamboo.leaf.core.service.WorkerIdService;
 import com.bamboo.leaf.core.service.impl.SegmentServiceImpl;
 import com.bamboo.leaf.core.service.impl.WorkerIdServiceImpl;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @description: 自动配置
