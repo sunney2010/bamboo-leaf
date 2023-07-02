@@ -3,6 +3,7 @@ package com.bamboo.leaf.server.service.impl;
 import com.bamboo.leaf.server.dao.TokenDAO;
 import com.bamboo.leaf.server.dao.entity.TokenDO;
 import com.bamboo.leaf.server.service.TokenService;
+import com.google.common.base.CharMatcher;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -10,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
 
 import java.util.*;
 
@@ -68,7 +68,7 @@ public class TokenServiceImpl implements TokenService {
             return false;
         }
         Set<String> namespaceSet = tokenMap.get(token);
-        boolean val=(namespaceSet != null && namespaceSet.contains(appId));
+        boolean val = (namespaceSet != null && namespaceSet.contains(appId));
         return val;
     }
 
@@ -77,4 +77,20 @@ public class TokenServiceImpl implements TokenService {
         return tokenDAO.insertToken(tokenDO);
     }
 
+    @Override
+    public String getToken(String appId) {
+        return buildToken();
+    }
+
+    /**
+     * Token生成
+     * @return
+     */
+    private String buildToken() {
+        long time = System.currentTimeMillis();
+        int random = (int) (Math.random() * Integer.MAX_VALUE);
+        UUID uuid = new UUID(time, random);
+        String uuidStr = CharMatcher.is('-').removeFrom(uuid.toString()).toUpperCase();
+        return uuidStr;
+    }
 }

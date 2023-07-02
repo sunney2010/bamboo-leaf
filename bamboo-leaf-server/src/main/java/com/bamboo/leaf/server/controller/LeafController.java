@@ -44,6 +44,20 @@ public class LeafController {
         logger.info(message);
         return message;
     }
+    @RequestMapping("/getToken")
+    public ResultResponse<String> getToken(String appId) {
+        logger.info("getToken parameter, appId:{},",appId);
+        ResultResponse<String> response = new ResultResponse<>();
+        try{
+            String token=tokenService.getToken(appId);
+            response.setResultData(token);
+        } catch (Exception e) {
+            response.setResult(ResultCode.FAIL.getMessage());
+            response.setErrMsg(ResultCode.SYS_ERR.getMessage());
+            logger.error("getToken error", e);
+        }
+        return response;
+    }
 
     @RequestMapping("/segment/nextSegmentRange")
     public ResultResponse<SegmentRange> nextSegmentRange(String appId,String namespace, Long maxValue, Integer step, String token) {

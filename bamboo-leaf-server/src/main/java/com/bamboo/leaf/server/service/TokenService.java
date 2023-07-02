@@ -22,4 +22,11 @@ public interface TokenService {
       */
     int insertToken(TokenDO tokenDO);
 
+     /**
+      * 获取 Token
+      * @param appId appId
+      * @return
+      */
+    String getToken(String appId);
+
 }
