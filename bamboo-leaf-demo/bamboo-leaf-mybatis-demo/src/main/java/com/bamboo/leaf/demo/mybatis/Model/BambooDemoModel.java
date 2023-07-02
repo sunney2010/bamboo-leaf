@@ -1,9 +1,13 @@
 package com.bamboo.leaf.demo.mybatis.Model;
 
+import com.bamboo.leaf.client.annotation.SegmentId;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class BambooDemoModel implements Serializable {
+
+    @SegmentId(namespace="SegmentIdTest")
     private String id;
     private String namespace;
     private Date createTime;

@@ -5,6 +5,5 @@
 rootProject.name = 'bamboo-leaf'
 include(':bamboo-leaf-server')
 include(':bamboo-leaf-client')
-include(':bamboo-leaf-demo')
 include(':bamboo-leaf-autoconfigure')
 include(':bamboo-leaf-core')

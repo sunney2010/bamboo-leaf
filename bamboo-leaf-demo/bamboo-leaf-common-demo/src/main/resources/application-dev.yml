@@ -20,15 +20,15 @@ spring:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
       type: com.alibaba.druid.pool.DruidDataSource
-      url: jdbc:mysql://www.zhuzhi.vip:3306/bamboo-leaf?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://www.zhuzhi.vip:3306/bamboo-leaf?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true&connectTimeout=3000&socketTimeout=6000
       username: root
       password: Zhuzhi2020!
       # 初始连接数
-      initialSize: 5
+      initialSize: 3
       # 最小连接池数量
-      minIdle: 10
+      minIdle: 8
       # 最大连接池数量
-      maxActive: 20
+      maxActive: 100
       # 配置获取连接等待超时的时间
       maxWait: 60000
       # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
@@ -38,10 +38,11 @@ spring:
       # 配置一个连接在池中最大生存的时间，单位是毫秒
       maxEvictableIdleTimeMillis: 900000
       # 配置检测连接是否有效
-      validationQuery: SELECT 1 FROM DUAL
+      validationQuery: SELECT 1
       testWhileIdle: true
       testOnBorrow: false
       testOnReturn: false
+      connectionProperties: connectTimeout=3009;socketTimeout=6009
       webStatFilter:
         enabled: true
       statViewServlet:

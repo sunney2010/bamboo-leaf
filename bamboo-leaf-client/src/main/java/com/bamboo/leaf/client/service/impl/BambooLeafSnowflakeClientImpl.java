@@ -5,7 +5,6 @@ import com.bamboo.leaf.client.service.BambooLeafSnowflakeClient;
 import com.bamboo.leaf.client.utils.SnowflakeIdUtils;
 import com.bamboo.leaf.core.constant.LeafConstant;
 import com.bamboo.leaf.client.enums.ModeEnum;
-import com.bamboo.leaf.core.exception.BambooLeafException;
 import com.bamboo.leaf.core.factory.AbstractWorkerIdGeneratorFactory;
 import com.bamboo.leaf.core.generator.SnowflakeGenerator;
 import com.bamboo.leaf.core.generator.impl.DefaultSnowflakeGenerator;
@@ -15,11 +14,11 @@ import com.bamboo.leaf.core.util.PNetUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @description: TODO
@@ -37,7 +36,8 @@ public class BambooLeafSnowflakeClientImpl extends AbstractWorkerIdGeneratorFact
 
     private ApplicationContext applicationContext;
 
-    @Resource(name = "workerIdService")
+    @Autowired
+    @Qualifier("workerIdService")
     WorkerIdService localWorkerIdService;
 
     @Override

@@ -11,7 +11,9 @@
     <artifactId>bamboo-leaf-demo</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <!--
         <module>bamboo-leaf-mybatis-demo</module>
+        -->
         <module>bamboo-leaf-common-demo</module>
     </modules>
     <dependencies>

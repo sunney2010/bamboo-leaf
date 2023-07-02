@@ -22,8 +22,7 @@ public class NamedThreadFactory implements ThreadFactory {
 
     public NamedThreadFactory(String namePrefix, boolean daemon) {
         this.daemon = daemon;
-        SecurityManager s = System.getSecurityManager();
-        group = (s != null) ? s.getThreadGroup() : Thread.currentThread().getThreadGroup();
+        group = new ThreadGroup("bamboo.leaf.threadGroup");
         this.namePrefix = namePrefix;
     }
 

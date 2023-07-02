@@ -58,7 +58,7 @@ public class LeafConstant {
     /**
      * 最大重试次数
      */
-    public static final int RETRY_TIMES_MAX = 20;
+    public static final int RETRY_TIMES_MAX = 30;
     /**
      * 预加载下个号段的默认百分比
      */

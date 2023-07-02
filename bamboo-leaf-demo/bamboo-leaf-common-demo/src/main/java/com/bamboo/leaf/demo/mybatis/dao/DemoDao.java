@@ -5,9 +5,9 @@ import com.bamboo.leaf.demo.mybatis.entity.DemoDO;
 import com.bamboo.leaf.demo.mybatis.entity.DemoErrorDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +27,7 @@ public class DemoDao {
     /**
      * 数据源
      */
-    @Resource
+    @Autowired
     protected DataSource dataSource;
 
     private volatile String insertDemoSql;

@@ -4,9 +4,9 @@ import com.bamboo.leaf.demo.mybatis.dao.DemoDao;
 import com.bamboo.leaf.demo.mybatis.entity.DemoDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Field;
 
 /**
@@ -18,12 +18,12 @@ import java.lang.reflect.Field;
 public class BaseController {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Resource
+    @Autowired
     protected DemoDao demoDao;
 
     protected void insertDemo(String id, String namespace, String remark) {
-        Class a=LeafController.class;
-        Field[] f=a.getDeclaredFields();
+        Class a = LeafController.class;
+        Field[] f = a.getDeclaredFields();
         DemoDO demo = new DemoDO();
         demo.setId(id);
         demo.setNamespace(namespace);

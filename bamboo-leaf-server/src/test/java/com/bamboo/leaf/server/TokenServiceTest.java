@@ -3,8 +3,8 @@ package com.bamboo.leaf.server;
 import com.bamboo.leaf.server.dao.entity.TokenDO;
 import com.bamboo.leaf.server.service.TokenService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
 import java.util.UUID;
 
 /**
@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class TokenServiceTest extends BaseJunit {
 
-    @Resource
+    @Autowired
     TokenService tokenService;
 
     @Test

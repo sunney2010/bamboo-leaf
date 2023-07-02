@@ -45,8 +45,9 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public ServletRegistrationBean servletRegistrationBean() {
-        // 注册自己的Sevlet
-        return new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
+    public ServletRegistrationBean druidServletRegistration() {
+        ServletRegistrationBean registration = new ServletRegistrationBean(new StatViewServlet());
+        registration.addUrlMappings("/druid/*");
+        return registration;
     }
 }

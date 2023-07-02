@@ -1,15 +1,18 @@
 package com.bamboo.leaf.demo.mybatis.controller;
 
+import com.bamboo.leaf.client.constant.ParamConstant;
 import com.bamboo.leaf.client.service.BambooLeafSegmentClient;
 import com.bamboo.leaf.client.service.BambooLeafSnowflakeClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author lichunming
@@ -21,9 +24,9 @@ public class LeafController {
     private static final Logger logger = LoggerFactory.getLogger(LeafController.class);
 
 
-    @Resource
+    @Autowired
     BambooLeafSnowflakeClient bambooLeafSnowflakeClient;
-    @Resource
+    @Autowired
     BambooLeafSegmentClient bambooLeafSegmentClient;
 
     @RequestMapping("/segment/hello")
@@ -43,8 +46,12 @@ public class LeafController {
             long leafVal = bambooLeafSegmentClient.segmentId(namespace);
             long dateVal = bambooLeafSegmentClient.dateSegmentId(namespace);
             long timeVal = bambooLeafSegmentClient.timeSegmentId(namespace);
-            String datePixedVal = bambooLeafSegmentClient.dateSegmentId(namespace, "O");
-            String timePixedVal = bambooLeafSegmentClient.timeSegmentId(namespace, "P");
+            Map<String,Object> paramMap=new HashMap<>();
+            paramMap.put(ParamConstant.PARAM_PREFIX,"PREFIX");
+            paramMap.put(ParamConstant.PARAM_INFIX,"INFIX");
+            paramMap.put(ParamConstant.PARAM_SUFFIX,"SUFFIX");
+            String datePixedVal = bambooLeafSegmentClient.dateSegmentId(namespace, paramMap);
+            String timePixedVal = bambooLeafSegmentClient.timeSegmentId(namespace, paramMap);
 
             result.put("leafVal", leafVal);
             result.put("dateVal", dateVal + "");

@@ -4,11 +4,11 @@ import com.bamboo.leaf.client.service.BambooLeafSegmentClient;
 import com.bamboo.leaf.client.service.BambooLeafSnowflakeClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 
 /**
@@ -21,9 +21,9 @@ public class LeafController {
     private static final Logger logger = LoggerFactory.getLogger(LeafController.class);
 
 
-    @Resource
+    @Autowired
     BambooLeafSnowflakeClient bambooLeafSnowflakeClient;
-    @Resource
+    @Autowired
     BambooLeafSegmentClient bambooLeafSegmentClient;
 
     @RequestMapping("/segment/hello")
@@ -43,21 +43,19 @@ public class LeafController {
             long leafVal = bambooLeafSegmentClient.segmentId(namespace);
             long dateVal = bambooLeafSegmentClient.dateSegmentId(namespace);
             long timeVal = bambooLeafSegmentClient.timeSegmentId(namespace);
-            String datePixedVal = bambooLeafSegmentClient.dateSegmentId(namespace, "O");
-            String timePixedVal = bambooLeafSegmentClient.timeSegmentId(namespace, "P");
+            String autoDateSegmentId = bambooLeafSegmentClient.autoDateSegmentId(namespace);
+
 
             result.put("leafVal", leafVal);
             result.put("dateVal", dateVal + "");
             result.put("timeVal", timeVal + "");
-            result.put("datePixedVal", datePixedVal);
-            result.put("timePixedVal", timePixedVal);
+            result.put("autoDateSegmentId", autoDateSegmentId);
             result.put("currentTime", LocalDateTime.now());
             logger.info("nextSegment is success,namespace:{}", namespace);
             logger.info("leafVal:{}", leafVal);
             logger.info("dateVal:{}", dateVal);
             logger.info("timeVal:{}", timeVal);
-            logger.info("datePixedVal:{}", datePixedVal);
-            logger.info("timePixedVal:{}", timePixedVal);
+            logger.info("autoDateSegmentId:{}", autoDateSegmentId);
 
         } catch (Exception e) {
             logger.error("nextSegment error", e);

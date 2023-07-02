@@ -12,19 +12,22 @@
 		<module>bamboo-leaf-server</module>
 		<module>bamboo-leaf-client</module>
 		<module>bamboo-leaf-autoconfigure</module>
-		<module>bamboo-leaf-demo</module>
-		<module>bamboo-leaf-plugin</module>
+		<!--
+    <module>bamboo-leaf-demo</module>
+
+    <module>bamboo-leaf-plugin</module>
+    -->
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<druid.version>1.2.11</druid.version>
+		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<druid.version>1.2.16</druid.version>
 		<fastjson.version>1.2.83</fastjson.version>
-		<spring.version>2.4.0</spring.version>
+		<spring.version>3.1.0</spring.version>
 		<mysql.version>8.0.28</mysql.version>
-		<lang3.version>3.9</lang3.version>
+		<lang3.version>3.12.0</lang3.version>
 		<slf4j.version>1.7.30</slf4j.version>
 	</properties>
 
@@ -52,7 +55,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.alibaba</groupId>
-				<artifactId>druid</artifactId>
+				<artifactId>druid-spring-boot-starter</artifactId>
 				<version>${druid.version}</version>
 			</dependency>
 			<dependency>
@@ -129,7 +132,12 @@
 			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpclient</artifactId>
-				<version>4.5.13</version>
+				<version>4.5.14</version>
+			</dependency>
+			<dependency>
+				<groupId>jakarta.annotation</groupId>
+				<artifactId>jakarta.annotation-api</artifactId>
+				<version>2.1.1</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

@@ -4,7 +4,7 @@ import javax.annotation.PostConstruct;
 
 public class DruidConfig {
     @PostConstruct
-    public void setProperties(){
-        System.setProperty("druid.mysql.usePingMethod","false");
+    public void setProperties() {
+        System.setProperty("druid.mysql.usePingMethod", "false");
     }
 }

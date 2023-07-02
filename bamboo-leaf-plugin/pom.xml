@@ -12,9 +12,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>bamboo-leaf-plugin-mybatis</module>
-        <!--
-        <module>bamboo-leaf-plugin-shardingsphere</module>
-        -->
     </modules>
     <dependencies>
     </dependencies>

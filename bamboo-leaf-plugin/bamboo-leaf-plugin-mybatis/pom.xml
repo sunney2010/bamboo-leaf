@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>com.bamboo.leaf</groupId>
-            <artifactId>bamboo-leaf-core</artifactId>
+            <artifactId>bamboo-leaf-client</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -15,6 +15,11 @@
             <artifactId>bamboo-leaf-autoconfigure</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.bamboo.leaf</groupId>
+            <artifactId>bamboo-leaf-plugin-mybatis</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
         </dependency>

@@ -7,9 +7,9 @@ plugins {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter:2.4.0'
-    implementation 'org.springframework.boot:spring-boot-autoconfigure:2.4.0'
-    implementation 'org.springframework.boot:spring-boot-configuration-processor:2.4.0'
+    implementation 'org.springframework.boot:spring-boot-starter:3.1.0'
+    implementation 'org.springframework.boot:spring-boot-autoconfigure:3.1.0'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor:3.1.0'
     implementation project(':bamboo-leaf-core')
     implementation project(':bamboo-leaf-client')
 }

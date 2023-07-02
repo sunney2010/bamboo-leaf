@@ -10,7 +10,7 @@ import com.bamboo.leaf.core.exception.BambooLeafException;
  */
 public interface SegmentDAO {
     /**
-     * 更新
+     * 更新Segment
      *
      * @param segmentDO  对象
      * @param oldLeafVal 对象
@@ -20,7 +20,7 @@ public interface SegmentDAO {
     int updateSegment(SegmentDO segmentDO, long oldLeafVal) throws BambooLeafException;
 
     /**
-     * 新增
+     * 新增Segment
      *
      * @param segmentDO 插入对象
      * @return 返回序列下一个值
@@ -29,7 +29,7 @@ public interface SegmentDAO {
     int insertSegment(SegmentDO segmentDO) throws BambooLeafException;
 
     /**
-     * 查询
+     * 查询Segment
      *
      * @param namespace 命名空间
      * @return 返回序列下一个值
@@ -38,7 +38,7 @@ public interface SegmentDAO {
     SegmentDO selectSegment(String namespace) throws BambooLeafException;
 
     /**
-     * 重置
+     * 重置Segment
      *
      * @param namespace 命名空间
      * @param maxVal    当前最大值

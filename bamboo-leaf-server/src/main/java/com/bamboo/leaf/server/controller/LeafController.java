@@ -9,10 +9,10 @@ import com.bamboo.leaf.server.service.TokenService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -27,11 +27,11 @@ public class LeafController {
 
     private static final Logger logger = LoggerFactory.getLogger(LeafController.class);
 
-    @Resource
+    @Autowired
     TokenService tokenService;
-    @Resource
+    @Autowired
     SegmentService segmentService;
-    @Resource
+    @Autowired
     WorkerIdService workerIdService;
 
     @RequestMapping("/hello")

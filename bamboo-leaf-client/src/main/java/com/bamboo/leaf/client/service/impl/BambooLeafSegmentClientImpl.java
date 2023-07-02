@@ -5,7 +5,6 @@ import com.bamboo.leaf.client.constant.ParamConstant;
 import com.bamboo.leaf.client.enums.ModeEnum;
 import com.bamboo.leaf.client.service.BambooLeafSegmentClient;
 import com.bamboo.leaf.core.constant.LeafConstant;
-import com.bamboo.leaf.core.exception.BambooLeafException;
 import com.bamboo.leaf.core.factory.AbstractSegmentGeneratorFactory;
 import com.bamboo.leaf.core.generator.SegmentGenerator;
 import com.bamboo.leaf.core.generator.impl.CachedSegmentGenerator;
@@ -14,11 +13,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,13 +34,14 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
-     * 前缀最大长度
+     * 前中后缀最大长度6
      */
-    private static final Integer PREFIX_MAX_LENGTH = 10;
+    private static final Integer FIX_MAX_LENGTH = 6;
 
     private ApplicationContext applicationContext;
 
-    @Resource(name = "segmentService")
+    @Autowired
+    @Qualifier("segmentService")
     SegmentService localSegmentService;
 
 
@@ -65,7 +66,7 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
         // 默认模式
         String mode = ClientConfig.getInstance().getMode();
         //最大值默认为0
-        long maxValue = 0l;
+        Long maxValue = 0L;
         try {
             // 获取方法级模式，方法级优先。
             String modeTemp = (String) paramMap.get(ParamConstant.PARAM_MODE_KEY);
@@ -92,25 +93,11 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
         paramMap.put(ParamConstant.PARAM_MODE_KEY, ClientConfig.getInstance().getMode());
         // 设置默认最大值
         paramMap.put(ParamConstant.PARAM_MAX_VALUE_KEY, LeafConstant.SEGMENT_10_MAXVALUE);
-        return this.dateSegmentId(namespace, paramMap);
+        return Long.valueOf(this.dateSegmentId(namespace, paramMap));
     }
 
     @Override
-    public String dateSegmentId(String namespace, String prefix) {
-        if (namespace == null || namespace.trim().length() == 0) {
-            throw new IllegalArgumentException("namespace is null");
-        }
-        if (prefix == null || prefix.trim().length() == 0) {
-            throw new IllegalArgumentException("prefix is null");
-        }
-        if (prefix.trim().length() < 1 || prefix.trim().length() > PREFIX_MAX_LENGTH) {
-            throw new IllegalArgumentException("prefix range no in [1,10]");
-        }
-        return prefix + this.dateSegmentId(namespace);
-    }
-
-    @Override
-    public Long dateSegmentId(String namespace, Map<String, Object> paramMap) {
+    public String dateSegmentId(String namespace, Map<String, Object> paramMap) {
         if (namespace == null || namespace.trim().length() == 0) {
             logger.error("namespace is null");
             throw new IllegalArgumentException("namespace is null");
@@ -127,9 +114,11 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
             }
             //获取方法级最大值
             Long mvTemp = (Long) paramMap.get(ParamConstant.PARAM_MAX_VALUE_KEY);
-            //方法级最大值,范围【8~11位】
+            //方法级最大值,范围【8~10位】
             if (mvTemp >= LeafConstant.SEGMENT_8_MAXVALUE && mvTemp <= LeafConstant.SEGMENT_10_MAXVALUE) {
                 maxValue = mvTemp;
+            } else {
+                logger.warn("dateSegmentId的maxValue:范围是【8~10位】,当前值maxValue：{}，maxValue Reset:{}", mvTemp, maxValue);
             }
         } catch (Exception e) {
             if (logger.isWarnEnabled()) {
@@ -137,29 +126,14 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
             }
         }
         SegmentGenerator generator = this.getSegmentGenerator(namespace, maxValue, mode);
-        String val = generator.nextSegmentIdFixed(maxValue);
-        StringBuilder id = new StringBuilder(20);
+        String sequence = generator.nextSegmentIdFixed(maxValue);
         // 获取当前的系统时间
         Date dt = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        id.append(formatter.format(dt));
-        id.append(val);
-        return Long.valueOf(id.toString());
+        String fixed = formatter.format(dt);
+        return this.buildSegmentId(fixed, sequence, paramMap);
     }
 
-    @Override
-    public String dateSegmentId(String namespace, String prefix, Map<String, Object> paramMap) {
-        if (namespace == null || namespace.trim().length() == 0) {
-            throw new IllegalArgumentException("namespace is null");
-        }
-        if (prefix == null || prefix.trim().length() == 0) {
-            throw new IllegalArgumentException("prefix is null");
-        }
-        if (prefix.trim().length() < 1 || prefix.trim().length() > PREFIX_MAX_LENGTH) {
-            throw new IllegalArgumentException("prefix range no in [1,10]");
-        }
-        return prefix + this.dateSegmentId(namespace, paramMap);
-    }
 
     @Override
     public Long shortDateSegmentId(String namespace) {
@@ -172,12 +146,12 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
         paramMap.put(ParamConstant.PARAM_MODE_KEY, ClientConfig.getInstance().getMode());
         // 设置默认最大值
         paramMap.put(ParamConstant.PARAM_MAX_VALUE_KEY, LeafConstant.SEGMENT_10_MAXVALUE);
-        return this.shortDateSegmentId(namespace, paramMap);
+        return Long.valueOf(this.shortDateSegmentId(namespace, paramMap));
 
     }
 
     @Override
-    public Long shortDateSegmentId(String namespace, Map<String, Object> paramMap) {
+    public String shortDateSegmentId(String namespace, Map<String, Object> paramMap) {
         if (namespace == null || namespace.trim().length() == 0) {
             logger.error("namespace is null");
             throw new IllegalArgumentException("namespace is null");
@@ -197,6 +171,8 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
             //方法级最大值,范围【8~11位】
             if (mvTemp >= LeafConstant.SEGMENT_8_MAXVALUE && mvTemp <= LeafConstant.SEGMENT_10_MAXVALUE) {
                 maxValue = mvTemp;
+            } else {
+                logger.warn("shortDateSegmentId的maxValue:范围是【8~10位】,当前值maxValue：{}，maxValue Reset:{}", mvTemp, maxValue);
             }
         } catch (Exception e) {
             if (logger.isWarnEnabled()) {
@@ -204,42 +180,13 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
             }
         }
         SegmentGenerator generator = this.getSegmentGenerator(namespace, maxValue, mode);
-        String val = generator.nextSegmentIdFixed(maxValue);
-        StringBuilder id = new StringBuilder(20);
+        String sequence = generator.nextSegmentIdFixed(maxValue);
+
         // 获取当前的系统时间
         Date dt = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyMMdd");
-        id.append(formatter.format(dt));
-        id.append(val);
-        return Long.valueOf(id.toString());
-    }
-
-    @Override
-    public String shortDateSegmentId(String namespace, String prefix) {
-        if (namespace == null || namespace.trim().length() == 0) {
-            throw new IllegalArgumentException("namespace is null");
-        }
-        if (prefix == null || prefix.trim().length() == 0) {
-            throw new IllegalArgumentException("prefix is null");
-        }
-        if (prefix.trim().length() < 1 || prefix.trim().length() > PREFIX_MAX_LENGTH) {
-            throw new IllegalArgumentException("prefix range no in [1,10]");
-        }
-        return prefix + this.shortDateSegmentId(namespace);
-    }
-
-    @Override
-    public String shortDateSegmentId(String namespace, String prefix, Map<String, Object> paramMap) {
-        if (namespace == null || namespace.trim().length() == 0) {
-            throw new IllegalArgumentException("namespace is null");
-        }
-        if (prefix == null || prefix.trim().length() == 0) {
-            throw new IllegalArgumentException("prefix is null");
-        }
-        if (prefix.trim().length() < 1 || prefix.trim().length() > PREFIX_MAX_LENGTH) {
-            throw new IllegalArgumentException("prefix range no in [1,10]");
-        }
-        return prefix + this.shortDateSegmentId(namespace, paramMap);
+        String fixed = formatter.format(dt);
+        return this.buildSegmentId(fixed, sequence, paramMap);
     }
 
 
@@ -253,12 +200,12 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
         paramMap.put(ParamConstant.PARAM_MODE_KEY, ClientConfig.getInstance().getMode());
         // 设置默认最大值
         paramMap.put(ParamConstant.PARAM_MAX_VALUE_KEY, LeafConstant.SEGMENT_7_MAXVALUE);
-        return this.timeSegmentId(namespace, paramMap);
+        return Long.valueOf(this.timeSegmentId(namespace, paramMap));
 
     }
 
     @Override
-    public Long timeSegmentId(String namespace, Map<String, Object> paramMap) {
+    public String timeSegmentId(String namespace, Map<String, Object> paramMap) {
         if (namespace == null || namespace.trim().length() == 0) {
             throw new IllegalArgumentException("namespace is null");
         }
@@ -277,6 +224,8 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
             //方法级最大值,范围【5~7位】
             if (mvTemp >= LeafConstant.SEGMENT_5_MAXVALUE && mvTemp <= LeafConstant.SEGMENT_7_MAXVALUE) {
                 maxValue = mvTemp;
+            } else {
+                logger.warn("timeSegmentId的maxValue:范围是【5~7位】,当前值maxValue：{}，maxValue Reset:{}", mvTemp, maxValue);
             }
         } catch (Exception e) {
             if (logger.isWarnEnabled()) {
@@ -284,43 +233,105 @@ public class BambooLeafSegmentClientImpl extends AbstractSegmentGeneratorFactory
             }
         }
         SegmentGenerator generator = this.getSegmentGenerator(namespace, maxValue, mode);
-        String val = generator.nextSegmentIdFixed(maxValue);
-
-        StringBuilder id = new StringBuilder(20);
+        String sequence = generator.nextSegmentIdFixed(maxValue);
         // 获取当前的系统时间
         Date dt = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyMMddHHmmss");
-        id.append(formatter.format(dt));
-        id.append(val);
-        return Long.valueOf(id.toString());
+        String fixed = formatter.format(dt);
+        return this.buildSegmentId(fixed, sequence, paramMap);
+    }
+
+
+    @Override
+    public String autoDateSegmentId(String namespace) {
+        if (namespace == null || namespace.trim().length() == 0) {
+            logger.error("namespace is null");
+            throw new IllegalArgumentException("namespace is null");
+        }
+        Map<String, Object> paramMap = new HashMap<>(4);
+        // 设置默认模式
+        paramMap.put(ParamConstant.PARAM_MODE_KEY, ClientConfig.getInstance().getMode());
+        // 设置默认最大值
+        paramMap.put(ParamConstant.PARAM_MAX_VALUE_KEY, LeafConstant.SEGMENT_10_MAXVALUE);
+        return this.autoDateSegmentId(namespace, paramMap);
     }
 
     @Override
-    public String timeSegmentId(String namespace, String prefix) {
+    public String autoDateSegmentId(String namespace, Map<String, Object> paramMap) {
         if (namespace == null || namespace.trim().length() == 0) {
+            logger.error("namespace is null");
             throw new IllegalArgumentException("namespace is null");
         }
-        if (prefix == null || prefix.trim().length() == 0) {
-            throw new IllegalArgumentException("prefix is null");
+        // 获取当前的系统时间
+        Date dt = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyMMdd");
+        String fixed = formatter.format(dt);
+        // namespace=namespace_yyMMdd
+        namespace = namespace + "_" + fixed;
+        // 默认模式
+        String mode = ClientConfig.getInstance().getMode();
+        //最大值默认为10位
+        long maxValue = LeafConstant.SEGMENT_10_MAXVALUE;
+
+        try {
+            // 获取方法级模式，方法级优先。
+            String modeTemp = (String) paramMap.get(ParamConstant.PARAM_MODE_KEY);
+            if (StringUtils.isNotBlank(modeTemp)) {
+                mode = modeTemp;
+            }
+            //获取方法级最大值
+            Long mvTemp = (Long) paramMap.get(ParamConstant.PARAM_MAX_VALUE_KEY);
+            //方法级最大值,范围【8~11位】
+            if (mvTemp >= LeafConstant.SEGMENT_8_MAXVALUE && mvTemp <= LeafConstant.SEGMENT_10_MAXVALUE) {
+                maxValue = mvTemp;
+            } else {
+                logger.warn("autoDateSegmentId的maxValue:范围是【8~10位】,当前值maxValue：{}，maxValue Reset:{}", mvTemp, maxValue);
+            }
+        } catch (Exception e) {
+            if (logger.isWarnEnabled()) {
+                logger.warn("segmentId param is error,msg:", e);
+            }
         }
-        if (prefix.trim().length() < 1 || prefix.trim().length() > PREFIX_MAX_LENGTH) {
-            throw new IllegalArgumentException("prefix range no in [1,10]");
-        }
-        return prefix + this.timeSegmentId(namespace);
+        SegmentGenerator generator = this.getSegmentGenerator(namespace, maxValue, mode);
+        String sequence = generator.nextSegmentIdFixed(maxValue);
+        return buildSegmentId(fixed, sequence, paramMap);
     }
 
-    @Override
-    public String timeSegmentId(String namespace, String prefix, Map<String, Object> paramMap) {
-        if (namespace == null || namespace.trim().length() == 0) {
-            throw new IllegalArgumentException("namespace is null");
+    /**
+     * 序列构建
+     * 默认格式：fixed+sequence
+     * 自定义格式：[prefix]+fixed+[infix]+sequence+[suffix]
+     *
+     * @param fixed    固定位，如yyyyMMdd
+     * @param sequence 序列值
+     * @param paramMap 参数
+     * @return
+     */
+    private String buildSegmentId(String fixed, String sequence, Map<String, Object> paramMap) {
+        // 前缀
+        String prefix = (String) paramMap.get(ParamConstant.PARAM_PREFIX);
+        //前缀不为空，最大长度大于6时，获取前6位。
+        if (StringUtils.isNotBlank(prefix) && prefix.length() > FIX_MAX_LENGTH) {
+            prefix = prefix.substring(0, 5);
+            logger.warn("prefix前缀最大长度大于:{},截取前:{}位！", FIX_MAX_LENGTH, FIX_MAX_LENGTH);
         }
-        if (prefix == null || prefix.trim().length() == 0) {
-            throw new IllegalArgumentException("prefix is null");
+        // 中缀
+        String infix = (String) paramMap.get(ParamConstant.PARAM_INFIX);
+        //中缀不为空，最大长度大于6时，获取前6位。
+        if (StringUtils.isNotBlank(infix) && infix.length() > FIX_MAX_LENGTH) {
+            infix = infix.substring(0, 5);
+            logger.warn("infix中缀最大长度大于:{},截取前:{}位！", FIX_MAX_LENGTH, FIX_MAX_LENGTH);
         }
-        if (prefix.trim().length() < 1 || prefix.trim().length() > PREFIX_MAX_LENGTH) {
-            throw new IllegalArgumentException("prefix range no in [1,10]");
+        // 后缀
+        String suffix = (String) paramMap.get(ParamConstant.PARAM_SUFFIX);
+        //后缀不为空，最大长度大于6时，获取前6位。
+        if (StringUtils.isNotBlank(suffix) && suffix.length() > FIX_MAX_LENGTH) {
+            suffix = suffix.substring(0, 5);
+            logger.warn("suffix后缀最大长度大于:{},截取前:{}位！", FIX_MAX_LENGTH, FIX_MAX_LENGTH);
         }
-        return prefix + this.timeSegmentId(namespace, paramMap);
+        StringBuilder segmentId = new StringBuilder(64);
+        segmentId.append(prefix).append(fixed).append(infix).append(sequence).append(suffix);
+        return segmentId.toString();
     }
 
 

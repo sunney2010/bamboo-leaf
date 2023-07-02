@@ -4,12 +4,15 @@ import com.alibaba.druid.filter.Filter;
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
+import jakarta.servlet.Servlet;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * @description: 数据源配置
@@ -45,8 +48,14 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public ServletRegistrationBean servletRegistrationBean() {
-        // 注册自己的Sevlet
-        return new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
+    public ServletRegistrationBean druidSverlet() {
+        ServletRegistrationBean reg = new ServletRegistrationBean();
+        reg.setServlet((Servlet) new StatViewServlet());
+        reg.addUrlMappings("/druid/*");
+        reg.addInitParameter("loginUsername", "joshua");
+        reg.addInitParameter("loginPassword", "123456");
+        reg.addInitParameter("logSlowSql", "true");
+        reg.addInitParameter("slowSqlMillis", "1000");
+        return reg;
     }
 }

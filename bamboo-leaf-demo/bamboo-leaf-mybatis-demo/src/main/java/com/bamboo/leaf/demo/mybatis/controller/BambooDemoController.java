@@ -26,11 +26,11 @@ public class BambooDemoController {
         ModelMap result = new ModelMap();
         try {
             BambooDemoModel model=new BambooDemoModel();
-            model.setId(bambooLeafSegmentClient.dateSegmentId(namespace,"P"));
+            //model.setId(bambooLeafSegmentClient.dateSegmentId(namespace,"P"));
             model.setNamespace(namespace);
             int val = bambooLeafDemoService.insertBambooDemo(model);
             result.put("value", JSON.toJSON(model));
-            result.put("value", val);
+            result.put("result", val);
 
         } catch (Exception e) {
             logger.error("insertBamboo error", e);

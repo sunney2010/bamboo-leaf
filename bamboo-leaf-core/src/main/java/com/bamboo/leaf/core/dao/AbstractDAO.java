@@ -4,7 +4,7 @@ import com.bamboo.leaf.core.constant.TableConfigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -135,6 +135,10 @@ public abstract class AbstractDAO {
     private volatile String insertSegmentSql;
     private volatile String resetSegmentSql;
 
+    /**
+     *获取查询Segment的SQL
+     * @return
+     */
     protected String getSelectSegmentSql() {
         if (selectSegmentSql == null) {
             synchronized (this) {
@@ -158,6 +162,10 @@ public abstract class AbstractDAO {
         return selectSegmentSql;
     }
 
+    /**
+     * 获取更新Segment的SQL
+     * @return
+     */
     protected String getUpdateSegmentSql() {
         if (updateSegmentSql == null) {
             synchronized (this) {
@@ -180,7 +188,7 @@ public abstract class AbstractDAO {
     }
 
     /**
-     * seq_value重置
+     * 获取重置Segment的SQL
      *
      * @return
      */
@@ -204,7 +212,7 @@ public abstract class AbstractDAO {
         return resetSegmentSql;
     }
     /**
-     * 当没有记录集时可以执行插入操作
+     * 获取插入Segment的SQL
      *
      * @return
      */

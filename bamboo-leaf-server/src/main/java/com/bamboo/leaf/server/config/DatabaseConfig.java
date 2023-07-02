@@ -3,6 +3,7 @@ package com.bamboo.leaf.server.config;
 import com.alibaba.druid.filter.Filter;
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidDataSourceMBean;
 import com.alibaba.druid.support.http.StatViewServlet;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
 import java.util.LinkedList;
 
 /**
@@ -26,7 +28,7 @@ public class DatabaseConfig {
     }
 
     @ConfigurationProperties(prefix = "spring.datasource.druid")
-    @Bean(name = "dataSource",initMethod = "init", destroyMethod = "close")
+    @Bean(name = "dataSource", initMethod = "init", destroyMethod = "close")
     public DruidDataSource druidDataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
 
@@ -36,7 +38,6 @@ public class DatabaseConfig {
         druidDataSource.setProxyFilters(filtersList);
         return druidDataSource;
     }
-
 
     @Bean
     public Filter filter() {
@@ -48,11 +49,5 @@ public class DatabaseConfig {
         //合并SQL，有时，一些相同的慢日志过多影响阅读，开启合并功能
         statFilter.setMergeSql(true);
         return statFilter;
-    }
-
-    @Bean
-    public ServletRegistrationBean servletRegistrationBean() {
-        // 注册自己的Sevlet
-        return new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
     }
 }

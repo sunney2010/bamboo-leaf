@@ -4,11 +4,11 @@ import com.bamboo.leaf.client.service.BambooLeafSnowflakeClient;
 import com.bamboo.leaf.core.util.PNetUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 
 /**
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class SnowflakeController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(SnowflakeController.class);
 
-    @Resource
+    @Autowired
     BambooLeafSnowflakeClient bambooLeafSnowflakeClient;
 
     @RequestMapping("/snowflake/snowflakeId")
@@ -90,13 +90,14 @@ public class SnowflakeController extends BaseController {
         }
         return result;
     }
+
     @RequestMapping("/snowflake/queryWorkerId")
     public ModelMap queryWorkerId(String namespace) {
         logger.info("queryWorkerId parameter: namespace:{}", namespace);
         ModelMap result = new ModelMap();
         try {
             String hospIp = PNetUtils.getLocalHost();
-            Integer workerId = bambooLeafSnowflakeClient.queryWorkerId(namespace,hospIp);
+            Integer workerId = bambooLeafSnowflakeClient.queryWorkerId(namespace, hospIp);
             result.put("workerId", workerId + "");
             result.put("currentIp", hospIp + "");
             result.put("currentTime", LocalDateTime.now());

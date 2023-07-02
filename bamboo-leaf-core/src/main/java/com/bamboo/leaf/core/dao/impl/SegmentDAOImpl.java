@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * @description: TODO
+ * @description: SegmentDAO
  * @Author: Zhuzhi
  * @Date: 2020/11/30 下午1:10
  */
@@ -83,6 +83,12 @@ public class SegmentDAOImpl extends AbstractDAO implements SegmentDAO {
         return val;
     }
 
+    /**
+     * 初始化当前namespace数据段
+     * @param segmentDO
+     * @return
+     * @throws BambooLeafException
+     */
     private int insertSegmentSql(SegmentDO segmentDO) throws BambooLeafException {
         int val = 0;
         Connection conn = null;
@@ -110,6 +116,13 @@ public class SegmentDAOImpl extends AbstractDAO implements SegmentDAO {
         return val;
     }
 
+    /**
+     *
+     * @param segmentDO
+     * @param oldLeafVal
+     * @return
+     * @throws BambooLeafException
+     */
     private int updateSegmentSql(SegmentDO segmentDO,long oldLeafVal) throws BambooLeafException {
         int val = 0;
         Connection conn = null;
@@ -136,6 +149,12 @@ public class SegmentDAOImpl extends AbstractDAO implements SegmentDAO {
         return val;
     }
 
+    /**
+     *
+     * @param namespace
+     * @return
+     * @throws BambooLeafException
+     */
     private SegmentDO selectSegmentSql(String namespace) throws BambooLeafException {
         SegmentDO segmentDO = null;
         Connection conn = null;

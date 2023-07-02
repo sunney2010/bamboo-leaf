@@ -3,14 +3,15 @@ package com.bamboo.leaf.server.service.impl;
 import com.bamboo.leaf.server.dao.TokenDAO;
 import com.bamboo.leaf.server.dao.entity.TokenDO;
 import com.bamboo.leaf.server.service.TokenService;
+import jakarta.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
+
 import java.util.*;
 
 /**
@@ -20,7 +21,7 @@ import java.util.*;
 @Service
 public class TokenServiceImpl implements TokenService {
 
-    @Resource
+    @Autowired
     TokenDAO tokenDAO;
 
     private static final Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
