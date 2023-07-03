@@ -44,18 +44,19 @@ public class LeafController {
         logger.info(message);
         return message;
     }
+
     @RequestMapping("/createToken")
     public ResultResponse<String> createToken(String appId) {
-        logger.info("getToken parameter, appId:{},",appId);
+        logger.info("getToken parameter, appId:{},", appId);
         ResultResponse<String> response = new ResultResponse<>();
-        if(StringUtils.isBlank(appId)){
+        if (StringUtils.isBlank(appId)) {
             logger.warn("createToken is fail,appId is null");
             response.setResult(ResultCode.FAIL.getMessage());
             response.setErrMsg(ResultCode.PARA_ERR.getMessage());
             return response;
         }
-        try{
-            String token=tokenService.createToken(appId);
+        try {
+            String token = tokenService.createToken(appId);
             response.setResultData(token);
         } catch (Exception e) {
             response.setResult(ResultCode.FAIL.getMessage());
@@ -66,9 +67,9 @@ public class LeafController {
     }
 
     @RequestMapping("/segment/nextSegmentRange")
-    public ResultResponse<SegmentRange> nextSegmentRange(String appId,String namespace, Long maxValue, Integer step, String token) {
+    public ResultResponse<SegmentRange> nextSegmentRange(String appId, String namespace, Long maxValue, Integer step, String token) {
         ResultResponse<SegmentRange> response = new ResultResponse<>();
-        logger.info("nextSegmentRange parameter, appId:{},namespace:{},maxValue:{},step:{},token:{},",appId, namespace, maxValue, step, token);
+        logger.info("nextSegmentRange parameter, appId:{},namespace:{},maxValue:{},step:{},token:{},", appId, namespace, maxValue, step, token);
         if (!tokenService.canVisit(appId, token)) {
             response.setResult(ResultCode.FAIL.getMessage());
             response.setErrMsg(ResultCode.TOKEN_ERR.getMessage());
@@ -87,10 +88,10 @@ public class LeafController {
     }
 
     @RequestMapping("/snowflake/queryWorkerId")
-    public ResultResponse<Integer> queryWorkerId(String namespace,String appId, String hostIp, String token) {
-        logger.info("queryWorkerId parameter: namespace:{},appId:{},hostIp:{},token:{}", namespace,appId, hostIp, token);
+    public ResultResponse<Integer> queryWorkerId(String namespace, String appId, String hostIp, String token) {
+        logger.info("queryWorkerId parameter: namespace:{},appId:{},hostIp:{},token:{}", namespace, appId, hostIp, token);
         ResultResponse<Integer> response = new ResultResponse<>();
-        if (StringUtils.isEmpty(namespace)||StringUtils.isEmpty(appId) || StringUtils.isEmpty(hostIp) || StringUtils.isEmpty(token)) {
+        if (StringUtils.isEmpty(namespace) || StringUtils.isEmpty(appId) || StringUtils.isEmpty(hostIp) || StringUtils.isEmpty(token)) {
             response.setResult(ResultCode.FAIL.getMessage());
             response.setErrMsg(ResultCode.PARA_ERR.getMessage());
             return response;
