@@ -78,12 +78,24 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public String getToken(String appId) {
-        return buildToken();
+    public String createToken(String appId) {
+        TokenDO tokenDO = this.tokenDAO.queryTokenByAppId(appId);
+        String token = "";
+        if (null != tokenDO) {
+            token = tokenDO.getToken();
+        } else {
+            token = buildToken();
+            tokenDO = new TokenDO();
+            tokenDO.setToken(token);
+            tokenDO.setAppId(appId);
+            this.tokenDAO.insertToken(tokenDO);
+        }
+        return token;
     }
 
     /**
      * Token生成
+     *
      * @return
      */
     private String buildToken() {

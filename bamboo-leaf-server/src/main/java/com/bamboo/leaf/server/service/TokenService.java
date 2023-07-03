@@ -27,6 +27,6 @@ public interface TokenService {
       * @param appId appId
       * @return
       */
-    String getToken(String appId);
+    String createToken(String appId);
 
 }

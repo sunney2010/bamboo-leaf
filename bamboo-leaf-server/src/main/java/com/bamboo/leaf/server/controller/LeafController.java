@@ -44,12 +44,18 @@ public class LeafController {
         logger.info(message);
         return message;
     }
-    @RequestMapping("/getToken")
-    public ResultResponse<String> getToken(String appId) {
+    @RequestMapping("/createToken")
+    public ResultResponse<String> createToken(String appId) {
         logger.info("getToken parameter, appId:{},",appId);
         ResultResponse<String> response = new ResultResponse<>();
+        if(StringUtils.isBlank(appId)){
+            logger.warn("createToken is fail,appId is null");
+            response.setResult(ResultCode.FAIL.getMessage());
+            response.setErrMsg(ResultCode.PARA_ERR.getMessage());
+            return response;
+        }
         try{
-            String token=tokenService.getToken(appId);
+            String token=tokenService.createToken(appId);
             response.setResultData(token);
         } catch (Exception e) {
             response.setResult(ResultCode.FAIL.getMessage());

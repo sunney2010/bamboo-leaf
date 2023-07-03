@@ -10,14 +10,25 @@ import java.util.List;
 public interface TokenDAO {
     /**
      * 查询db中所有的token信息
+     *
      * @return
      */
     List<TokenDO> selectAll();
 
     /**
      * 查询db中所有的token信息
+     *
      * @param tokenDO
      * @return
      */
     int insertToken(TokenDO tokenDO);
+
+    /**
+     * 查询Token信息
+     *
+     * @param appId appId
+     * @return
+     */
+    TokenDO queryTokenByAppId(String appId);
+
 }
