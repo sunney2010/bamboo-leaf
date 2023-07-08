@@ -9,17 +9,23 @@ plugins {
 configurations.all {
 }
 dependencies {
-implementation project(':bamboo-leaf-core')
-implementation 'com.alibaba:druid-spring-boot-starter:1.2.16'
-implementation 'org.springframework.boot:spring-boot-starter-web:3.1.0'
-implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.1.0'
-implementation 'mysql:mysql-connector-java:8.0.33'
-implementation 'commons-beanutils:commons-beanutils:1.9.4'
-implementation 'org.apache.commons:commons-lang3:3.12.0'
-implementation 'org.springframework.boot:spring-boot-devtools:3.1.0'
-implementation 'jakarta.activation:jakarta.activation-api:2.1.1'
-    implementation('com.google.guava:guava:31.0.1-jre')
-testImplementation 'org.springframework.boot:spring-boot-starter-test:3.1.0'
+
+    implementation 'com.alibaba:druid-spring-boot-starter:1.2.16'
+    implementation ('org.springframework.boot:spring-boot-starter-web:3.1.0'){
+        exclude(group:'org.springframework.boot',module:'spring-boot-starter-tomcat')
+    }
+    implementation('org.springframework.boot:spring-boot-starter-undertow:3.1.0')
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.1.0'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation 'commons-beanutils:commons-beanutils:1.9.4'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'jakarta.activation:jakarta.activation-api:2.1.1'
+    implementation'com.google.guava:guava:31.0.1-jre'
+    testImplementation('org.springframework.boot:spring-boot-starter-test:3.1.0') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    implementation project(':bamboo-leaf-core')
+    implementation project(':bamboo-leaf-client')
 }
 
 description = 'bamboo-leaf-server'
